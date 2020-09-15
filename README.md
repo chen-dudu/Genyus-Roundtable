@@ -1,9 +1,16 @@
-![genyus roundtable logo](./genyus%20Roundtable%20readme.png)
 
-# Genyus Roundtable
-Genyus Roundtable is a part of the offerings of the Genyus Network. Roundtable is an online peer-led focus group where 
-people with shared commonalities and traits can discuss research which directly involves their broader peer groups in a 
-fun and empowering way.
+<p align="center">
+    <img src="genyus-Roundtable-readme.png" alt="genyus roundtable logo">
+</p>
+<br>
+<h1 align="center">
+    Genyus Roundtable
+</h1>
+<p  align="center">
+    Genyus Roundtable is a part of the offerings of the Genyus Network. Roundtable is an online peer-led focus group where people with shared commonalities and traits can discuss research which directly involves their broader peer groups in a fun and empowering way.
+</p>
+
+---
 
 ## Contributors
 
@@ -12,22 +19,22 @@ fun and empowering way.
         <td align="center">
             <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/haichaos?view=summary">Haichao Song</a>
             <br>
-            <p>💻</p>
+            <p>:computer:</p>
         </td>
         <td align="center">
             <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/kaixuang?view=summary">Kaixuan Guo</a>
             <br>
-            <p>💻</p>
+            <p>:computer:</p>
         </td>
         <td align="center">
             <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/liguoc?view=summary">Liguo Chen</a>
             <br>
-            <p>💻</p>
+            <p>:computer:</p>
         </td>
         <td align="center">
             <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/yujuny?view=summary">Yujun Yan</a>
             <br>
-            <p>💻</p>
+            <p>:computer:</p>
         </td>
     </tr>
 </table>
