@@ -20,17 +20,17 @@ Genyus Roundtable is a part of the offerings of the Genyus Network. Roundtable i
         <td align="center">
             <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/kaixuang?view=summary">Kaixuan Guo</a>
             <br>
-            <p>:computer:</p>
+            <p align="center">:computer:</p>
         </td>
         <td align="center">
             <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/liguoc?view=summary">Liguo Chen</a>
             <br>
-            <p>:computer:</p>
+            <p align="center">:computer:</p>
         </td>
         <td align="center">
             <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/yujuny?view=summary">Yujun Yan</a>
             <br>
-            <p>:computer:</p>
+            <p align="center">:computer:</p>
         </td>
     </tr>
 </table>
@@ -42,7 +42,7 @@ Genyus Roundtable is a part of the offerings of the Genyus Network. Roundtable i
         <td align="center">
             <a href="https://bitbucket.cis.unimelb.edu.au:8445/projects/SWEN900142020WSECHIDNA/repos/swen90014-2020-ws-echidna/browse">Peter Eze</a>
             <br>
-            <p>:computer:</p>
+            <p align="center">:computer:</p>
         </td>
     </tr>
 </table>
