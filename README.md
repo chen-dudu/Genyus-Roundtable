@@ -1,4 +1,4 @@
-![genyus roundtable logo](/genyus%20Roundtable.png)
+![genyus roundtable logo](genyus%20Roundtable.png)
 
 # Genyus Roundtable
 Genyus Roundtable is a part of the offerings of the Genyus Network. Roundtable is an online peer-led focus group where 
