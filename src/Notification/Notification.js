@@ -5,7 +5,7 @@ import {
     HeaderWrapper,
     FooterWrapper,
     ImageWrapper,Seperator,BodyBG
-} from './Login.style';
+} from './Notification.style';
 import logo from '../img/logo.png';
 import {Body} from './Body'
 import Footer from './Footer'
