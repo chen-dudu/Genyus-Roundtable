@@ -19,7 +19,7 @@ class Body1 extends React.Component {
                 </div>
                 <br />
                 <Link to="Signup"><SubmitButton>Sign Up!</SubmitButton></Link>
-                <Link to="Login"><SubmitButton>Log in!</SubmitButton></Link>
+                <Link to="Notification"><SubmitButton>Log in!</SubmitButton></Link>
                 <br />
 
 			</Body1Wrapper>
