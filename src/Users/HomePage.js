@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {HeaderWrapper,ImageWrapper,Seperator,LogoutWrapper,LogoutButton} from './HomePage.style';
 import logo from '../img/logo.png';
-// import pic1 from '../img/1.jpg';
 import Footer from './Footer.js';
 import Body from './Body.js';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 class Header extends React.Component {
   render(){
@@ -17,8 +18,8 @@ class Header extends React.Component {
         </ImageWrapper>
         <LogoutWrapper>
           <div>
-          {/* <img src={pic1}></img> */}
-          <br/><br/>
+          <Avatar src={this.props.image} size={64} style={{ left: '30%' ,margin: '2% auto'}} icon={<UserOutlined />} />
+          <br/>
           <LogoutButton>Logout</LogoutButton>
           </div>
         </LogoutWrapper>
@@ -32,16 +33,15 @@ class Header extends React.Component {
   }
 }
 
-class HomePage extends React.Component {
-  render(){
+const HomePage = props => {
+  const [image, setImage] = useState();
     return(
       <container>
-        <Header></Header>
-        <Body></Body>  
+        <Header image={image}></Header>
+        <Body setImage={setImage}></Body>  
         <Footer></Footer>
       </container>
     )
-  }
 }
 
 // ========================================

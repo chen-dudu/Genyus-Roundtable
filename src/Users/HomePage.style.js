@@ -27,10 +27,10 @@ export const LogoutWrapper = styled.div`
   width:50%;
   height: 80%;
   float:left;
-  >div>img {
-    margin-left: 30%;
-    margin-top:2%;
-    height:80px;
+  // >div>img {
+  //   margin-left: 30%;
+  //   margin-top:2%;
+  //   height:80px;
 `;
 
 export const LogoutButton = styled.div`
