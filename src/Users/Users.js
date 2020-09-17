@@ -9,7 +9,7 @@ class Users extends React.Component{
   render(){
   return (
     <div>
-    	<WelcomeWrapper>Welcome,{this.props.location.state}!</WelcomeWrapper>
+    	{/* <WelcomeWrapper>Welcome,{this.props.location.state}!</WelcomeWrapper> */}
     	<HomePage></HomePage>
     </div>
   );

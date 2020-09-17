@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HeaderWrapper,ImageWrapper,Seperator} from './HomePage.style';
+import {HeaderWrapper,ImageWrapper,Seperator,LogoutWrapper,LogoutButton} from './HomePage.style';
 import logo from '../img/logo.png';
+// import pic1 from '../img/1.jpg';
 import Footer from './Footer.js';
 import Body from './Body.js';
 
@@ -10,9 +11,21 @@ class Header extends React.Component {
     return (
       <HeaderWrapper>
         <ImageWrapper>
+          <div>
           <img src={logo}></img>
+          </div>
         </ImageWrapper>
-        <Seperator></Seperator>       
+        <LogoutWrapper>
+          <div>
+          {/* <img src={pic1}></img> */}
+          <br/><br/>
+          <LogoutButton>Logout</LogoutButton>
+          </div>
+        </LogoutWrapper>
+        <br></br> <br></br> <br></br>
+        <br></br> <br></br> <br></br>
+        <br></br> 
+        <Seperator></Seperator>    
       </HeaderWrapper>
       
     );

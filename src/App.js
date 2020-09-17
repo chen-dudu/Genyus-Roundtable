@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './App.css';
 import logo from './img/logo.svg';
 import {
@@ -13,9 +13,8 @@ import Login from './Login/Login'
 import Users from './Users/Users'
 
 
-
-class App extends React.Component{
-  render(){
+function App(){
+  const [nickName, setNickName] = useState("");
   return (
     <Router>
         <Route path="/HomePage" component={HomePage}></Route>
@@ -24,6 +23,5 @@ class App extends React.Component{
         <Route path="/users" component={Users}></Route>
     </Router>
   );
-}
 }
 export default App;
