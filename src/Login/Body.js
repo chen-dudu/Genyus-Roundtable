@@ -3,6 +3,7 @@ import React from 'react';
 import { BodyWrapper, SubmitButton, Input, GoSignup} from './Login.style';
 import noteImg from "../img/note.png"
 import firebase from '../firebase';
+import {Link} from "react-router-dom";
 
 export class Body extends React.Component {
 
@@ -71,10 +72,12 @@ export class Body extends React.Component {
                     <br />
                     <br />
                     <div align={'center'} style={{ width: '90%'}}>
+                        {/*<Link to="Notification">*/}
                         <input align={'center'} id={'login-button'} style={{background: "#3399ff", borderRadius: 5,
                             width: "80%", height: 40, fontWeight: "bold",
                             fontSize: 20, color: "white"}}
                                type={'submit'} value={'Log in'} />
+                    {/*</Link>*/}
                     </div>
                 </form>
                 {/*<SubmitButton>Log In</SubmitButton>*/}
