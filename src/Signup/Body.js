@@ -35,6 +35,7 @@ class Body extends React.Component{
       console.log('successfully add in new user with uid', uid);
       let record = db.collection('users').doc(uid);
       record.set({fullname: this.state.full_name, nickname: this.state.nick_name});
+      console.log("###");
       window.location.href = "http://localhost:3000/login";
 
     }, credential => {

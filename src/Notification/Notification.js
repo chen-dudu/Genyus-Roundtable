@@ -17,7 +17,7 @@ const Notification = props => {
                 <ImageWrapper>
                     <img src={logo}></img>
                     <Seperator></Seperator>
-                    <p>Log in</p>
+                    <p>Notifications</p>
                 </ImageWrapper>
             </HeaderWrapper>
             <BodyBG>
