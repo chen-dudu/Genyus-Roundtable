@@ -1,38 +1,32 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// uppercase below
-import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper,Title,Text} from './Notification.style'
+import ReactDOM from 'react-dom';
+import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './Notification.style'
+import leftImg from "../img/footleft.png"
 import middleImg from "../img/footmid.png"
 import rightImg from "../img/footright.png"
 
-
-const Footer = props => {
-    return (
-        <FooterWrapper>
-            <LeftWrapper>
-                <Title>BLOGS</Title>
-                <Text>Candid with Cal</Text>
-                <Text>Topic Talk</Text>
-                <Title>ABOUT</Title>
-                <Text>Cal's Story</Text>
-                <Text>The genesis of genyus</Text>
-            </LeftWrapper>
-            <MidWrapper>
+class Footer extends React.Component {
+	render(){
+		return(
+          <FooterWrapper>
+          	<LeftWrapper>
+	          	<div>
+	          	<img src={leftImg} alt=""></img>
+	          	</div>
+          	</LeftWrapper>
+          	<MidWrapper>
                 <div>
-                    <img src={middleImg}></img>
+                <img src={middleImg} alt=""></img>
                 </div>
             </MidWrapper>
             <RightWrapper>
                 <div>
-                    <img src={rightImg}></img>
+                <img src={rightImg} alt=""></img>
                 </div>
             </RightWrapper>
-        </FooterWrapper>
-    );
-};
-
-Footer.propTypes = {
-
-};
+          </FooterWrapper>
+		)
+	}
+}
 
 export default Footer;

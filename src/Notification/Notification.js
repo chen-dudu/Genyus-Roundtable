@@ -1,33 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-    BodyWrapper,
-    HeaderWrapper,
-    FooterWrapper,
-    ImageWrapper,Seperator,BodyBG
-} from './Notification.style';
-import logo from '../img/logo.png';
-import {Body} from './Body'
-import Footer from './Footer'
+import HomePage from './HomePage';
+import {WelcomeWrapper} from './Notification.style'
 
-const Notification = props => {
-    return (
-        <div>
-            <HeaderWrapper>
-                <ImageWrapper>
-                    <img src={logo}></img>
-                    <Seperator></Seperator>
-                    <p>Notifications</p>
-                </ImageWrapper>
-            </HeaderWrapper>
-            <BodyBG>
-                <Body></Body>
-            </BodyBG>
-            <Footer>footer</Footer>
-        </div>
-    );
-};
+class Notification extends React.Component{
+	
 
-Notification.propTypes = {};
+  render(){
+  return (
+    <div>
+    	{/* <WelcomeWrapper>Welcome,{this.props.location.state}!</WelcomeWrapper> */}
+    	<HomePage></HomePage>
+    </div>
+  );
+}
+}
 
 export default Notification;
