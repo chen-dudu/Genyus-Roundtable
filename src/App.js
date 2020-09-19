@@ -11,6 +11,8 @@ import HomePage from './HomePage/HomePage';
 import Signup from './Signup/Signup'
 import Login from './Login/Login'
 import Users from './Users/Users'
+import ProfileSetting from './ProfileSetting/ProfileSetting'
+import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
 
 
 function App(){
@@ -20,7 +22,9 @@ function App(){
         <Route path="/HomePage" component={HomePage}></Route>
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Login" component={Login}></Route>
+        <Route path="/ProfileSetting" component={ProfileSetting}></Route>
         <Route path="/users" component={Users}></Route>
+        <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> 
     </Router>
   );
 }

@@ -33,26 +33,26 @@ export const LogoutWrapper = styled.div`
   //   height:80px;
 `;
 
-export const LogoutButton = styled.div`
-  float:left;
-  text-align:center;
-  position: relative;
-  color: red;
-  font-weight:bold;
-  font-size:15px;
-  background: white;
-  width: 10%;
-  height: 10%;
-  top:5%;
-  left: 30%;
-  border: solid 3px;
-  border-color: red;
+// export const LogoutButton = styled.div`
+//   float:left;
+//   text-align:center;
+//   position: relative;
+//   color: red;
+//   font-weight:bold;
+//   font-size:15px;
+//   background: white;
+//   width: 10%;
+//   height: 10%;
+//   top:5%;
+//   left: 30%;
+//   border: solid 3px;
+//   border-color: red;
 
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  :hover {
-    background:#3399ff
-  }
-`
+//   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+//   :hover {
+//     background:#3399ff
+//   }
+// `
 
 export const Seperator = styled.div`
   height: 20px;
@@ -73,85 +73,93 @@ export const ProfileWrapper = styled.div`
 
     position: absolute;
     left: 30%;
+
+    > h3 {
+      // margin: 20px auto;
+      color: red;
+      font-size: 20px;
+      font-weight: normal;
+      text-align: center;
+    }
 `
 
 
-export const NotificationButton = styled.div`
-  color: white;
-  font-weight:bold;
-  font-size:15px;
-  background: #4682B4;
-  width: 200px;
-  height: 50px;
-  line-height: 50px;
-  position: absolute;
-  right: 30%;
-  top: 40%;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  :hover {
-    background:#3399ff
-  }
-`
+// export const NotificationButton = styled.div`
+//   color: white;
+//   font-weight:bold;
+//   font-size:15px;
+//   background: #4682B4;
+//   width: 200px;
+//   height: 50px;
+//   line-height: 50px;
+//   position: absolute;
+//   right: 30%;
+//   top: 40%;
+//   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+//   :hover {
+//     background:#3399ff
+//   }
+// `
 
-export const ScheduleButton = styled.div`
-  color: white;
-  font-weight:bold;
-  font-size:15px;
-  background: #4682B4;
-  width: 200px;
-  height: 50px;
-  line-height: 50px;
-  position: absolute;
-  right: 30%;
-  top: 60%;
+// export const ScheduleButton = styled.div`
+//   color: white;
+//   font-weight:bold;
+//   font-size:15px;
+//   background: #4682B4;
+//   width: 200px;
+//   height: 50px;
+//   line-height: 50px;
+//   position: absolute;
+//   right: 30%;
+//   top: 60%;
 
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  :hover {
-    background:#3399ff
-  }
-`
+//   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+//   :hover {
+//     background:#3399ff
+//   }
+// `
 
-export const SettingButton = styled.div`
-  color: #3399ff;
-  font-weight:bold;
-  font-size:20px;
-  background: white;
-  width: 200px;
-  height: 40px;
-  line-height: 30px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 20%;
-  border: solid 3px;
-  border-color: red;
+// export const SettingButton = styled.div`
+//   color: #3399ff;
+//   font-weight:bold;
+//   font-size:20px;
+//   background: white;
+//   width: 200px;
+//   height: 40px;
+//   line-height: 30px;
+//   position: absolute;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   bottom: 20%;
+//   border: solid 3px;
+//   border-color: red;
 
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  :hover {
-    background:white;
-  }
-`
+//   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+//   :hover {
+//     background:white;
+//   }
+// `
 
-export const StatusButton = styled.div`
-color: #3399ff;
-font-weight:bold;
-font-size:20px;
-background: white;
-width: 200px;
-height: 40px;
-line-height: 30px;
-position: absolute;
-left: 50%;
-transform: translateX(-50%);
-bottom: 5%;
-border: solid 3px;
-border-color: red;
+// export const StatusButton = styled.div`
+// color: #3399ff;
+// font-weight:bold;
+// font-size:20px;
+// background: white;
+// width: 200px;
+// height: 40px;
+// line-height: 30px;
+// position: absolute;
+// left: 50%;
+// transform: translateX(-50%);
+// bottom: 5%;
+// border: solid 3px;
+// border-color: red;
 
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-:hover {
-  background:white;
-}
-`
+// box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+// :hover {
+//   background:white;
+// }
+// `
 
 export const LeftWrapper = styled.div`
   width:33.3%;
@@ -197,18 +205,10 @@ export const Body1Wrapper = styled.div`
 
   background-image: linear-gradient(white,white,#ffce33);
   
-  > h1 {
-    margin:20px auto;
-    color: #4682B4;
-    font-size: 40px;
-    font-weight: normal;
-    text-align: center;
-  }
-
   > h2 {
-    margin:20px auto;
-    color: red;
-    font-size: 30px;
+    margin:2%;
+    color: #4682B4;
+    font-size: 35px;
     font-weight: normal;
     text-align: center;
   }
@@ -288,3 +288,6 @@ export const ImageUploader = styled.div`
     position: absolute;
     left: 35%;
 `
+// export const BodyWrapper = styled.div`
+
+// `

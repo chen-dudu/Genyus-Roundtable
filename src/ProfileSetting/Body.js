@@ -1,5 +1,5 @@
 import React,{ useState } from 'react';
-import {Body2Wrapper} from './Users.style';
+import {Body2Wrapper} from './ProfileSetting.style';
 import Body1 from './Body1.js';
 import {withRouter} from 'react-router-dom';
 
