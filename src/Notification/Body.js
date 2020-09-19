@@ -30,10 +30,7 @@ class Body extends React.Component {
 	render() {
 		return (
 			<Body1Wrapper>
-				<TitleWrapper>
-					<h1>Researcher list</h1>
-					<Button type="primary" onClick={() => this.props.history.push('/HomePage')}>Create a new account</Button>
-				</TitleWrapper>
+				<h1>Notifications</h1>
 				<ListWrapper>
 					<List
 						bordered={true}
@@ -45,9 +42,8 @@ class Body extends React.Component {
 
 							>
 								<List.Item.Meta
-									avatar={<Avatar src={item.img} size={80}/>}
 									title={<a href="https://ant.design" style={{fontSize:25}}>{item.title}</a>}
-									description={<p style={{fontSize:15}}>"Description"</p>}
+									description={<p style={{fontSize:15}}>{item.description}</p>}
 								/>
 
 								<div>

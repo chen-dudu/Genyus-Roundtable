@@ -24,7 +24,7 @@ export class Body extends React.Component {
             console.log('successful login for user', this.state.email);
             window.location.href = "http://localhost:3000/Notification";
         }, credential => {
-            console.log(credential);
+            console.lonmg(credential);
             alert(credential.message);
         });
     }

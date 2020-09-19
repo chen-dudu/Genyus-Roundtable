@@ -189,12 +189,11 @@ export const WelcomeWrapper = styled.div`
 
 export const TitleWrapper = styled.div`
       > h1 {
-      margin:20px auto;
-      color: #4682B4;
-      font-size: 40px;
-      font-weight: normal;
-      text-align: center;
-     }
+    font-size: 40px;
+    font-weight: bold;
+    color:#4682B4;
+    margin-left:20px;
+  }
     
       > Button {
       position: absolute;
