@@ -248,8 +248,6 @@ export const Body2Wrapper = styled.div`
   width: 100%;
   background: #4682B4;
   
-
-
   > h1 {
     color:white;
     font-weight:bold;
