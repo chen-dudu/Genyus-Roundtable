@@ -121,7 +121,7 @@ class Body extends React.Component{
       </form>
       <br/><br/>
       {/*<Link to={{pathname: '/users', state: this.state.nname}}>*/}
-        {/*<SubmitButton type="primary">Sign Up</SubmitButton>*/}
+      {/*  <SubmitButton type="primary">Sign Up</SubmitButton>*/}
       {/*</Link>*/}
     
     </BodyWrapper>
