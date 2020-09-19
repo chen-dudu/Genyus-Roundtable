@@ -1,11 +1,8 @@
 import React from 'react';
 import './App.css';
-import logo from './img/logo.svg';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import HomePage from './HomePage/HomePage';
 import Signup from './Signup/Signup'

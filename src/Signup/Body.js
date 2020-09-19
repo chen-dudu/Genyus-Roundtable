@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {BodyWrapper,SubmitButton,Input} from './Signup.style';
+import {BodyWrapper} from './Signup.style';
 import noteImg from "../img/note.png"
 import { Link } from "react-router-dom";
 

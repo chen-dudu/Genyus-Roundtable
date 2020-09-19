@@ -60,10 +60,6 @@ export const Seperator = styled.div`
   background-image: linear-gradient(white, #4682B4);
   `;
 
-export const ProfilePhotoWrapper = styled.div`
-  height: 100px;
-`
-
 export const ProfileWrapper = styled.div`
     display: inline-block;
     width: 20%;
@@ -91,66 +87,6 @@ export const NotificationButton = styled.div`
   :hover {
     background:#3399ff
   }
-`
-
-export const ScheduleButton = styled.div`
-  color: white;
-  font-weight:bold;
-  font-size:15px;
-  background: #4682B4;
-  width: 200px;
-  height: 50px;
-  line-height: 50px;
-  position: absolute;
-  right: 30%;
-  top: 60%;
-
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  :hover {
-    background:#3399ff
-  }
-`
-
-export const SettingButton = styled.div`
-  color: #3399ff;
-  font-weight:bold;
-  font-size:20px;
-  background: white;
-  width: 200px;
-  height: 40px;
-  line-height: 30px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 20%;
-  border: solid 3px;
-  border-color: red;
-
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  :hover {
-    background:white;
-  }
-`
-
-export const StatusButton = styled.div`
-color: #3399ff;
-font-weight:bold;
-font-size:20px;
-background: white;
-width: 200px;
-height: 40px;
-line-height: 30px;
-position: absolute;
-left: 50%;
-transform: translateX(-50%);
-bottom: 5%;
-border: solid 3px;
-border-color: red;
-
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-:hover {
-  background:white;
-}
 `
 
 export const LeftWrapper = styled.div`
@@ -188,8 +124,6 @@ export const RightWrapper = styled.div`
     height:150px;
   }
 `
-
-
 export const Body1Wrapper = styled.div`
   width: 100%;
   height: 500px;
@@ -244,27 +178,6 @@ export const Body1Wrapper = styled.div`
   }
 `
 
-export const Body2Wrapper = styled.div`
-  width: 100%;
-  background: #4682B4;
-  
-  > h1 {
-    color:white;
-    font-weight:bold;
-    font-size:40px;
-    text-align:center;
-  }
-
-  > p {
-    color:white;
-    font-weight:normal;
-    font-size:20px;
-    margin-left:50px;
-  }
-
-`
-
-
 export const WelcomeWrapper = styled.div`
     margin:20px auto;
     color: #4682B4;
@@ -274,14 +187,26 @@ export const WelcomeWrapper = styled.div`
 
 `
 
-export const ImageUploader = styled.div`
-    display: inline-block;
-    width: 200px;
-    height: 200px;
-    border: solid 3px;
-    border-color: red;
-    border-radius: 50%;
+export const TitleWrapper = styled.div`
+      > h1 {
+      margin:20px auto;
+      color: #4682B4;
+      font-size: 40px;
+      font-weight: normal;
+      text-align: center;
+     }
+    
+      > Button {
+      position: absolute;
+      right: 25%;
+      top: 20px;
+      
+      } 
+  `;
 
-    position: absolute;
-    left: 35%;
-`
+export const ListWrapper = styled.div`
+      width: 50%;
+      margin: auto;
+      
+      
+  `;

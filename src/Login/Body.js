@@ -1,9 +1,8 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { BodyWrapper, SubmitButton, Input, GoSignup} from './Login.style';
+import { BodyWrapper, GoSignup} from './Login.style';
 import noteImg from "../img/note.png"
 import firebase from '../firebase';
-import {Link} from "react-router-dom";
 
 export class Body extends React.Component {
 
