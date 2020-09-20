@@ -209,7 +209,7 @@ export default {
         let storageRef = storage.ref(path);
         // put is not async
         let uploadFeedback = storageRef.put(avatarFile);
-        uploadFeedback.on('state_change',
+        uploadFeedback.on('state_changed',
             function progress(snapshot) {
                 // this is used together with progress bar to show the current upload progress
             },
