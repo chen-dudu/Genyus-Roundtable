@@ -3,6 +3,7 @@ import React from 'react';
 import { BodyWrapper, SubmitButton, Input, GoSignup} from './Login.style';
 import noteImg from "../img/note.png"
 import firebase from '../firebase';
+import UserManager from "../DataModel/UserModel/UserManager";
 
 export class Body extends React.Component {
 
@@ -19,14 +20,22 @@ export class Body extends React.Component {
         const auth = firebase.auth();
         console.log('user', this.state.email, 'is trying to login using password', this.state.password);
         // TODO handle exception return (e.g. wrong password, user not existed)
-        auth.signInWithEmailAndPassword(this.state.email, this.state.password).then(credential => {
-            // TODO redirecting to home page after successful login
-            console.log('successful login for user', this.state.email);
-            window.location.href = "http://localhost:3000/users";
-        }, credential => {
-            console.log(credential);
-            alert(credential.message);
-        });
+        UserManager.getCurrentUser()
+            .then(user => {
+                console.log(`current user is  ${user.email}`);
+            })
+            .catch(err => {
+                console.error(`failed`);
+            });
+
+        // auth.signInWithEmailAndPassword(this.state.email, this.state.password).then(credential => {
+        //     // TODO redirecting to home page after successful login
+        //     console.log('successful login for user', this.state.email);
+        //     window.location.href = "http://localhost:3000/users";
+        // }, credential => {
+        //     console.log(credential);
+        //     alert(credential.message);
+        // });
     }
 
     // update email

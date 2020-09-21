@@ -12,6 +12,8 @@ export const FooterWrapper = styled.div`
   width:100%;
   bottom:0px;
   left:0px;
+  
+  
 `;
 
 export const ImageWrapper = styled.div`
@@ -24,6 +26,12 @@ export const ImageWrapper = styled.div`
     font-weight: bold;
     color:#4682B4;
     margin-left:20px;
+  }
+  > Button {
+    position: absolute;
+    right:25px;
+    top: 25px;
+    
   }
 `;
 
@@ -40,7 +48,7 @@ export const SubmitButton = styled.div`
   background: #4682B4;
   width: 150px;
   height: 50px;
-
+  cursor: hand;
 
 
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
@@ -92,58 +100,60 @@ export const RightWrapper = styled.div`
     height:150px;
   }
 `
+export const TitleWrapper = styled.div`
+      > h1 {
+      margin:20px auto;
+      color: #4682B4;
+      font-size: 40px;
+      font-weight: normal;
+      text-align: center;
+     }
+    
+      > Button {
+      position: absolute;
+      right: 25%;
+      top: 20px;
+      
+      }
+      
+      
+  `;
+
+export const ListWrapper = styled.div`
+      width: 50%;
+      margin: auto;
+      
+      
+  `;
+
 
 
 export const Body1Wrapper = styled.div`
-  width: 100%;
-
-  background-image: linear-gradient(white,white,#ffce33);
+      width: 100%;
+      position: relative;
+      background-image: linear-gradient(white,white,#ffce33);
+      
+      #editButton {
+      position: absolute;
+      right: 15%;
+      top: 10px;
+      color: white;
+      font-weight:bold;
+      font-size:20px;
+      background: #4682B4;
+      width: 250px;
+      height: 50px;
+      cursor: hand;
   
-  > h1 {
-    margin:20px auto;
-    color: #4682B4;
-    font-size: 40px;
-    font-weight: normal;
-    text-align: center;
-  }
-
-  > h2 {
-    margin:20px auto;
-    color: red;
-    font-size: 30px;
-    font-weight: normal;
-    text-align: center;
-  }
-
-
-  > div {
-    text-align: center;
-  }
-
-  > div > img {
-    margin-left:-50px;
-  }
-
-  > div > p {
-    color: red;
-    font-size: 20px;
-    font-weight: normal;
-    margin-top:0px;
-  }
-
-  > div > iframe {
-    height:400px;
-    width:800px;
-  }
-
-  #SignUp {
-    margin:20px auto;
-    color: #4682B4;
-    font-size: 30px;
-    font-weight: normal;
-    text-align: center;
-  }
-
+  
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+      :hover {
+        background:#3399ff
+      }
+      border-radius: 5px;
+      outline: 0px;
+      }
+      
   
 `
 
