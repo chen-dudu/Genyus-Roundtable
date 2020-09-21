@@ -138,20 +138,10 @@ export const Body1Wrapper = styled.div`
   }
 
   > h2 {
-    margin:20px auto;
-    color: red;
     font-size: 30px;
-    font-weight: normal;
-    text-align: center;
-  }
-
-
-  > div {
-    text-align: center;
-  }
-
-  > div > img {
-    margin-left:-50px;
+    font-weight: bold;
+    color: red;
+    margin-left:20px;
   }
 
   > div > p {

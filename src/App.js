@@ -8,6 +8,7 @@ import HomePage from './HomePage/HomePage';
 import Signup from './Signup/Signup'
 import Login from './Login/Login'
 import Notification from './Notification/Notification'
+import ViewAcceptedSession from "./ViewAcceptedSession/ViewAcceptedSession";
 import Users from './Users/Users'
 
 
@@ -21,6 +22,7 @@ class App extends React.Component{
         <Route path="/Login" component={Login}></Route>
         <Route path="/users" component={Users}></Route>
         <Route path="/Notification" component={Notification}></Route>
+        <Route path="/ViewAcceptedSession" component={ViewAcceptedSession}></Route>
     </Router>
   );
 }

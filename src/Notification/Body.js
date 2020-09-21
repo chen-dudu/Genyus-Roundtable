@@ -1,6 +1,6 @@
 import React from 'react';
-import {Body1Wrapper, HeaderWrapper, ListWrapper, TitleWrapper} from './Notification.style';
-import { List, Avatar, Button} from 'antd';
+import {Body1Wrapper} from './Notification.style';
+import {Button} from 'antd';
 import 'antd/dist/antd.css';
 import {Card} from 'antd';
 
