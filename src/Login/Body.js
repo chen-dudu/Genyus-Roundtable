@@ -22,7 +22,7 @@ export class Body extends React.Component {
         auth.signInWithEmailAndPassword(this.state.email, this.state.password).then(credential => {
             // TODO redirecting to home page after successful login
             console.log('successful login for user', this.state.email);
-            window.location.href = "http://localhost:3000/Notification";
+            window.location.href = "http://localhost:3000/users";
         }, credential => {
             console.lonmg(credential);
             alert(credential.message);
