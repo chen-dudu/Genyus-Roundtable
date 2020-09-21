@@ -103,7 +103,8 @@ class Body1 extends React.Component {
 						.then(photo => {
 							console.log('getAvatar successful');
 							console.log('setImage successful');
-							this.setState({imageUrl: photo});
+							// this.setState({imageUrl: photo});
+							this.props.setImage(photo);
 						})
 						.catch(error => {
 							console.log(error);

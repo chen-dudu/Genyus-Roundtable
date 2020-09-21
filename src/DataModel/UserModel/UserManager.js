@@ -54,37 +54,18 @@ export default {
      * @returns {Promise<void>} upon successful retrieving, a promise with resolve value of download URL is returned.
      *                          upon failed retrieving, a promise with reject value of null is returned.
      */
-    async getAvatar (path,setImage) {
-        // TODO decide on which one to use
-        // let fileRef = storage.ref().child(path);
-        let fileRef = storage.ref(path);
-
-        fileRef.getDownloadURL()
-            .then(url => {
-                console.info(`${CLASS_NAME} | getAvatar | successfully get the download URL of avatar file, ${url}`);
-                setImage(url);
-                // console.log(setState);
-                // setState({ imageUrl: url, loading: false });
-
-                // This can be downloaded directly:
-                // let xhr = new XMLHttpRequest();
-                // xhr.responseType = 'blob';
-                // xhr.onload = function(event) {
-                //     var blob = xhr.response;
-                // };
-                // xhr.open('GET', url);
-                // xhr.send();
-
-                // Or inserted into an <img> element:
-                // let img = document.getElementById('myimg');
-                // img.src = url;
-                return url;
-            })
-            .catch(err => {
-                console.error(`${CLASS_NAME}| getAvatar | failed to get the download URL for avatar file, received error message: ${err.message}`);
-                return null;
-            });
-
+    async getAvatar (path) {
+        try {
+            // TODO decide on which one to use
+            // let fileRef = storage.ref().child(path);
+            let fileRef = storage.ref(path);
+            let url = await fileRef.getDownloadURL();
+            console.info(`${CLASS_NAME} | getAvatar | successfully get the download URL of avatar file, ${url}`);
+            return Promise.resolve(url);
+        } catch (err) {
+            console.error(`${CLASS_NAME}| getAvatar | failed to get the download URL for avatar file, received error message: ${err.message}`);
+            return Promise.reject(null);
+        }
     },
 
     /**
