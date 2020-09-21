@@ -1,8 +1,13 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { BodyWrapper, SubmitButton, Input, GoSignup} from './Login.style';
+import { BodyWrapper, SubmitButton, GoSignup} from './Login.style';
 import noteImg from "../img/note.png"
-import firebase from '../firebase';
+
+import UserManager from "../DataModel/UserModel/UserManager";
+import { Input, Button } from 'antd';
+import 'antd/dist/antd.css';
+
+const CLASS_NAME = "Login/Body";
 
 export class Body extends React.Component {
 
@@ -16,17 +21,17 @@ export class Body extends React.Component {
 
     login(e) {
         e.preventDefault();
-        const auth = firebase.auth();
         console.log('user', this.state.email, 'is trying to login using password', this.state.password);
-        // TODO handle exception return (e.g. wrong password, user not existed)
-        auth.signInWithEmailAndPassword(this.state.email, this.state.password).then(credential => {
-            // TODO redirecting to home page after successful login
-            console.log('successful login for user', this.state.email);
-            window.location.href = "http://localhost:3000/users";
-        }, credential => {
-            console.log(credential);
-            alert(credential.message);
-        });
+        UserManager.login(this.state.email, this.state.password)
+            .then(userType => {
+                console.info(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
+                // redirect to user hoem page
+                window.location.href = "http://localhost:3000/users";
+            })
+            .catch(err => {
+                console.error(`${CLASS_NAME} | login | failed to login the user with email ${this.state.email}`);
+                alert(err);
+            });
     }
 
     // update email
@@ -55,8 +60,9 @@ export class Body extends React.Component {
                         <label htmlFor="email" style={{ fontSize: "25px" }}>Email</label>
                     </div>
 
+                    <Input id={'email'} size={"large"} placeholder={'Email'} allowClear value={this.state.email} onChange={this.onEmailEnter} style={{width: '50%'}}/>
                     {/*<Input type="text" id="email" name="email" style={{ width: "50%" }} />*/}
-                    <input type={'text'} id={'email'} name={'email'} value={this.state.email} style={{width: '50%', height: 30}} onChange={this.onEmailEnter} />
+                    {/*<input type={'text'} id={'email'} name={'email'} value={this.state.email} style={{width: '50%', height: 30}} onChange={this.onEmailEnter} />*/}
                     <br />
                     <br />
                     <br />
@@ -64,21 +70,26 @@ export class Body extends React.Component {
                         <label htmlFor="password" style={{ fontSize: "25px" }}>Password</label>
                     </div>
 
+                    <Input.Password id={'password'} size={"large"} placeholder={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{width: '50%'}}/>
                     {/*<Input type="password" id="password" name="password" style={{ width: "50%" }} />*/}
-                    <input type={'password'} id={'password'} name={'password'} value={this.state.password} style={{width: '50%', height: 30}} onChange={this.onPasswordEnter}/>
+                    {/*<input type={'password'} id={'password'} name={'password'} value={this.state.password} style={{width: '50%', height: 30}} onChange={this.onPasswordEnter}/>*/}
                     <br />
                     <br />
                     <br />
                     <br />
-                    <div align={'center'} style={{ width: '90%'}}>
-                        <input align={'center'} id={'login-button'} style={{background: "#3399ff", borderRadius: 5,
-                            width: "80%", height: 40, fontWeight: "bold",
-                            fontSize: 20, color: "white"}}
-                               type={'submit'} value={'Log in'} />
+                    <div align={'center'} style={{width: "90%"}} >
+                        <Button htmlType={"submit"} id={'login-button'} type={"primary"} block size={"large"} style={{fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}}>
+                            Log in
+                        </Button>
+
+                        {/*<input align={'center'} id={'login-button'} style={{background: "#3399ff", borderRadius: 5,*/}
+                        {/*    width: "80%", height: 40, fontWeight: "bold",*/}
+                        {/*    fontSize: 20, color: "white"}}*/}
+                        {/*       type={'submit'} value={'Log in'} />*/}
                     </div>
                 </form>
                 {/*<SubmitButton>Log In</SubmitButton>*/}
-                {/* todolist: domain name need to be updated after deploying*/}
+                 {/*todolist: domain name need to be updated after deploying*/}
                 <GoSignup><a href = 'http://localhost:3000/signup'>Don't have an account? Sign up</a></GoSignup>
                 <br />
                 <br />
