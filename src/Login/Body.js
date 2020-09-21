@@ -2,7 +2,10 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { BodyWrapper, SubmitButton, Input, GoSignup} from './Login.style';
 import noteImg from "../img/note.png"
-import firebase from '../firebase';
+
+import UserManager from "../DataModel/UserModel/UserManager";
+
+const CLASS_NAME = "Login/Body";
 
 export class Body extends React.Component {
 
@@ -16,17 +19,17 @@ export class Body extends React.Component {
 
     login(e) {
         e.preventDefault();
-        const auth = firebase.auth();
         console.log('user', this.state.email, 'is trying to login using password', this.state.password);
-        // TODO handle exception return (e.g. wrong password, user not existed)
-        auth.signInWithEmailAndPassword(this.state.email, this.state.password).then(credential => {
-            // TODO redirecting to home page after successful login
-            console.log('successful login for user', this.state.email);
-            window.location.href = "http://localhost:3000/users";
-        }, credential => {
-            console.log(credential);
-            alert(credential.message);
-        });
+        UserManager.login(this.state.email, this.state.password)
+            .then(userType => {
+                console.info(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
+                // redirect to user hoem page
+                window.location.href = "http://localhost:3000/users";
+            })
+            .catch(err => {
+                console.error(`${CLASS_NAME} | login | failed to login the user with email ${this.state.email}`);
+                alert(err);
+            });
     }
 
     // update email
