@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Body1Wrapper,SubmitButton,Body2Wrapper,TitleWrapper,ListWrapper} from './ResearcherHomePage.style';
+import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper} from './ResearcherHomePage.style';
 import Img from '../../img/Avatar.png';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
@@ -46,6 +46,19 @@ const data = [
 	},
 ];
 
+class MyButton extends React.Component{
+	render(){
+		return(
+
+
+			<Button type="primary"/>
+
+		)
+	}
+}
+
+
+
 class Body extends React.Component {
 	constructor(props) {
     super(props);
@@ -61,11 +74,18 @@ class Body extends React.Component {
 			
 			<Body1Wrapper>
 				<TitleWrapper>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+
 				<h1>Researcher list</h1>
-				<Button type="primary" onClick={() => this.props.history.push('/HomePage')}>Create a new account</Button>
+				<Button onClick={() => this.props.history.push('/HomePage')}>Create a new account</Button>
 				</TitleWrapper>
 				<ListWrapper>
 				<List
+					style={{borderColor:'red'}}
 					bordered={true}
 
 
@@ -82,8 +102,7 @@ class Body extends React.Component {
 
 							<div>
 								<Button type="primary" onClick={() => this.props.history.push('/Admin/ResearcherDetail')}>Edit</Button>
-								<text> </text>
-								<Button type="primary" onClick={() => this.props.history.push('/Admin/ResearcherDetail')}>Detail</Button>
+
 							</div>
 
 						</List.Item>

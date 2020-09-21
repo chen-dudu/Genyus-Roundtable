@@ -101,8 +101,13 @@ export const RightWrapper = styled.div`
   }
 `
 export const TitleWrapper = styled.div`
+      position: relative;
+
+
       > h1 {
-      margin:20px auto;
+      position: absolute;
+      top: 10px;
+      left: 15%;
       color: #4682B4;
       font-size: 40px;
       font-weight: normal;
@@ -111,7 +116,8 @@ export const TitleWrapper = styled.div`
     
       > Button {
       position: absolute;
-      right: 25%;
+     
+      right: 15%;
       top: 20px;
       
       color: white;
@@ -132,8 +138,30 @@ export const TitleWrapper = styled.div`
       
   `;
 
+
+export const ButtonWrapper = styled.div`
+      
+      > Button {
+      color: white;
+      font-weight:bold;
+      font-size:20px;
+      background: #4682B4;
+      width: 250px;
+      height: 50px;
+      cursor: hand;    
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+      :hover {
+        background:#3399ff
+      }
+      border-radius: 5px;
+      outline: 0px;
+      }
+      
+      
+  `;
+
 export const ListWrapper = styled.div`
-      width: 50%;
+      width: 70%;
       margin: auto;
       > List {
       background-color: #61dafb;
