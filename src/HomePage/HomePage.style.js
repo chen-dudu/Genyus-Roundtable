@@ -40,9 +40,6 @@ export const SubmitButton = styled.div`
   background: #4682B4;
   width: 150px;
   height: 50px;
-
-
-
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   :hover {
     background:#3399ff
