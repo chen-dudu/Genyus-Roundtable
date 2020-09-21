@@ -2,6 +2,7 @@ import React from 'react';
 import { Body1Wrapper, ListWrapper, TitleWrapper } from './Notification.style';
 import { List, Avatar, Button} from 'antd';
 import 'antd/dist/antd.css';
+import {Card} from 'antd';
 
 const data = [
 	{
@@ -27,38 +28,24 @@ const data = [
 ]
 
 class Body extends React.Component {
+	state = {
+		loading: false,
+	};
+
+	onChange = checked => {
+		this.setState({ loading: !checked });
+	};
+
 	render() {
 		return (
 			<Body1Wrapper>
 				<h1>Notifications</h1>
-				<ListWrapper>
-					<List
-						bordered={true}
-
-
-						dataSource={data}
-						renderItem={item => (
-							<List.Item
-
-							>
-								<List.Item.Meta
-									title={<a href="https://ant.design" style={{fontSize:25}}>{item.title}</a>}
-									description={<p style={{fontSize:15}}>{item.description}</p>}
-								/>
-
-								<div>
-									<Button type="primary" onClick={() => this.props.history.push('/HomePage')}>Edit</Button>
-									<text> </text>
-									<Button type="primary" onClick={() => this.props.history.push('/HomePage')}>Detail</Button>
-								</div>
-
-							</List.Item>
-						)}
-					/>
-				</ListWrapper>
-				<br/>
-
-
+				<Card style={{width: 800, borderColor:"red", background: "transparent",
+					borderWidth: 4, borderRadius: 20, marginLeft: "10%", marginRight: "10%"}}>
+					<h1>Card content</h1>
+					<p>Card content</p>
+					<p>Card content</p>
+				</Card>
 			</Body1Wrapper>
 
 

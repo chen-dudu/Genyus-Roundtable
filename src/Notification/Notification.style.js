@@ -126,7 +126,7 @@ export const RightWrapper = styled.div`
 `
 export const Body1Wrapper = styled.div`
   width: 100%;
-  height: 500px;
+  height: 1000px;
   position: relative;
 
   background-image: linear-gradient(white,white,#ffce33);
