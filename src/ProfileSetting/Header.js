@@ -9,6 +9,7 @@ import { UserOutlined } from '@ant-design/icons';
 
 class Header extends React.Component {
     render(){
+      console.log("Header**************",this.props.image);
       return (
         <HeaderWrapper>
           <ImageWrapper>

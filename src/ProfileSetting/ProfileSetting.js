@@ -9,10 +9,11 @@ import {withRouter} from 'react-router-dom';
 
 const ProfileSetting = props => {
   const [image, setImage] = useState();
+  console.log("ProfileSetting***",image);
     return(
       <container>
         <Header image={image}></Header>
-        <Body setImage={setImage}></Body>  
+        <Body setImage={setImage} image={image}></Body>  
         <Footer></Footer>
       </container>
     )

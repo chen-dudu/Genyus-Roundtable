@@ -54,7 +54,7 @@ export default {
      * @returns {Promise<void>} upon successful retrieving, a promise with resolve value of download URL is returned.
      *                          upon failed retrieving, a promise with reject value of null is returned.
      */
-    async getAvatar (path) {
+    async getAvatar (path,setImage) {
         // TODO decide on which one to use
         // let fileRef = storage.ref().child(path);
         let fileRef = storage.ref(path);
@@ -62,6 +62,9 @@ export default {
         fileRef.getDownloadURL()
             .then(url => {
                 console.info(`${CLASS_NAME} | getAvatar | successfully get the download URL of avatar file, ${url}`);
+                setImage(url);
+                // console.log(setState);
+                // setState({ imageUrl: url, loading: false });
 
                 // This can be downloaded directly:
                 // let xhr = new XMLHttpRequest();
