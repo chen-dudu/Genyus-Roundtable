@@ -18,7 +18,7 @@ class Header extends React.Component {
         </ImageWrapper>
         <LogoutWrapper>
           <div>
-          <Avatar src={this.props.image} size={64} style={{ left: '30%' ,margin: '2% auto'}} icon={<UserOutlined />} />
+          <Avatar src={this.props.image} size={64} style={{ left: '80%' ,margin: '2% auto'}} icon={<UserOutlined />} />
           <br/>
           <LogoutButton>Logout</LogoutButton>
           </div>

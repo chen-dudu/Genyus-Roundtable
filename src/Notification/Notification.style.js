@@ -44,7 +44,7 @@ export const LogoutButton = styled.div`
   width: 10%;
   height: 10%;
   top:5%;
-  left: 30%;
+  left: 80%;
   border: solid 3px;
   border-color: red;
 
@@ -126,7 +126,6 @@ export const RightWrapper = styled.div`
 `
 export const Body1Wrapper = styled.div`
   width: 100%;
-  height: 1000px;
   position: relative;
 
   background-image: linear-gradient(white,white,#ffce33);
@@ -174,8 +173,14 @@ export const Body1Wrapper = styled.div`
     font-weight: normal;
     text-align: center;
   }
+  
+  > Button {
+      position: absolute;
+      right: 25%;
+      top: 20px;
 
   }
+ 
 `
 
 export const WelcomeWrapper = styled.div`
