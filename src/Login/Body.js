@@ -60,7 +60,7 @@ export class Body extends React.Component {
                         <label htmlFor="email" style={{ fontSize: "25px" }}>Email</label>
                     </div>
 
-                    <Input size={"large"} placeholder={'Email'} allowClear value={this.state.email} onChange={this.onEmailEnter} style={{width: '50%'}}/>
+                    <Input id={'email'} size={"large"} placeholder={'Email'} allowClear value={this.state.email} onChange={this.onEmailEnter} style={{width: '50%'}}/>
                     {/*<Input type="text" id="email" name="email" style={{ width: "50%" }} />*/}
                     {/*<input type={'text'} id={'email'} name={'email'} value={this.state.email} style={{width: '50%', height: 30}} onChange={this.onEmailEnter} />*/}
                     <br />
@@ -70,7 +70,7 @@ export class Body extends React.Component {
                         <label htmlFor="password" style={{ fontSize: "25px" }}>Password</label>
                     </div>
 
-                    <Input.Password size={"large"} placeholder={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{width: '50%'}}/>
+                    <Input.Password id={'password'} size={"large"} placeholder={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{width: '50%'}}/>
                     {/*<Input type="password" id="password" name="password" style={{ width: "50%" }} />*/}
                     {/*<input type={'password'} id={'password'} name={'password'} value={this.state.password} style={{width: '50%', height: 30}} onChange={this.onPasswordEnter}/>*/}
                     <br />
