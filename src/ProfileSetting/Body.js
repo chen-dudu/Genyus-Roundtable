@@ -1,7 +1,8 @@
 import React,{ useState } from 'react';
 import {Body2Wrapper} from './ProfileSetting.style';
 import Body1 from './Body1.js';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+
 
 
 
@@ -38,4 +39,4 @@ class Body extends React.Component {
 	}
 }
 
-export default Body;
+export default withRouter(Body);

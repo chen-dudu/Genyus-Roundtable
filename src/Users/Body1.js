@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { Body1Wrapper, NotificationButton, ScheduleButton, ProfileWrapper } from './Users.style';
 import { Upload, message, Button } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
@@ -40,6 +39,14 @@ class Avatar extends React.Component {
 		if (info.file.status === 'done') {
 			// Get this url from response in real world.
 			console.log(info.file.originFileObj);
+			UserManager.updateAvatar(info.file.originFileObj)
+				.then(response => {
+					console.log('update successful');
+				})
+				.catch(error => {
+					console.log(error);
+				});
+
 			getBase64(info.file.originFileObj, imageUrl => {
 				// 用这个方法给imageUrl赋值
 				this.setState({
@@ -52,12 +59,41 @@ class Avatar extends React.Component {
 		}
 	};
 
+	getImage = () => {
+		UserManager.getCurrentUser()
+			.then(response => {
+				console.log('getCurrentUser successful');
+				console.log('photourl:' + response.photoURL);
+
+				if (response.photoURL) {
+					UserManager.getAvatar(response.photoURL)
+						.then(photo => {
+							console.log('getAvatar successful');
+							console.log('setImage successful');
+							this.setState({ imageUrl: photo });
+							// this.props.setImage(photo);
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	constructor(props) {
+		super(props);
+		this.getImage();
+	}
+
 	render() {
 		const { loading, imageUrl } = this.state;
 		const uploadButton = (
 			<div>
-				{loading ? <LoadingOutlined /> : <PlusOutlined />}
-				<div style={{ fontSize: '16px', color: '#08c' }}>Upload</div>
+				{loading ? <LoadingOutlined style={{ background: 'red' }} /> : <PlusOutlined />}
+				<div style={{ marginTop: 8 }}></div>
 			</div>
 		);
 		//   console.log(this.state);
@@ -72,7 +108,7 @@ class Avatar extends React.Component {
 					beforeUpload={beforeUpload}
 					onChange={this.handleChange}
 				>
-					{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '200%' }} /> : uploadButton}
+					{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '200%', borderRadius: '100%' }} /> : uploadButton}
 				</Upload>
 			</ImgCrop>
 		);
@@ -80,6 +116,38 @@ class Avatar extends React.Component {
 }
 
 class Body1 extends React.Component {
+	getImage = () => {
+		UserManager.getCurrentUser()
+			.then(response => {
+				console.log('getCurrentUser successful');
+				console.log('photourl:' + response.photoURL);
+
+				if (response.photoURL) {
+					UserManager.getAvatar(response.photoURL)
+						.then(photo => {
+							console.log('getAvatar successful');
+							console.log('setImage successful');
+							// this.setState({imageUrl: photo});
+							this.props.setImage(photo);
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+	handleClick = () => {
+		this.props.history.push('/ProfileSetting');
+	}
+
+	constructor(props) {
+		super(props);
+		this.getImage();
+	}
+	
 	render() {
 
 		return (
@@ -93,7 +161,7 @@ class Body1 extends React.Component {
 					<br /><br />
 					<Avatar setImage={this.props.setImage} size="large" />
 					<br /><br /><br /><br />
-					<Button danger style={{ margin: '0', width: '55%', height: '12%', fontSize: '120%' }} onClick={() => this.props.history.push('/ProfileSetting')}>Profile Settings</Button>
+					<Button danger style={{ margin: '0', width: '55%', height: '12%', fontSize: '120%' }} onClick={this.handleClick}>Profile Settings</Button>
 
 					<Button danger style={{ margin: '5% 5% 0', width: '55%', height: '12%', fontSize: '120%' }} onClick={() => this.props.history.push('/ProfileSetting')}>Status and Rewards</Button>
 
