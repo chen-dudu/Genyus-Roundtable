@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Body1Wrapper, ProfileWrapper } from './ProfileSetting.style';
-import { Upload, message, Button, Input } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Upload, message, Button, Input, Avatar } from 'antd';
+import { LoadingOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import ImgCrop from 'antd-img-crop';
 import { withRouter } from 'react-router-dom';
@@ -27,7 +27,7 @@ function beforeUpload(file) {
 	return isJpgOrPng && isLt2M;
 }
 
-class Avatar extends React.Component {
+class UploadTrigger extends React.Component {
 	state = {
 		loading: false,
 	};
@@ -55,22 +55,47 @@ class Avatar extends React.Component {
 					loading: false,
 				});
 				this.props.setImage(imageUrl);
-
-				// 在这里把imageUrl和对应的用户名发回给服务器，告诉服务器要更新这个头像
 			},
 			);
 
 		}
 	};
 
+	getImage = () => {
+		UserManager.getCurrentUser()
+			.then(response => {
+				console.log('getCurrentUser successful');
+				console.log('photourl:' + response.photoURL);
+
+				if (response.photoURL) {
+					UserManager.getAvatar(response.photoURL)
+						.then(photo => {
+							console.log('getAvatar successful');
+							console.log('setImage successful');
+							this.setState({imageUrl: photo});
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	constructor(props) {
+		super(props);
+		this.getImage();
+	}
+
 	render() {
+
 		const { loading, imageUrl } = this.state;
-		// ToDo: 在此处像服务器请求图片，并赋值给imageUrl
-		// if拿到图片 this.setState把图片赋值给imageUrl
 		const uploadButton = (
 			<div>
-				{loading ? <LoadingOutlined /> : <PlusOutlined />}
-				<div style={{ marginTop: 8 }}>Upload</div>
+				{loading ? <LoadingOutlined style={{ background: 'red' }}/> : <PlusOutlined />}
+				<div style={{ marginTop: 8 }}></div>
 			</div>
 		);
 		return (
@@ -84,7 +109,7 @@ class Avatar extends React.Component {
 				beforeUpload={beforeUpload}
 				onChange={this.handleChange}
 			>
-				{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '200%' }} /> : uploadButton}
+				{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '200%', borderRadius:'100%' }} /> : uploadButton}
 			</Upload>
 			</ImgCrop>
 		);
@@ -99,7 +124,7 @@ class Body1 extends React.Component {
 				console.log('photourl:' + response.photoURL);
 
 				if (response.photoURL) {
-					UserManager.getAvatar(response.photoURL,this.props.setImage)
+					UserManager.getAvatar(response.photoURL)
 						.then(photo => {
 							console.log('getAvatar successful');
 							console.log('setImage successful');
@@ -119,9 +144,6 @@ class Body1 extends React.Component {
 	constructor(props) {
 		super(props);
 		this.getImage();
-		// this.setState({ imageUrl: props.image, loading: false });
-		// this.state = { imageUrl: props.image, loading: false };
-
 	}
 
 	render() {
@@ -156,7 +178,7 @@ class Body1 extends React.Component {
 					<h3>Current Profile Pic: </h3>
 					<h5 style={{ color: '#4682B4' }}>Click on the photo to make changes</h5>
 					<br /><br /><br /><br />
-					<Avatar setImage={this.props.setImage} size="large" />
+					<UploadTrigger setImage={this.props.setImage}  size="large" />
 				</ProfileWrapper>
 			</Body1Wrapper>
 		)

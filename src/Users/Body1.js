@@ -6,6 +6,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import ImgCrop from 'antd-img-crop';
 import { withRouter } from 'react-router-dom';
+import UserManager from '../DataModel/UserModel/UserManager';
 
 
 function getBase64(img, callback) {
@@ -46,7 +47,6 @@ class Avatar extends React.Component {
 					loading: false,
 				});
 				this.props.setImage(imageUrl);
-				// 在这里把imageUrl和对应的用户名发回给服务器，告诉服务器要更新这个头像
 			},
 			);
 		}
@@ -54,8 +54,6 @@ class Avatar extends React.Component {
 
 	render() {
 		const { loading, imageUrl } = this.state;
-		// ToDo: 在此处像服务器请求图片，并赋值给imageUrl
-		// if拿到图片 this.setState把图片赋值给imageUrl
 		const uploadButton = (
 			<div>
 				{loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -83,16 +81,7 @@ class Avatar extends React.Component {
 
 class Body1 extends React.Component {
 	render() {
-		// const auth = firebase.auth();
-		// let name;
-		// if (auth.currentUser) {
-		// 	let uid = auth.currentUser.uid;
-		// 	const db = firebase.firestore();
-		// 	name = db.collection("users").doc(uid);
-		// }
-		// else {
-		// 	name = "Rico";
-		// }
+
 		return (
 
 			<Body1Wrapper>
