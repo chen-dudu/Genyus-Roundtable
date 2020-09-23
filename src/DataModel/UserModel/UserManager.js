@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "../../firebase";
 import User from "./User";
 
 const USER_COLLECTION = 'users';
@@ -91,14 +91,14 @@ export default {
      * a method used to sign up the user with the provided email address, password, full name and nick name
      * @param email       the email of the user to be signed up
      * @param password    the password of the user to be signed up
-     * @param type        the type of the user to be signed up
-     * @param description the description of the user
      * @param fullname    the full name of the user to be signed up
      * @param nickname    the nick name of the user to be signed up
+     * @param type        the type of the user to be signed up
+     * @param description the description of the user
      * @returns {Promise<*>} upon successful signup, a promise with resolve value of undefined is returned.
      *                       upon failed signup, a promise with reject value of error message string is returned.
      */
-    async signup(email, password, type='participant', description='', fullname, nickname) {
+    async signup(email, password, fullname, nickname, type='participant', description='') {
         try {
             let signupFeedback = await auth.createUserWithEmailAndPassword(email, password);
             console.info(`${CLASS_NAME} | signup | feedback from user signup: ${signupFeedback}`);
@@ -107,9 +107,10 @@ export default {
             let uid = signupFeedback.user.uid;
             let storeFeedback = await userDocs.doc(uid).set({fullname: fullname, nickname: nickname, type: type, description: description, sessions: [], notifications: []});
             console.info(`${CLASS_NAME} | signup | feedback from firestore: ${storeFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
-            console.error(`${CLASS_NAME} | signup | signup/name update/data storing failed, with error message: ${err.message}`);
-            return err.message;
+            console.error(`${CLASS_NAME} | signup | signup/name-update/data-storing failed, with error message: ${err.message}`);
+            return Promise.reject(err.message);
         }
         // let error;
         // auth.createUserWithEmailAndPassword(email, password)
@@ -150,30 +151,21 @@ export default {
      * @param email    the email of the user to be logged in
      * @param password the password of the user to be logged in
      * @returns {Promise<*>} upon successful login, a promise with resolve value of user type is returned.
-     *                       upon failed login, a promise with reject value of null is returned.
+     *                       upon failed login, a promise with reject value of the received error message is returned.
      */
     async login(email, password) {
         try {
             let loginFeedback = await auth.signInWithEmailAndPassword(email, password);
             console.info(`${CLASS_NAME} | login |successful login for account ${email} and returned credential ${loginFeedback}`);
             let uid = loginFeedback.user.uid;
-            return await userDocs.doc(uid).get().get('type');
+            // get the user first, before get the attribute "type", otherwise it would be undefined
+            let user = await userDocs.doc(uid).get();
+            let type = user.get('type');
+            return Promise.resolve(type);
         } catch (err) {
             console.error(`${CLASS_NAME} | login |failed to login account ${email}, received error message: ${err.message}`);
-            return null;
+            return Promise.reject(err.message);
         }
-        // let error;
-        // auth.signInWithEmailAndPassword(email, password)
-        //     .then(credential => {
-        //         // successful login, no error raised
-        //         console.info(`successful login for account ${email}`);
-        //         return null;
-        //     })
-        //     .catch(err => {
-        //         // error = err.message;
-        //         console.error(`failed to login account ${email}, received error message: ${err.message}`);
-        //         return err.message
-        //     });
     },
 
     /**
@@ -332,15 +324,15 @@ export default {
             if (!currentUser) {
                 // current is null
                 console.error(`${CLASS_NAME} | updateDescription | failed to retrieve the current user to perform update`);
-                return 'current user is null';
+                return Promise.reject('current user is null');
             }
             let uid = currentUser.uid;
             let updateFeedback = userDocs.doc(uid).update({description: des});
             console.info(`${CLASS_NAME} | updateDescription | successfully retrieved user data for uid ${uid}, feedback received: ${updateFeedback}`);
-            return undefined;
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateDescription | failed to update user description, received error message: ${err.mesage}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     }
 }
