@@ -123,7 +123,7 @@ class Body1 extends React.Component {
 				console.log('photourl:' + response.photoURL);
 				// let displayedName = response.email;
 				// console.log('email*******:', displayedName);
-				this.setState({displayedName:response.email});
+				this.setState({displayedName:response.nickname});
 
 				if (response.photoURL) {
 					UserManager.getAvatar(response.photoURL)

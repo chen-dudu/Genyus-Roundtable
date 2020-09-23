@@ -36,7 +36,6 @@ class Body extends React.Component{
 
         UserManager.signup(this.state.email, this.state.password, this.state.full_name, this.state.nick_name)
             .then(response => {
-                // window.location.href = "http://localhost:3000/login";
                 this.props.history.push("Login");
             })
             .catch(err => {
