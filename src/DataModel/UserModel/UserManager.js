@@ -26,11 +26,13 @@ export default {
                 let uid = current.uid;
                 let creationTime = current.metadata.creationTime;
                 let userDoc = await userDocs.doc(uid).get();
+                let fullname = userDoc.get('fullname');
+                let nickname = userDoc.get('nickname');
                 let sessions = userDoc.get('sessions');
                 let notifications = userDoc.get('notifications');
                 let type = userDoc.get('type');
                 let description = userDoc.get('description');
-                currentUser = new User(current.uid, current.email, current.displayName, current.phoneNumber, current.photoURL, current.providerId, type, creationTime, description, sessions, notifications);
+                currentUser = new User(current.uid, current.email, current.displayName, fullname, nickname, current.phoneNumber, current.photoURL, current.providerId, type, creationTime, description, sessions, notifications);
                 // return current;
                 return currentUser;
             } catch (err) {
