@@ -98,13 +98,35 @@ export const BodyWrapper = styled.div`
   width: 100%;
   position: relative;
 
-  background-image: linear-gradient(white,white,#ffce33);
+  background-image: white;
   
   > h1 {
     font-size: 40px;
     font-weight: bold;
     color:#4682B4;
     margin-left:20px;
+    margin-bottom: -10px;
+  }
+
+  > h2 {
+    font-size: 30px;
+    color:red;
+    margin-left:20px;
+    top: 10px;
+  }
+ 
+`
+
+export const Body2Wrapper = styled.div`
+  width: 80%;
+  position: relative;
+  
+  background-image: linear-gradient(#4682B4,#4682B4,#4682B4,#4682B4, white);
+  
+  > h1 {
+    font-size: 30px;
+    color:white;
+    margin-left:40px;
     margin-bottom: -10px;
   }
 
