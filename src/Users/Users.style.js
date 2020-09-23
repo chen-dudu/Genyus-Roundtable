@@ -76,40 +76,40 @@ export const ProfileWrapper = styled.div`
 `
 
 
-export const NotificationButton = styled.div`
-  color: white;
-  font-weight:bold;
-  font-size:15px;
-  background: #4682B4;
-  width: 200px;
-  height: 50px;
-  line-height: 50px;
-  position: absolute;
-  right: 30%;
-  top: 40%;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  :hover {
-    background:#3399ff
-  }
-`
+// export const NotificationButton = styled.div`
+//   color: white;
+//   font-weight:bold;
+//   font-size:15px;
+//   background: #4682B4;
+//   width: 200px;
+//   height: 50px;
+//   line-height: 50px;
+//   position: absolute;
+//   right: 30%;
+//   top: 40%;
+//   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+//   :hover {
+//     background:#3399ff
+//   }
+// `
 
-export const ScheduleButton = styled.div`
-  color: white;
-  font-weight:bold;
-  font-size:15px;
-  background: #4682B4;
-  width: 200px;
-  height: 50px;
-  line-height: 50px;
-  position: absolute;
-  right: 30%;
-  top: 60%;
+// export const ScheduleButton = styled.div`
+//   color: white;
+//   font-weight:bold;
+//   font-size:15px;
+//   background: #4682B4;
+//   width: 200px;
+//   height: 50px;
+//   line-height: 50px;
+//   position: absolute;
+//   right: 30%;
+//   top: 60%;
 
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  :hover {
-    background:#3399ff
-  }
-`
+//   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+//   :hover {
+//     background:#3399ff
+//   }
+// `
 
 // export const SettingButton = styled.div`
 //   color: #3399ff;
@@ -201,14 +201,6 @@ export const Body1Wrapper = styled.div`
     margin:20px auto;
     color: #4682B4;
     font-size: 40px;
-    font-weight: normal;
-    text-align: center;
-  }
-
-  > h2 {
-    margin:20px auto;
-    color: red;
-    font-size: 30px;
     font-weight: normal;
     text-align: center;
   }

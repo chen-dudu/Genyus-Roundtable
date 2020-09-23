@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Body1Wrapper, NotificationButton, ScheduleButton, ProfileWrapper } from './Users.style';
+import { Body1Wrapper, ProfileWrapper } from './Users.style';
 import { Upload, message, Button } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
@@ -121,6 +121,9 @@ class Body1 extends React.Component {
 			.then(response => {
 				console.log('getCurrentUser successful');
 				console.log('photourl:' + response.photoURL);
+				// let displayedName = response.email;
+				// console.log('email*******:', displayedName);
+				this.setState({displayedName:response.email});
 
 				if (response.photoURL) {
 					UserManager.getAvatar(response.photoURL)
@@ -146,6 +149,9 @@ class Body1 extends React.Component {
 	constructor(props) {
 		super(props);
 		this.getImage();
+		this.state = {
+			displayedName: null
+		}
 	}
 	
 	render() {
@@ -154,11 +160,13 @@ class Body1 extends React.Component {
 
 			<Body1Wrapper>
 				<h1>Welcome to Genyus Roundtable!</h1>
-				<NotificationButton>My Notification</NotificationButton>
-				<ScheduleButton>My Roundtable Schedule</ScheduleButton>
+				<Button  type="primary" style={{ margin: '8% 58% 0', width: '12%', height: '10%', position: 'absolute' }}>My Notification</Button>
+				{/* <NotificationButton>My Notification</NotificationButton> */}
+				<Button  type="primary" style={{ margin: '13% 58% 0', width: '12%', height: '10%', position: 'absolute' }}>My Roundtable Schedule</Button>
+				{/* <ScheduleButton>My Roundtable Schedule</ScheduleButton> */}
 				<ProfileWrapper>
-					<h1 color={"red"}>Hey there, </h1>
-					<br /><br />
+				<h2 style={{color:'red'}}>Hey there, {this.state.displayedName}</h2>
+					<br /><br/>
 					<Avatar setImage={this.props.setImage} size="large" />
 					<br /><br /><br /><br />
 					<Button danger style={{ margin: '0', width: '55%', height: '12%', fontSize: '120%' }} onClick={this.handleClick}>Profile Settings</Button>
