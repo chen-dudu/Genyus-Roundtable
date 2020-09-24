@@ -77,6 +77,16 @@ class Body2 extends React.Component {
 						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
 							https://zoom.com/join39436?pwd=iisbado8b</div>
 					</Col>
+					<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"82%",
+						fontSize: 15, color: "white"}}>Add to Calendar</Button>
+					<br />
+					<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"70%",
+						fontSize: 15, color: "white"}}>Edit Status</Button>
+					<br />
 				</Row>
 				<br />
 				<hr style={{color: "white", height: 0}} />
@@ -93,7 +103,7 @@ class Body2 extends React.Component {
 							purposes?</div>
 					</Col>
 					<Col className="gutter-row" span={12}>
-						<div style={{background: 'white', padding: '8px 0', textAlign:"center",
+						<div style={{background: 'white', padding: '20.5px 0', textAlign:"center",
 							fontSize:"16px"}}>Yes</div>
 					</Col>
 					<Col className="gutter-row" span={12}>
@@ -112,15 +122,18 @@ class Body2 extends React.Component {
 						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
 							Employed full time</div>
 					</Col>
+					<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"40%",
+						fontSize: 15, color: "white"}}>Edit Responses</Button>
+					<br />
 				</Row>
-				<Button style={{background: "red", borderRadius: 5, marginLeft:"35%", marginRight:"35%",
-					width: "30%", height: 40, fontWeight: "bold",
-					fontSize: 15, color: "white"}}>Download Researcher's Notes</Button>
-				<br />
 				<hr style={{color: "white", height: 0}} />
 				<br />
 				<br />
-				<Button style={{background: "red", borderRadius: 5, marginLeft:"35%", marginRight:"35%",
+				<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
+					marginLeft:"35%", marginRight:"35%",
+					boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
 					width: "30%", height: 40, fontWeight: "bold",
 					fontSize: 15, color: "white"}}>Download Researcher's Notes</Button>
 				<br />
