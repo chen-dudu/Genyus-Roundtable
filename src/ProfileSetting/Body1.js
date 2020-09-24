@@ -65,12 +65,12 @@ class UploadTrigger extends React.Component {
 
 	getImage = () => {
 		UserManager.getCurrentUser()
-			.then(response => {
+			.then(user => {
 				console.log('getCurrentUser successful');
-				console.log('photourl:' + response.photoURL);
+				console.log('photourl:' + user.photoURL);
 
-				if (response.photoURL) {
-					UserManager.getAvatar(response.photoURL)
+				if (user.photoURL) {
+					UserManager.getAvatar(user.photoURL)
 						.then(photo => {
 							console.log('getAvatar successful');
 							console.log('setImage successful');
@@ -157,12 +157,15 @@ class Body1 extends React.Component {
 
 	getImage = () => {
 		UserManager.getCurrentUser()
-			.then(response => {
+			.then(user => {
 				console.log('getCurrentUser successful');
-				console.log('photourl:' + response.photoURL);
+				console.log('photourl:' + user.photoURL);
+				this.setState({full_name: user.fullname, nick_name: user.nickname});
+				console.log("PrintFullname!!!!!!!!!!!!!",user.fullname);
+				console.log("PrintNickname!!!!!!!!!!!!!",user.nickname);
 
-				if (response.photoURL) {
-					UserManager.getAvatar(response.photoURL)
+				if (user.photoURL) {
+					UserManager.getAvatar(user.photoURL)
 						.then(photo => {
 							console.log('getAvatar successful');
 							console.log('setImage successful');
