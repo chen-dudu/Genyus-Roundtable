@@ -2,9 +2,10 @@ import React from 'react';
 import {Body2Wrapper, BodyWrapper} from './ViewAcceptedSession.style';
 import {Button} from 'antd';
 import 'antd/dist/antd.css';
-import {Card, Steps} from 'antd';
+import {Steps, Row, Col} from 'antd';
 
 const { Step } = Steps;
+const style = {background: 'white', padding: '8px 0'};
 
 class Body1 extends React.Component {
 	state = {
@@ -48,8 +49,86 @@ class Body2 extends React.Component {
 				<br />
 				<h1>Confirmation Details:</h1>
 				<br />
+				<Row
+					gutter={[5, 5]}
+					style={{marginLeft:"20px", marginRight:"40%"}}
+				>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+							fontSize:"16px"}}>Your Status</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center",
+							fontSize:"16px"}}>Signed up, you're ready to go!</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+							fontSize:"16px"}}>Date of Event</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
+							2/5/20,  6:30 pm</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+							fontSize:"16px"}}>Video Chat Link</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
+							https://zoom.com/join39436?pwd=iisbado8b</div>
+					</Col>
+				</Row>
+				<br />
+				<hr style={{color: "white", height: 0}} />
+				<br />
+				<h1>Your Signup Responses:</h1>
+				<br />
+				<Row
+					gutter={[5, 5]}
+					style={{marginLeft:"20px", marginRight:"40%"}}
+				>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+							fontSize:"16px"}}>Are you willing for the data collected to be used for research
+							purposes?</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center",
+							fontSize:"16px"}}>Yes</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+							fontSize:"16px"}}>Have you suffered a stroke?</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
+							Yes</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+							fontSize:"16px"}}>What is your current employment status?</div>
+					</Col>
+					<Col className="gutter-row" span={12}>
+						<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
+							Employed full time</div>
+					</Col>
+				</Row>
+				<Button style={{background: "red", borderRadius: 5, marginLeft:"35%", marginRight:"35%",
+					width: "30%", height: 40, fontWeight: "bold",
+					fontSize: 15, color: "white"}}>Download Researcher's Notes</Button>
+				<br />
+				<hr style={{color: "white", height: 0}} />
+				<br />
+				<br />
+				<Button style={{background: "red", borderRadius: 5, marginLeft:"35%", marginRight:"35%",
+					width: "30%", height: 40, fontWeight: "bold",
+					fontSize: 15, color: "white"}}>Download Researcher's Notes</Button>
+				<br />
+				<br />
+				<br />
 				<br />
 			</Body2Wrapper>
+
 
 
 		)
