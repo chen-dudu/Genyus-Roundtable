@@ -1,6 +1,14 @@
 
 class Pod {
 
+    /**
+     * a private constructor which will be called by pod manager to creat a new pod object
+     * @param pid         the unique id of the pod
+     * @param title       the title of the pod
+     * @param description the description of the pod
+     * @param researcher  the researcher who is responsible for the pod
+     * @param sessions    the list of roundtable sessions the pod contains
+     */
     constructor(pid, title, description, researcher, sessions) {
         this._pid = pid;
         this._title = title;
