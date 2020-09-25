@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
-  height: 150px;
+  height: 200px;
   left:0px;
 `;
 
@@ -15,45 +15,79 @@ export const FooterWrapper = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  margin-left: 0;
-  > img {
-    height: 130px;
-  }
-  > p {
-    font-size: 40px;
-    font-weight: bold;
-    color:#4682B4;
-    margin-left:20px;
-  }
+  width:50%;
+  height: 80%;
+  float:left;
+
+  >div>img {
+    height:130px;
 `;
 
-export const Seperator = styled.div`
-  height: 10px;
-  background-image: linear-gradient(white, #4682B4);
-  `;
+export const LogoutWrapper = styled.div` 
+  width:50%;
+  height: 80%;
+  float:left;
+  // >div>img {
+  //   margin-left: 30%;
+  //   margin-top:2%;
+  //   height:80px;
+`;
 
-
-export const SubmitButton = styled.div`
-  color: white;
+export const LogoutButton = styled.div`
+  float:left;
+  text-align:center;
+  position: relative;
+  color: red;
   font-weight:bold;
-  font-size:20px;
-  background: #4682B4;
-  width: 150px;
-  height: 50px;
-
-
+  font-size:15px;
+  background: white;
+  width: 10%;
+  height: 10%;
+  top:5%;
+  left: 80%;
+  border: solid 3px;
+  border-color: red;
 
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   :hover {
     background:#3399ff
   }
+`
 
-  // height of the word inside
+export const Seperator = styled.div`
+  height: 20px;
+  margin-bottom: 10%;
+  background-image: linear-gradient(white, #4682B4);
+  `;
+
+export const ProfileWrapper = styled.div`
+    display: inline-block;
+    width: 20%;
+    height: 80%;
+
+    // border-radius: 50%;
+
+    position: absolute;
+    left: 30%;
+`
+
+
+export const NotificationButton = styled.div`
+  color: white;
+  font-weight:bold;
+  font-size:15px;
+  background: #4682B4;
+  width: 200px;
+  height: 50px;
   line-height: 50px;
-  margin: 10px auto 30px;
-  text-align: center;
-  border-radius: 5px;
-`;
+  position: absolute;
+  right: 30%;
+  top: 40%;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  :hover {
+    background:#3399ff
+  }
+`
 
 export const LeftWrapper = styled.div`
   width:33.3%;
@@ -61,8 +95,6 @@ export const LeftWrapper = styled.div`
   >div {
     margin:0 auto;
     width:50%;
-
-    // height:100%;
   }
   >div>img {
     height:200px;
@@ -92,19 +124,17 @@ export const RightWrapper = styled.div`
     height:150px;
   }
 `
-
-
 export const Body1Wrapper = styled.div`
   width: 100%;
+  position: relative;
 
   background-image: linear-gradient(white,white,#ffce33);
   
   > h1 {
-    margin:20px auto;
-    color: #4682B4;
     font-size: 40px;
-    font-weight: normal;
-    text-align: center;
+    font-weight: bold;
+    color:#4682B4;
+    margin-left:20px;
   }
 
   > h2 {
@@ -143,32 +173,15 @@ export const Body1Wrapper = styled.div`
     font-weight: normal;
     text-align: center;
   }
-
-  }
-`
-
-export const Body2Wrapper = styled.div`
-  width: 100%;
-  background: #4682B4;
   
+  > Button {
+      position: absolute;
+      right: 25%;
+      top: 20px;
 
-
-  > h1 {
-    color:white;
-    font-weight:bold;
-    font-size:40px;
-    text-align:center;
   }
-
-  > p {
-    color:white;
-    font-weight:normal;
-    font-size:20px;
-    margin-left:50px;
-  }
-
+ 
 `
-
 
 export const WelcomeWrapper = styled.div`
     margin:20px auto;
@@ -176,9 +189,28 @@ export const WelcomeWrapper = styled.div`
     font-size: 30px;
     font-weight: normal;
     text-align: center;
-  
-
-
-  
 
 `
+
+export const TitleWrapper = styled.div`
+      > h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color:#4682B4;
+    margin-left:20px;
+  }
+    
+      > Button {
+      position: absolute;
+      right: 25%;
+      top: 20px;
+      
+      } 
+  `;
+
+export const ListWrapper = styled.div`
+      width: 50%;
+      margin: auto;
+      
+      
+  `;
