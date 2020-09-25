@@ -1,8 +1,9 @@
 import React from 'react';
 import {Body2Wrapper, BodyWrapper} from './ViewAcceptedSession.style';
-import {Button} from 'antd';
+import {Button, Tooltip} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
+import { QuestionOutlined } from '@ant-design/icons';
 
 const { Step } = Steps;
 const style = {background: 'white', padding: '8px 0'};
@@ -128,6 +129,7 @@ class Body2 extends React.Component {
 						fontSize: 15, color: "white"}}>Edit Responses</Button>
 					<br />
 				</Row>
+				<br />
 				<hr style={{color: "white", height: 0}} />
 				<br />
 				<br />
@@ -136,14 +138,19 @@ class Body2 extends React.Component {
 					boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
 					width: "30%", height: 40, fontWeight: "bold",
 					fontSize: 15, color: "white"}}>Download Researcher's Notes</Button>
+				<Tooltip>
+					<Button type="primary" shape="circle" icon={<QuestionOutlined />} size="large"
+							style={{position:"absolute", left: "92%", bottom:"82%", borderColor:"red", }}/>
+					<Button type="primary" shape="circle" icon={<QuestionOutlined />} size="large"
+							style={{position:"absolute", left: "61%", bottom:"68%", borderColor:"red", }}/>
+					<Button type="primary" shape="circle" icon={<QuestionOutlined />} size="large"
+					style={{position:"absolute", left: "70%", bottom:"10%", borderColor:"red", }}/>
+				</Tooltip>
 				<br />
 				<br />
 				<br />
 				<br />
 			</Body2Wrapper>
-
-
-
 		)
 	}
 }
