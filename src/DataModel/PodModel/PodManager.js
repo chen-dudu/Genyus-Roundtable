@@ -45,7 +45,6 @@ export default {
 
 function converter(pod) {
     return {
-        pid: pod.pid,
         title: pod.title,
         description: pod.description,
         researcher: pod.researcher,
