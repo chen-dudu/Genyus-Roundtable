@@ -24,7 +24,7 @@ function App(){
         <Route path="/Login" component={Login}></Route>
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
         <Route path="/users" component={Users}></Route>
-        <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> 
+        <Route path="/StatusAndRewards" component={StatusAndRewards}></Route>
     </Router>
   );
 }
