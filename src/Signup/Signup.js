@@ -7,8 +7,9 @@ import {
   ImageWrapper,Seperator,BodyBG
 } from './Signup.style';
 import logo from '../img/logo.png';
-import Body from './Body'
-import Footer from './Footer'
+import Body from './Body';
+import Footer from './Footer';
+import { withRouter } from 'react-router-dom';
 
 const Signup = props => {
   return (
@@ -30,4 +31,4 @@ const Signup = props => {
 
 Signup.propTypes = {};
 
-export default Signup;
+export default withRouter(Signup);
