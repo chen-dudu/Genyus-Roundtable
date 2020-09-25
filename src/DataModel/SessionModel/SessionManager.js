@@ -22,9 +22,10 @@ export default {
             let toSend = converter(session);
             let createFeedback = await sDocs.add(toSend);
             console.info(`${CLASS_NAME} | createSession | new session has been successfully created in DB, id assigned is: ${createFeedback.id}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | createSession | failed to create a new session on DB, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -54,13 +55,14 @@ export default {
         try {
             let sDoc = await sDocs.doc(sid).get();
             console.info(`${CLASS_NAME} | getSession | successfully retrieved the needed session from DB`);
-            return new Session(sDoc.id, sDoc.get('title'), sDoc.get('description'), sDoc.get('duration'),
-                               sDoc.get('youtubeLink'), sDoc.get('zoomLink'), sDoc.get('timeSlots'),
-                               sDoc.get('questions'), sDoc.get('status'), sDoc.get('researchers'),
-                               sDoc.get('participants'), sDoc.get('notification'));
+            let newSession =  new Session(sDoc.id, sDoc.get('title'), sDoc.get('description'), sDoc.get('duration'),
+                                          sDoc.get('youtubeLink'), sDoc.get('zoomLink'), sDoc.get('timeSlots'),
+                                          sDoc.get('questions'), sDoc.get('status'), sDoc.get('researchers'),
+                                          sDoc.get('participants'), sDoc.get('notification'));
+            return Promise.resolve(newSession);
         } catch (err) {
             console.error(`${CLASS_NAME} | getSession | failed to retrieve the session from DB, received error message: ${err.message}`);
-            return null;
+            return Promise.reject(err.message);
         }
     },
 
@@ -71,18 +73,18 @@ export default {
      *                               upon failed retrieval, a promise with reject value of null is returned.
      */
     async getSessions(sids) {
-        let sessions = [];
-        sids.forEach(sid => {
-            this.getSession(sid)
-                .then(session => {
-                    sessions.unshift(Promise.resolve(session));
-                })
-                .catch(err => {
-                    console.error(`${CLASS_NAME} | getSessions | failed to get sessions, received error message: ${err}`);
-                    return null;
-                });
-        })
-        return Promise.all(sessions);
+        try {
+            let sessions = [];
+            for (let i = 0; i < sids.length; i++) {
+                let session = await this.getNotification(sids[i]);
+                sessions.unshift(Promise.resolve(session));
+            }
+            console.info(`${CLASS_NAME} | getSessions | successfully get all sessions from DB`);
+            return Promise.all(sessions);
+        } catch (err) {
+            console.error(`${CLASS_NAME} | getSessions | failed to get sessions, received error message: ${err}`);
+            return Promise.reject(null);
+        }
     },
 
     /**
@@ -96,9 +98,10 @@ export default {
         try {
             let updateFeedback = await sDocs.doc(sid).update({title: title});
             console.info(`${CLASS_NAME} | updateTitle | successfully update title on DB, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateTitle | failed to update title, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -113,9 +116,10 @@ export default {
         try {
             let updateFeedback = await sDocs.doc(sid).update({researchers: researchers});
             console.info(`${CLASS_NAME} | updateResearchers | successfully update researchers on DB, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateResearchers | failed to update researchers, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -130,9 +134,10 @@ export default {
         try {
             let updateFeedback = await sDocs.doc(sid).update({duration: duration});
             console.info(`${CLASS_NAME} | updateDuration | successfully update duration on DB, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateDuration | failed to update duration, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -147,9 +152,10 @@ export default {
         try {
             let updateFeedback = await sDocs.doc(sid).update({youtubeLink: link});
             console.info(`${CLASS_NAME} | updateYoutubeLink | successfully update youtube link on DB, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateYoutubeLink | failed to update youtube link, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -164,9 +170,10 @@ export default {
         try {
             let updateFeedback = await sDocs.doc(sid).update({description: description});
             console.info(`${CLASS_NAME} | updateDescription | successfully update description on DB, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateDescription | failed to update description, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -181,9 +188,10 @@ export default {
         try {
             let updateFeedback = await sDocs.doc(sid).update({zoomLink: link});
             console.info(`${CLASS_NAME} | updateZoomLink | successfully update zoom link on DB, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateZoomLink | failed to update zoom link, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -198,9 +206,10 @@ export default {
         try {
             let updateFeedback = await sDocs.doc(sid).update({timeSlots: slots});
             console.info(`${CLASS_NAME} | updateTimeSlots | successfully update time slots on DB, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateTimeSlots | failed to update time slot, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -215,9 +224,10 @@ export default {
         try {
             let updateFeedback = await sDocs.doc(sid).update({questions: questions});
             console.info(`${CLASS_NAME} | updateQuestions | successfully update questions on DB, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateQuestions | failed to update questions, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -237,9 +247,10 @@ export default {
             participants.unshift(uid);
             let updateFeedback = await sRef.update({participants: participants});
             console.info(`${CLASS_NAME} | signup | successfully sign up a participant for the given session, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | signup | failed to sign up a participant for the given sesison, error message received: ${err.message} `);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -253,10 +264,10 @@ export default {
         try {
             let sessionDoc = await sDocs.doc(sid).get();
             // let participants = sessionDoc.get('participants');
-            return sessionDoc.get('participants');
+            return Promise.resolve(sessionDoc.get('participants'));
         } catch (err) {
             console.error(`${CLASS_NAME} | getParticipant | failed to get participant list, received error message: ${err.message}`);
-            return null;
+            return Promise.reject(null);
         }
     },
 
@@ -269,10 +280,10 @@ export default {
     async getNotification(sid) {
         try {
             let sessionDoc = await sDocs.doc(sid).get();
-            return sessionDoc.get('notifications');
+            return Promise.resolve(sessionDoc.get('notifications'));
         } catch (err) {
             console.error(`${CLASS_NAME} | getNotification | failed to get notification list, received error message: ${err.message}`);
-            return null;
+            return Promise.reject(null);
         }
     }
 }
