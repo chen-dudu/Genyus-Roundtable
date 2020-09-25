@@ -162,7 +162,7 @@ class Body1 extends React.Component {
 				<h1>Welcome to Genyus Roundtable!</h1>
 				<Button  type="primary"
 						 style={{ margin: '8% 58% 0', width: '12%', height: '10%', position: 'absolute' }}
-						 href="/Notification"
+						 onClick={() => this.props.history.push('/Notification')}
 				>My Notification</Button>
 				{/* <NotificationButton>My Notification</NotificationButton> */}
 				<Button  type="primary" style={{ margin: '13% 58% 0', width: '12%', height: '10%', position: 'absolute' }}>My Pod Schedule</Button>

@@ -1,16 +1,31 @@
-import React from 'react';
-import HomePage from './HomePage';
+import React, {useState} from 'react';
+import Header from './Header.js';
+import Footer from './Footer.js';
+import Body from './Body.js';
 
-class Notification extends React.Component{
-	
+const Notification = props => {
+    const [image, setImage] = useState();
+    return(
+        <div>
+            <container>
+                <Header setImage={setImage} image={image}></Header>
+                <Body></Body>
+                <Footer></Footer>
+            </container>
+        </div>
+    )
+}
 
-  render(){
-  return (
-    <div>
-    	<HomePage></HomePage>
-    </div>
-  );
-}
-}
+// class Notification extends React.Component{
+//
+//
+//   render(){
+//   return (
+//     <div>
+//     	<Header> image={image} </Header>
+//     </div>
+//   );
+// }
+// }
 
 export default Notification;

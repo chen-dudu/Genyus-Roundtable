@@ -3,8 +3,11 @@ import {Body1Wrapper} from './Notification.style';
 import {Button} from 'antd';
 import 'antd/dist/antd.css';
 import {Card} from 'antd';
+import UserManager from '../DataModel/UserModel/UserManager';
+import NotificationManager from "../DataModel/NotificationModel/NotificationManager";
 
 class Body extends React.Component {
+
 	state = {
 		loading: false,
 	};
@@ -72,7 +75,6 @@ class Body extends React.Component {
 				</Card>
 				<br></br> <br></br>
 			</Body1Wrapper>
-
 
 		)
 	}
