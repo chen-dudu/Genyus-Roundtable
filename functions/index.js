@@ -1,4 +1,3 @@
-import User from "../src/DataModel/UserModel/User";
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
@@ -60,10 +59,16 @@ exports.createUser = functions.https.onCall((user, context) => {
                             return Promise.reject(err);
                         })
                 }
+                else {
+                    console.error(`${CLASS_NAME} | createUser | avatar used to create user is null`);
+                    return Promise.reject(new Error("given avatar is null"));
+                }
+                return Promise.resolve('placeholder');
             }).catch(err => {
                 console.error(`${CLASS_NAME} | createUser | failed to create a new user record on firestore, received error message ${err}`);
                 return Promise.reject(err);
             });
+            return Promise.resolve('placeholder');
         }).catch(err => {
             console.error(`${CLASS_NAME} | createUser | failed to create a new user for auth part, received error message ${err}`);
             return Promise.reject(err);
@@ -74,7 +79,7 @@ exports.createUser = functions.https.onCall((user, context) => {
 /**
  * a method used by admin to retrieve information from DB about the user using uid
  * @param data the object containing the id of the user whose data is to be retrieved
- * @return {Promise<User|String>} upon successful retrieval, a promise with resolve value of the user needed is returned
+ * @return {Promise<Object|String>} upon successful retrieval, a promise with resolve value of the user needed is returned
  *                                upon failed retrieval, a promise with reject value of received error message is returned
  */
 exports.getUser = functions.https.onCall((data, context) => {
@@ -89,18 +94,19 @@ exports.getUser = functions.https.onCall((data, context) => {
                 userDocs.doc(uid).get()
                     .then(userData => {
                         console.info(`${CLASS_NAME} | getUser | successfully retrieve data from firestore`);
-                        let uid = userAuth.uid;
-                        let fullname = userData.get('fullname');
-                        let nickname = userData.get('nickname');
-                        let phoneNumber = userAuth.phoneNumber;
-                        let photoURL = userAuth.photoURL;
-                        let providerID = userAuth.providerId;
-                        let type = userData.get('type');
-                        let creationTime = userAuth.metadata.creationTime;
-                        let description = userData.get('description');
-                        let sessions = userData.get('sessions');
-                        let notifications = userData.get('notifications');
-                        let user = new User(uid, fullname, nickname, phoneNumber, photoURL, providerID, type, creationTime, description, sessions, notifications);
+                        let user = {
+                        uid: userAuth.uid,
+                        fullname: userData.get('fullname'),
+                        nickname: userData.get('nickname'),
+                        phoneNumber: userAuth.phoneNumber,
+                        photoURL: userAuth.photoURL,
+                        providerID: userAuth.providerId,
+                        type: userData.get('type'),
+                        creationTime: userAuth.metadata.creationTime,
+                        description: userData.get('description'),
+                        sessions: userData.get('sessions'),
+                        notifications: userData.get('notifications')
+                        };
                         console.info(`${CLASS_NAME} | getUser | finished data preparation, data is ready to be returned`);
                         return Promise.resolve(user);
                     })
@@ -108,6 +114,7 @@ exports.getUser = functions.https.onCall((data, context) => {
                         console.error(`${CLASS_NAME} | getUser | failed to get data from firestore for user with uid ${data.uid}, error: ${err}`);
                         return Promise.reject(err);
                     });
+                return Promise.resolve('placeholder');
             })
             .catch(err => {
                 console.error(`${CLASS_NAME} | getUser | failed to get data from firebase auth for user with uid ${data.uid}, error: ${err}`);
@@ -119,7 +126,7 @@ exports.getUser = functions.https.onCall((data, context) => {
 /**
  * a method used by admin to retrieve a list of users from DB
  * @param data the object containing a list of uids of the users to be retrieved
- * @return {Promise<User[]|String>} upon successful retrieval, a promise with resolve value of a list of needed users is returned
+ * @return {Promise<Object[]|String>} upon successful retrieval, a promise with resolve value of a list of needed users is returned
  *                                  upon failed retrieval, a promise with reject value of received error message is returned
  */
 exports.getUsers = functions.https.onCall((data, context) => {
@@ -131,6 +138,7 @@ exports.getUsers = functions.https.onCall((data, context) => {
                 .then(user => {
                     console.info(`${CLASS_NAME} | getUsers | successfully get user with uid ${uid}`);
                     users.unshift(Promise.resolve(user));
+                    return Promise.resolve('placeholder');
                 })
                 .catch(err => {
                     console.error(`${CLASS_NAME} | getUsers | failed to get user with uid ${uid}`);
@@ -250,6 +258,7 @@ exports.updateUserAvatar = functions.https.onCall((data, context) => {
                     console.error(`${CLASS_NAME} | updateUserAvatar | failed to update user attribute "photoURL" for uid ${uid}, error: ${err}`);
                     return Promise.reject(err);
                 });
+                return Promise.resolve('placeholder');
             })
             .catch(err => {
                 console.error(`${CLASS_NAME} | updateUserAvatar | failed to upload the new avatar to DB for user with uid ${uid}, error: ${err}`);
