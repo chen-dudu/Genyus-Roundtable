@@ -1,9 +1,11 @@
 import React from 'react';
-import {Body2Wrapper, BodyWrapper} from './ViewAcceptedSession.style';
-import {Button, Tooltip} from 'antd';
+import {Body2Wrapper, BodyWrapper, Body3Wrapper} from './ViewAcceptedSession.style';
+import {Button, Card, Tooltip, Avatar} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
 import { QuestionOutlined } from '@ant-design/icons';
+import {Body1Wrapper} from "../Notification/Notification.style";
+import Img from "../img/person.gif";
 
 const { Step } = Steps;
 const style = {background: 'white', padding: '8px 0'};
@@ -36,7 +38,7 @@ class Body1 extends React.Component {
 				</Steps>
 				<br></br>
 				<br></br>
-				<h1 style={{fontSize:"30px", marginLeft:"15%", fontWeight:"normal"}}>Your Confirmation</h1>
+				<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Your Confirmation</h1>
 				<br></br>
 			</BodyWrapper>
 		)
@@ -155,12 +157,86 @@ class Body2 extends React.Component {
 	}
 }
 
+class Body3 extends React.Component {
+	state = {
+		loading: false,
+	};
+
+	onChange = checked => {
+		this.setState({ loading: !checked });
+	};
+
+	render() {
+		return (
+			<Body3Wrapper>
+				<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Roundtable Details</h1>
+				<br/>
+
+				<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Session Information</h2>
+				<h3>Session name : Meaningful Vocation</h3>
+				<h3>In this session we'll be discussing how you've returned to meaningful vocation post stroke.
+					We want to share stories about hurdles you've experienced and overcome, and how we could help
+					remove those obstacles for future survivors!</h3>
+
+				<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Available times</h2>
+				<h3>The session will be run at the following times:</h3>
+				<h3 style={{marginBottom:"-10px"}}>4/5/2020 - 6pm-8pm</h3>
+				<h3 style={{marginBottom:"-10px"}}>6/5/2020 - 10am - 8am</h3>
+				<h3>7/5/2020 6pm-8pm</h3>
+
+				<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>About the Researcher</h2>
+				<h3>Researcher Name: Joan Perez</h3>
+				<h3 style={{marginRight:"30%"}}>Joan Perez is a stroke researcher working at Monash University.
+					She's been in the field for over 15 years, and has been working with Genyus for the last 2 years!</h3>
+				<br/>
+				<br/>
+
+				<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Event Updates:</h1>
+				<br></br> <br></br>
+				<Card style={{width: 1000, borderColor:"red", background: "transparent",
+					borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>
+					<h1 style={{color: "red", fontSize: "20px", textAlign:"left",
+						float:"left"}}>Event Update: "Coming up Soon!"</h1>
+					<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>
+					<br></br>
+					<br></br>
+					<p style={{color: "black", fontSize: "20px"}}> Hi Genyuses! This session is coming up fast!
+						We're excited to see you all there next week! Joan has finalised the questions that will be
+						asked (see the event description!) and we're excited to see all your lovely faces!</p>
+				</Card>
+				<br></br> <br></br>
+				<Card style={{width: 1000, borderColor:"red", background: "transparent",
+					borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>
+					<h1 style={{color: "red", fontSize: "20px", textAlign:"left",
+						float:"left"}}>Event Update: "Ready to go!"</h1>
+					<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>
+					<br></br>
+					<br></br>
+					<p style={{color: "black", fontSize: "20px"}}> Hey everyone! The event description has been
+						updated to include some of the questions that will be asked in the session! Have a
+						looksee if you're interested ♥</p>
+				</Card>
+				<br></br> <br></br>
+
+				<div style={{position:"absolute", bottom:"65%", right:"5%"}}>
+					<h2>Learn more about the Session!!</h2>
+					<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
+							mozallowfullscreen="" allowFullScreen=""
+							src="https://www.youtube.com/embed/Xm_F_UBjrq8"></iframe>
+				</div>
+
+			</Body3Wrapper>
+		)
+	}
+}
+
 class Body extends React.Component {
 	render() {
 		return (
 			<div>
 				<Body1></Body1>
 				<Body2></Body2>
+				<Body3></Body3>
 			</div>
 
 

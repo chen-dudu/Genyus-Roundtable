@@ -118,7 +118,7 @@ export const BodyWrapper = styled.div`
 `
 
 export const Body2Wrapper = styled.div`
-  width: 80%;
+  width: 100%;
   position: relative;
   
   background-image: linear-gradient(#4682B4,#4682B4,#4682B4,#4682B4, white);
@@ -135,6 +135,52 @@ export const Body2Wrapper = styled.div`
     color:red;
     margin-left:20px;
     top: 10px;
+  }
+ 
+`
+
+export const Body3Wrapper = styled.div`
+  width: 100%;
+  position: relative;
+
+  background-image: linear-gradient(white,white,#ffce33);
+  
+  > h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color:#4682B4;
+    margin-left:20px;
+    margin-bottom: -10px;
+  }
+
+  > h2 {
+    font-size: 30px;
+    color:red;
+    margin-left:20px;
+    top: 10px;
+    margin-bottom: -10px;
+  }
+  
+  > h3 {
+    font-size: 20px;
+    color:black;
+    margin-left:5%;
+    margin-right:50%;
+    top: 10px;
+  }
+  
+  > div > iframe {
+    height:350px;
+    width:600px;
+  }
+  
+  > div > h2 {
+    font-size: 20px;
+    color:red;
+    margin-left:20px;
+    top: 10px;
+    text-align: center;
+    margin-bottom: -2px;
   }
  
 `
