@@ -1,7 +1,8 @@
 import React,{ useState } from 'react';
-import {Body2Wrapper} from './Users.style';
+import {Body2Wrapper} from './ProfileSetting.style';
 import Body1 from './Body1.js';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+
 
 
 
@@ -29,7 +30,7 @@ class Body extends React.Component {
 	render() {
 		return (
 			<div>
-				<Body1 setImage={this.props.setImage}></Body1>
+				<Body1 setImage={this.props.setImage} image={this.props.image}></Body1>
 				<Body2></Body2>
 			</div>
 

@@ -1,13 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import {
-  BodyWrapper,
   HeaderWrapper,
-  FooterWrapper,
   ImageWrapper,Seperator,BodyBG
 } from './Login.style';
 import logo from '../img/logo.png';
-import {Body} from './Body'
+import Body from './Body'
 import Footer from './Footer'
 
 const Login = props => {
@@ -30,4 +28,4 @@ const Login = props => {
 
 Login.propTypes = {};
 
-export default Login;
+export default withRouter(Login);

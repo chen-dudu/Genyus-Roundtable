@@ -7,18 +7,17 @@ import Body from './Body.js';
 import {withRouter} from 'react-router-dom';
 
 
-const Users = props => {
+const ProfileSetting = props => {
   const [image, setImage] = useState();
+  console.log("ProfileSetting***",image);
     return(
-      <div>
       <container>
         <Header image={image}></Header>
-        <Body setImage={setImage}></Body>  
+        <Body setImage={setImage} image={image}></Body>  
         <Footer></Footer>
       </container>
-      </div>
     )
 }
 
 // ========================================
-export default Users;
+export default withRouter(ProfileSetting);

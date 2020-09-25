@@ -1,18 +1,19 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { BodyWrapper, SubmitButton, GoSignup} from './Login.style';
+import { BodyWrapper, SubmitButton, GoSignup } from './Login.style';
 import noteImg from "../img/note.png"
 import UserManager from "../DataModel/UserModel/UserManager";
 import { Input, Button } from 'antd';
 import 'antd/dist/antd.css';
+import { withRouter } from 'react-router-dom';
 
 const CLASS_NAME = "Login/Body";
 
-export class Body extends React.Component {
+class Body extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {email: '', password: ''};
+        this.state = { email: '', password: '' };
         this.onEmailEnter = this.onEmailEnter.bind(this);
         this.onPasswordEnter = this.onPasswordEnter.bind(this);
         this.login = this.login.bind(this);
@@ -23,9 +24,10 @@ export class Body extends React.Component {
         console.log('user', this.state.email, 'is trying to login using password', this.state.password);
         UserManager.login(this.state.email, this.state.password)
             .then(userType => {
+                // redirect to user home page
                 console.info(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
-                // redirect to user hoem page
-                window.location.href = "http://localhost:3000/users";
+                this.props.history.push("users");
+
             })
             .catch(err => {
                 console.error(`${CLASS_NAME} | login | failed to login the user with email ${this.state.email}`);
@@ -36,15 +38,19 @@ export class Body extends React.Component {
     // update email
     onEmailEnter(e) {
         // console.log('email enter:', e.target.value);
-        this.setState({'email': e.target.value});
+        this.setState({ 'email': e.target.value });
         console.log('new state', this.state);
     }
 
     // update password
     onPasswordEnter(e) {
         // console.log('password enter:', e.target);
-        this.setState({'password': e.target.value});
+        this.setState({ 'password': e.target.value });
         console.log('new state', this.state);
+    }
+
+    handleChange = () => {
+        this.props.history.push("Signup");
     }
 
     render() {
@@ -54,12 +60,12 @@ export class Body extends React.Component {
                 <div className="title">Welcome Back!</div>
                 <br />
                 <br />
-                <form onSubmit={this.login}>
+                <form onSubmit={this.login} >
                     <div align={'center'}>
                         <label htmlFor="email" style={{ fontSize: "25px" }}>Email</label>
                     </div>
 
-                    <Input id={'email'} size={"large"} placeholder={'Email'} allowClear value={this.state.email} onChange={this.onEmailEnter} style={{width: '50%'}}/>
+                    <Input id={'email'} size={"large"} placeholder={'Email'} allowClear value={this.state.email} onChange={this.onEmailEnter} style={{ width: '50%' }} />
                     {/*<Input type="text" id="email" name="email" style={{ width: "50%" }} />*/}
                     {/*<input type={'text'} id={'email'} name={'email'} value={this.state.email} style={{width: '50%', height: 30}} onChange={this.onEmailEnter} />*/}
                     <br />
@@ -69,15 +75,15 @@ export class Body extends React.Component {
                         <label htmlFor="password" style={{ fontSize: "25px" }}>Password</label>
                     </div>
 
-                    <Input.Password id={'password'} size={"large"} placeholder={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{width: '50%'}}/>
+                    <Input.Password id={'password'} size={"large"} placeholder={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{ width: '50%' }} />
                     {/*<Input type="password" id="password" name="password" style={{ width: "50%" }} />*/}
                     {/*<input type={'password'} id={'password'} name={'password'} value={this.state.password} style={{width: '50%', height: 30}} onChange={this.onPasswordEnter}/>*/}
                     <br />
                     <br />
                     <br />
                     <br />
-                    <div align={'center'} style={{width: "90%"}} >
-                        <Button htmlType={"submit"} id={'login-button'} type={"primary"} block size={"large"} style={{fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}}>
+                    <div align={'center'} style={{ width: "90%" }} >
+                        <Button htmlType={"submit"} id={'login-button'} type={"primary"} block size={"large"} style={{ fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5 }}>
                             Log in
                         </Button>
 
@@ -87,9 +93,9 @@ export class Body extends React.Component {
                         {/*       type={'submit'} value={'Log in'} />*/}
                     </div>
                 </form>
-                {/*<SubmitButton>Log In</SubmitButton>*/}
-                 {/*todolist: domain name need to be updated after deploying*/}
-                <GoSignup><a href = 'http://localhost:3000/signup'>Don't have an account? Sign up</a></GoSignup>
+                <br></br>
+                <Button type="text" danger onClick={this.handleChange}>Don't have an account? Sign up</Button>
+                
                 <br />
                 <br />
             </BodyWrapper>
@@ -145,4 +151,4 @@ export class Body extends React.Component {
 
 // Body.propTypes = {};
 
-// export default Body;
+export default withRouter(Body);

@@ -25,10 +25,11 @@ export default {
         try {
             let noDoc = await noDocs.doc(nid).get();
             console.info(`${CLASS_NAME} | getNotification | successfully retrieve notification data from DB`);
-            return new Notification(nid, noDoc.get('title'), noDoc.get('description'), noDoc.get('timeReceived'), noDoc.get('isRead'), noDoc.get('sid'));
+            let newNotification = new Notification(nid, noDoc.get('title'), noDoc.get('description'), noDoc.get('timeReceived'), noDoc.get('isRead'), noDoc.get('sid'));
+            return Promise.resolve(newNotification);
         } catch (err) {
             console.error(`${CLASS_NAME} | getNotification | failed to retrieve notification data from DB, received error message: ${err.message}`);
-            return null;
+            return Promise.reject(null);
         }
     },
 
@@ -39,18 +40,17 @@ export default {
      *                               upon failed retrieval, a promise with reject value of null is returned.
      */
     async getNotifications(nids) {
-        let notifications = [];
-        nids.forEach(nid => {
-            this.getNotification(nid)
-                .then(notification => {
-                    notifications.unshift(Promise.resolve(notification));
-                })
-                .catch(err => {
-                    console.error(`${CLASS_NAME} | getNotifications | failed to get notifications, received error message: ${err}`);
-                    return null;
-                });
-        });
-        return Promise.all(notifications);
+        try {
+            let notifications = [];
+            for (let i = 0; i < nids.length; i ++) {
+                let notification = await this.getNotification(nids[i]);
+                notifications.unshift(Promise.resolve(notification));
+            }
+            return Promise.all(notifications);
+        } catch (err) {
+            console.error(`${CLASS_NAME} | getNotifications | failed to get notifications, received error message: ${err}`);
+            return Promise.reject(null);
+        }
     },
 
     /**
@@ -63,13 +63,14 @@ export default {
         try {
             let toSend = converter(notification);
             let noFeedback = await noDocs.add(toSend);
-            console.info(`${CLASS_NAME} | sendNotification | successfully add the notification to DB`);
             let noID = noFeedback.id;
+            console.info(`${CLASS_NAME} | sendNotification | successfully add the notification to DB, new id ${noID}`);
             let sid = notification.sid;
             // first add the new notification to the session's notification list
             let sessionRef = SessionManager.getSessionRef(sid);
             if (!sessionRef) {
-                console.error();
+                console.error(`session with sid ${sid} is not found on DB`);
+                return Promise.reject(`session with sid ${sid} is not found on DB`);
             }
 
             let sessionDoc = await sessionRef.get();
@@ -85,35 +86,30 @@ export default {
 
             // then add this new notification to all signed up participants
             // first use sid to get participant list
-            let sessionFeedback = await sessionDocs.doc(sid).get();
+            // let sessionFeedback = await sessionDocs.doc(sid).get();
+            let participants = sessionDoc.get('participants');
             console.info(`${CLASS_NAME} | sendNotification | successfully get the participant list from DB`);
-            let participants = sessionFeedback.get('participants');
             // start update each user's notification list
-            participants.forEach(id => {
-                let useRef = UserManager.getUserRef(id);
+            for (let i = 0; i < participants.length; i++) {
+                let id = participants[i];
 
+                let useRef = UserManager.getUserRef(id);
                 if (!useRef) {
                     console.error(`${CLASS_NAME} | sendNotification | failed to get the user with uid: ${id}`);
-                    return 'failed to get user ref';
+                    return Promise.reject('failed to get user ref');
                 }
 
-                useRef.get()
-                    .then(userDoc => {
-                        // add new notification id to the list
-                        let newList = userDoc.get('notifications').unshift(noID);
-                        // and then update the database
-                        useRef.update({notifications: newList});
-                        console.info(`${CLASS_NAME} | sendNotification | successfully send notification to user with id ${id}`);
-                    })
-                    .catch(err => {
-                        console.error(`${CLASS_NAME} | sendNotification | failed to retrieve data for user with uid: ${id}, received error message ${err.message}`);
-                        return err.message;
-                    });
-            });
+                let userDoc = await useRef.get();
+                let newList = userDoc.get('notifications').unshift(noID);
+                // and then update the database
+                await useRef.update({notifications: newList});
+                console.info(`${CLASS_NAME} | sendNotification | successfully send notification to user with id ${id}`);
+            }
             console.info(`${CLASS_NAME} | sendNotification | notification has been sent to all signed up participants`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | sendNotification | failed to send notification, received error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
@@ -131,7 +127,7 @@ export default {
             let sessionRef = SessionManager.getSessionRef(sid);
             if (!sessionRef) {
                 console.error(`${CLASS_NAME} | deleteNotification | failed to get session reference from session manager`);
-                return 'failed to get session ref';
+                return Promise.reject('failed to get session ref');
             }
 
             let sessionDoc = await sessionRef.get();
@@ -148,31 +144,29 @@ export default {
 
             // then, move on to update participants
             let participants = sessionDoc.get('participants');
-            participants.forEach(id => {
+            for (let i = 0; i < participants.length; i++) {
+                let id = participants[i];
+
                 let userRef = UserManager.getUserRef(id);
                 if (!userRef) {
                     console.error(`${CLASS_NAME} | deleteNotification | failed to get user reference for ${id} from user manager`);
-                    return `failed to get user reference`;
+                    return Promise.reject(`failed to get user reference`);
                 }
 
-                userRef.get()
-                    .then(userDoc => {
-                        let noList = userDoc.get('notifications');
-                        // update list
-                        let index = noList.indexOf(nid);
-                        if (index !== -1) {
-                            noList.splice(index, 1);
-                        }
-                        // push updated list to DB
-                        userRef.update({notifications: noList});
-                    })
-                    .catch(err => {
-                        console.error(`${CLASS_NAME} | deleteNotification | failed to retrieve user doc to update notification list, received error message: ${err.message}`);
-                        return err.message;
-                    });
-            });
+                let userDoc = await userRef.get();
+                let noList = userDoc.get('notifications');
+                // update list
+                let index = noList.indexOf(nid);
+                if (index !== -1) {
+                    noList.splice(index, 1);
+                }
+                // push updated list to DB
+                await userRef.update({notifications: noList});
+            }
+            console.info(`${CLASS_NAME} | deleteNotification | notification has been deleted from associated session and participant's notification list`);
+            return Promise.resolve(undefined);
         } catch (err) {
-            console.error(`${CLASS_NAME} |  | failed to delete notification, received error message: ${err.message}`);
+            console.error(`${CLASS_NAME} | deleteNotification | failed to delete notification, received error message: ${err.message}`);
             return err.message;
         }
     }
