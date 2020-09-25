@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import UserManager from "../DataModel/UserModel/UserManager";
 import { Input, Button} from 'antd';
 import 'antd/dist/antd.css';
+import { withRouter } from 'react-router-dom';
+
 
 const CLASS_NAME = "Signup/Body";
 
@@ -34,7 +36,7 @@ class Body extends React.Component{
 
         UserManager.signup(this.state.email, this.state.password, this.state.full_name, this.state.nick_name)
             .then(response => {
-                window.location.href = "http://localhost:3000/login";
+                this.props.history.push("Login");
             })
             .catch(err => {
                 console.error(`${CLASS_NAME}| signup | failed to sign up user with email ${this.state.email}`);
@@ -139,4 +141,4 @@ class Body extends React.Component{
 
 Body.propTypes = {};
 
-export default Body;
+export default withRouter(Body);
