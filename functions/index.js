@@ -63,16 +63,20 @@ exports.createUser = functions.https.onCall((user, context) => {
                     console.error(`${CLASS_NAME} | createUser | avatar used to create user is null`);
                     return Promise.reject(new Error("given avatar is null"));
                 }
-                return Promise.resolve('placeholder');
+                // return Promise.resolve('placeholder');
             }).catch(err => {
                 console.error(`${CLASS_NAME} | createUser | failed to create a new user record on firestore, received error message ${err}`);
                 return Promise.reject(err);
             });
-            return Promise.resolve('placeholder');
+            // return Promise.resolve('placeholder');
         }).catch(err => {
             console.error(`${CLASS_NAME} | createUser | failed to create a new user for auth part, received error message ${err}`);
             return Promise.reject(err);
         });
+    }
+    else {
+        console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
+        return Promise.reject(new Error('admin is not login!'));
     }
 });
 
@@ -95,17 +99,17 @@ exports.getUser = functions.https.onCall((data, context) => {
                     .then(userData => {
                         console.info(`${CLASS_NAME} | getUser | successfully retrieve data from firestore`);
                         let user = {
-                        uid: userAuth.uid,
-                        fullname: userData.get('fullname'),
-                        nickname: userData.get('nickname'),
-                        phoneNumber: userAuth.phoneNumber,
-                        photoURL: userAuth.photoURL,
-                        providerID: userAuth.providerId,
-                        type: userData.get('type'),
-                        creationTime: userAuth.metadata.creationTime,
-                        description: userData.get('description'),
-                        sessions: userData.get('sessions'),
-                        notifications: userData.get('notifications')
+                            uid: userAuth.uid,
+                            fullname: userData.get('fullname'),
+                            nickname: userData.get('nickname'),
+                            phoneNumber: userAuth.phoneNumber,
+                            photoURL: userAuth.photoURL,
+                            providerID: userAuth.providerData,
+                            type: userData.get('type'),
+                            creationTime: userAuth.metadata.creationTime,
+                            description: userData.get('description'),
+                            sessions: userData.get('sessions'),
+                            notifications: userData.get('notifications')
                         };
                         console.info(`${CLASS_NAME} | getUser | finished data preparation, data is ready to be returned`);
                         return Promise.resolve(user);
@@ -114,38 +118,116 @@ exports.getUser = functions.https.onCall((data, context) => {
                         console.error(`${CLASS_NAME} | getUser | failed to get data from firestore for user with uid ${data.uid}, error: ${err}`);
                         return Promise.reject(err);
                     });
-                return Promise.resolve('placeholder');
+                // return Promise.resolve('placeholder');
             })
             .catch(err => {
                 console.error(`${CLASS_NAME} | getUser | failed to get data from firebase auth for user with uid ${data.uid}, error: ${err}`);
                 return Promise.reject(err);
             });
     }
+    else {
+        console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
+        return Promise.reject(new Error('admin is not login!'));
+    }
 });
 
 /**
- * a method used by admin to retrieve a list of users from DB
- * @param data the object containing a list of uids of the users to be retrieved
- * @return {Promise<Object[]|String>} upon successful retrieval, a promise with resolve value of a list of needed users is returned
- *                                  upon failed retrieval, a promise with reject value of received error message is returned
+ * a method used by admin the retrieve all users on DB
+ * @return {Promise<Object[]>} upon successful retrieval, a promise with resolve value of a list of needed users is returned
+ *                             upon failed retrieval, a promise with reject value of received error message is returned
  */
 exports.getUsers = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-        let users = [];
-        data.uids.forEach(uid => {
-            this.getUsers(uid)
-                .then(user => {
-                    console.info(`${CLASS_NAME} | getUsers | successfully get user with uid ${uid}`);
-                    users.unshift(Promise.resolve(user));
-                    return Promise.resolve('placeholder');
-                })
-                .catch(err => {
-                    console.error(`${CLASS_NAME} | getUsers | failed to get user with uid ${uid}`);
-                    return Promise.reject(err);
+        let user_list = [];
+        auth.listUsers()
+            .then(response => {
+                response.users.forEach(user => {
+                    let uid = user.uid;
+                    userDocs.doc(uid).get()
+                        .then(doc => {
+                            let user = {
+                                uid: user.uid,
+                                fullname: doc.get('fullname'),
+                                nickname: doc.get('nickname'),
+                                phoneNumber: user.phoneNumber,
+                                photoURL: user.photoURL,
+                                providerID: user.providerData,
+                                type: doc.get('type'),
+                                creationTime: user.metadata.creationTime,
+                                description: doc.get('description'),
+                                sessions: doc.get('sessions'),
+                                notifications: doc.get('notifications')
+                            };
+                            user_list.unshift(Promise.resolve(user));
+                        })
+                        .catch(err => {
+                            console.error(`${CLASS_NAME} | getUsers | failed to retrieve user record from firestore for uid ${uid}, error: ${err}`);
+                            return Promise.reject(err);
+                        });
                 });
-        });
-        return Promise.all(users);
+                console.info(`${CLASS_NAME} | getUsers | finished pre-processing, data is ready to be returned`);
+                return Promise.all(user_list);
+            })
+            .catch(err => {
+                console.error(`${CLASS_NAME} | getUsers| failed to retrieve all users from DB, received error message ${err}`);
+                return Promise.reject(err);
+            });
+    }
+    else {
+        console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
+        return Promise.reject(new Error('admin is not login!'));
+    }
+});
+
+/**
+ * a method used by admin to retrieve a list of researchers from DB
+ * @return {Promise<Object[]|String>} upon successful retrieval, a promise with resolve value of a list of needed researchers is returned
+ *                                    upon failed retrieval, a promise with reject value of received error message is returned
+ */
+exports.getResearchers = functions.https.onCall((data, context) => {
+    // only login admin can do operation
+    if (context.auth) {
+        let user_list = [];
+        auth.listUsers()
+            .then(response => {
+                response.users.forEach(user => {
+                    let uid = user.uid;
+                    userDocs.doc(uid).get()
+                        .then(doc => {
+                            if (doc.get('type') === "researcher") {
+                                let user = {
+                                    uid: user.uid,
+                                    fullname: doc.get('fullname'),
+                                    nickname: doc.get('nickname'),
+                                    phoneNumber: user.phoneNumber,
+                                    photoURL: user.photoURL,
+                                    providerID: user.providerData,
+                                    type: doc.get('type'),
+                                    creationTime: user.metadata.creationTime,
+                                    description: doc.get('description'),
+                                    sessions: doc.get('sessions'),
+                                    notifications: doc.get('notifications')
+                                };
+                                user_list.unshift(Promise.resolve(user));
+                            }
+                        })
+                        .catch(err => {
+                            console.error(`${CLASS_NAME} | getResearchers | failed to retrieve user record from firestore for uid ${uid}, error: ${err}`);
+                            return Promise.reject(err);
+                        });
+                });
+                console.info(`${CLASS_NAME} | getResearchers | finished pre-processing, data is ready to be returned`);
+                return Promise.all(user_list);
+            })
+            .catch(err => {
+                console.error(`${CLASS_NAME} | getResearchers| failed to retrieve all users from DB, received error message ${err}`);
+                return Promise.reject(err);
+            });
+    }
+    else {
+        console.error(`${CLASS_NAME} | getResearchers | the admin trying to do operation is not login`);
+        return Promise.reject(new Error('admin is not login!'));
     }
 });
 
@@ -168,6 +250,10 @@ exports.updateUserEmail = functions.https.onCall((data, context) => {
             return Promise.reject(err);
         });
     }
+    else {
+        console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
+        return Promise.reject(new Error('admin is not login!'));
+    }
 });
 
 /**
@@ -188,6 +274,10 @@ exports.updateUserPassword = functions.https.onCall((data, context) => {
             console.error(`${CLASS_NAME} | updateUserPassword | failed to update the password of the user with uid ${data.uid}, err: ${err}`);
             return Promise.reject(err);
         });
+    }
+    else {
+        console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
+        return Promise.reject(new Error('admin is not login!'));
     }
 });
 
@@ -210,6 +300,10 @@ exports.updateUserFullname = functions.https.onCall((data, context) => {
             return Promise.reject(err);
        });
     }
+    else {
+        console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
+        return Promise.reject(new Error('admin is not login!'));
+    }
 });
 
 /**
@@ -230,6 +324,10 @@ exports.updateUserDescription = functions.https.onCall((data, context) => {
             console.error(`${CLASS_NAME} | updateUserDescription | failed to update the description of user with uid ${data.uid}, err: ${err}`);
             return Promise.reject(err);
         });
+    }
+    else {
+        console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
+        return Promise.reject(new Error('admin is not login!'));
     }
 });
 
@@ -258,11 +356,15 @@ exports.updateUserAvatar = functions.https.onCall((data, context) => {
                     console.error(`${CLASS_NAME} | updateUserAvatar | failed to update user attribute "photoURL" for uid ${uid}, error: ${err}`);
                     return Promise.reject(err);
                 });
-                return Promise.resolve('placeholder');
+                // return Promise.resolve('placeholder');
             })
             .catch(err => {
                 console.error(`${CLASS_NAME} | updateUserAvatar | failed to upload the new avatar to DB for user with uid ${uid}, error: ${err}`);
                 return Promise.reject(err);
             });
+    }
+    else {
+        console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
+        return Promise.reject(new Error('admin is not login!'));
     }
 });
