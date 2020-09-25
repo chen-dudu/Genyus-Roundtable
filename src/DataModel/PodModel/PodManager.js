@@ -12,7 +12,8 @@ export default {
     /**
      * a method used to create a new pod document on DB, with auto-assigned ID
      * @param pod the pod to be created on DB
-     * @returns {Promise<undefined|String>}
+     * @returns {Promise<undefined|String>} upon successful creation, a promise with resolve value of undefined is returned
+     *                                      upon failed creation, a promise with reject value of the received error message is returned
      */
     async createPod(pod) {
         try {
@@ -29,7 +30,8 @@ export default {
     /**
      * a method used to get the pod with the specified id from DB
      * @param pid the id of the pod to be retrieved fro DB
-     * @returns {Promise<Pod|String>}
+     * @returns {Promise<Pod|String>} upon successful retrieval, a promise with resolve value of the required pod object is returned
+     *                                upon failed retrieval, a promise with reject value of the received error message is returned
      */
     async getPod(pid) {
         try {
