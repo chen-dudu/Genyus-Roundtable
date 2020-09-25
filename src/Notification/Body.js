@@ -28,7 +28,10 @@ class Body extends React.Component {
 						had its time finalised to 2/5/20, 6:00pm. Click to go to the event page to RSVP!</p>
 					<Button style={{background: "#3399ff", borderRadius: 5,
 						width: "20%", height: 40, fontWeight: "bold",
-						fontSize: 15, color: "white"}}>Go To Event Page</Button>
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						fontSize: 15, color: "white"}}
+							href="\ViewAcceptedSession"
+					>Go To Event Page</Button>
 				</Card>
 				<br></br> <br></br>
 				<Card style={{width: 1000, borderColor:"red", background: "transparent",
@@ -44,7 +47,10 @@ class Body extends React.Component {
 						Click to go to the event page to read the whole update!</p>
 					<Button style={{background: "#3399ff", borderRadius: 5,
 						width: "20%", height: 40, fontWeight: "bold",
-						fontSize: 15, color: "white"}}>Go To Event Page</Button>
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						fontSize: 15, color: "white"}}
+							href="\ViewAcceptedSession"
+					>Go To Event Page</Button>
 				</Card>
 				<br></br> <br></br>
 				<Card style={{width: 1000, borderColor:"red", background: "transparent",
@@ -59,7 +65,10 @@ class Body extends React.Component {
 						Click to go to the event page to view details or alter your availabilities!</p>
 					<Button style={{background: "#3399ff", borderRadius: 5,
 						width: "20%", height: 40, fontWeight: "bold",
-						fontSize: 15, color: "white"}}>Go To Event Page</Button>
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						fontSize: 15, color: "white"}}
+							href="\ViewAcceptedSession"
+					>Go To Event Page</Button>
 				</Card>
 				<br></br> <br></br>
 			</Body1Wrapper>
