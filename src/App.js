@@ -3,13 +3,12 @@ import './App.css';
 
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-
+  Route
 } from "react-router-dom";
 import HomePage from './HomePage/HomePage';
 import Signup from './Signup/Signup'
 import Login from './Login/Login'
+import Notification from './Notification/Notification'
 import Users from './Users/Users'
 
 import ResearcherList from './Admin/ResearcherList/ResearcherHomePage'
@@ -26,16 +25,16 @@ function App(){
   return (
     <Router>
 
-        <Route path="/HomePage" component={HomePage}/>
-        <Route path="/Signup" component={Signup}/>
-        <Route path="/Login" component={Login}/>
-
+        <Route path="/HomePage" component={HomePage}></Route>
+        <Route path="/Signup" component={Signup}></Route>
+        <Route path="/Login" component={Login}></Route>
+        <Route path="/ProfileSetting" component={ProfileSetting}></Route>
+        <Route path="/users" component={Users}></Route>
+        <Route path="/Notification" component={Notification}></Route>
+        <Route path="/StatusAndRewards" component={StatusAndRewards}></Route>
         <Route path="/Admin/ResearcherList" component={ResearcherList}/>
         <Route path="/Admin/ResearcherDetail" component={ResearcherDetail}/>
         <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
-
-        <Route path="/ProfileSetting" component={ProfileSetting}/>
-        <Route path="/users" component={Users}/>
 
     </Router>
   );
