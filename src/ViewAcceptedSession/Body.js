@@ -3,7 +3,7 @@ import {Body2Wrapper, BodyWrapper, Body3Wrapper} from './ViewAcceptedSession.sty
 import {Button, Card, Tooltip, Avatar} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
-import { QuestionOutlined } from '@ant-design/icons';
+import {QuestionOutlined, UserOutlined} from '@ant-design/icons';
 import {Body1Wrapper} from "../Notification/Notification.style";
 import Img from "../img/person.gif";
 
@@ -188,6 +188,8 @@ class Body3 extends React.Component {
 				<h3>Researcher Name: Joan Perez</h3>
 				<h3 style={{marginRight:"30%"}}>Joan Perez is a stroke researcher working at Monash University.
 					She's been in the field for over 15 years, and has been working with Genyus for the last 2 years!</h3>
+				<Avatar src={this.props.image} size={128} style={{position:"absolute", left: '80%', bottom:"48%",
+					margin: '2% auto'}} icon={<UserOutlined />} />
 				<br/>
 				<br/>
 
