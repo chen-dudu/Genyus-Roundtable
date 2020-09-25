@@ -3,16 +3,16 @@ class Application {
 
     /**
      * a private constructor which will be called by application manager to creat a new application object
-     * @param aid      the unique id of the application
-     * @param uid      the id of the applicant
-     * @param sid      the id of the roundtable session to be applied for
-     * @param status   the current status of the application, i.e. approved, rejected or pending for assessment
-     * @param optional additional information applicant provides during the application process
+     * @param aid       the unique id of the application
+     * @param applicant the id of the applicant
+     * @param session   the id of the session to be applied for
+     * @param status    the current status of the application, i.e. approved, rejected or pending
+     * @param optional  additional information applicant provides during the application process
      */
-    constructor(aid, uid, sid, status, optional='') {
+    constructor(aid, applicant, session, status, optional='') {
         this._aid = aid;
-        this._uid = uid;
-        this._sid = sid;
+        this._applicant = applicant;
+        this._session = session;
         this._status = status;
         this._optional = optional;
     }
@@ -21,12 +21,12 @@ class Application {
         return this._aid;
     }
 
-    get uid() {
-        return this._uid;
+    get applicant() {
+        return this._applicant;
     }
 
-    get sid() {
-        return this._sid;
+    get session() {
+        return this._session;
     }
 
     get status() {
@@ -41,12 +41,12 @@ class Application {
         this._aid = newID;
     }
 
-    set uid(newID) {
-        this._uid = newID;
+    set applicant(newApplicant) {
+        this._applicant = newApplicant;
     }
 
-    set sid(newID) {
-        this._sid = newID;
+    set session(newSession) {
+        this._session = newSession;
     }
 
     set status(newStatus) {
