@@ -45,6 +45,7 @@ export default {
     }
 }
 
+// convert a Pod object to a form that can be processed by firebase
 function converter(pod) {
     return {
         title: pod.title,
