@@ -16,6 +16,54 @@ export const FooterWrapper = styled.div`
   
 `;
 
+export const BodyWrapper = styled.div`
+  width: 70%;
+  height: 100%;
+  // top right down
+  margin: 100px auto 0px;
+  border: 1px solid;
+  border-color: red;
+  border-radius: 5px;
+  position: relative;
+
+  // priority
+  z-index:10;
+  background-image: linear-gradient(white,white,#ffce33);
+  /* background-image: linear-gradient(white, yellow); */
+  .cal {
+    position: absolute;
+    left:-10px;
+    transform: translateX(-100%);
+    >img {
+      width:300px;
+    }
+  }
+  .title {
+    position: absolute;
+    left:20px;
+    top:20px;  
+    color: red;
+    font-size: 30px;
+    
+  }
+  .cancelButton{
+    position: absolute;
+    bottom: 30px;
+    left:20px;    
+  }
+  .confirmButton{
+    position: absolute;
+    bottom: 30px;
+    right:20px;    
+  }
+
+  > form > div {
+    display: inline-block;
+    width: 140px;
+    margin-left: 20px;
+  }
+`;
+
 export const ImageWrapper = styled.div`
   margin-left: 0;
   > img {
@@ -102,7 +150,9 @@ export const RightWrapper = styled.div`
 `
 export const TitleWrapper = styled.div`
       > h1 {
-      margin:20px auto;
+      position: absolute;
+      left:20px;
+      top:10px;
       color: #4682B4;
       font-size: 40px;
       font-weight: normal;

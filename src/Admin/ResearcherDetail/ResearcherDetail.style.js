@@ -17,7 +17,7 @@ export const FooterWrapper = styled.div`
 `;
 
 export const BodyWrapper = styled.div`
-  width: 50%;
+  width: 70%;
   height: 100%;
   // top right down
   margin: 100px auto 0px;
@@ -39,11 +39,22 @@ export const BodyWrapper = styled.div`
     }
   }
   .title {
-    margin:20px auto;
+    position: absolute;
+    left:20px;
+    top:20px;  
     color: red;
     font-size: 30px;
-    font-weight: bold;
-    text-align: center;
+    
+  }
+  .cancelButton{
+    position: absolute;
+    bottom: 30px;
+    left:20px;    
+  }
+  .confirmButton{
+    position: absolute;
+    bottom: 30px;
+    right:20px;    
   }
 
   > form > div {
@@ -139,7 +150,9 @@ export const RightWrapper = styled.div`
 `
 export const TitleWrapper = styled.div`
       > h1 {
-      margin:20px auto;
+      position: absolute;
+      left:20px;
+      top:10px;
       color: #4682B4;
       font-size: 40px;
       font-weight: normal;

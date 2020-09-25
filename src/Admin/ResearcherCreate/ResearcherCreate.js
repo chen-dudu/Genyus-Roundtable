@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HeaderWrapper,ImageWrapper,Seperator} from './ResearcherCreate.style';
+
 
 import Footer from './Footer.js';
 import Body from './Body.js';
