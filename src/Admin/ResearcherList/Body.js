@@ -7,26 +7,26 @@ import { withRouter } from 'react-router-dom'
 import {List, Avatar, Button, Spin} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import UserManager from "../../DataModel/UserModel/UserManager";
+import firebase from "firebase";
 
 
 
+let data = [];
+
+
+const getResearchers = firebase.functions().httpsCallable('getResearchers');
+getResearchers().then(result=>{
+
+	console.log(result);
+
+}).catch(err=>{
+	console.log("something wrong");
+});
 
 
 class Body extends React.Component {
 
-	getResearcher= () => {
-		UserManager.getCurrentUser()
-			.then(user => {
-				console.log('getCurrentUser successful' + user.fullname);
-				this.setState({loading:false});
-			})
-
-
-			.catch(error => {
-				console.log(error);
-				this.setState({loading:false});
-			});
-	};
+	// this.setState({loading:false});
 
 
 
@@ -34,33 +34,33 @@ class Body extends React.Component {
 
 	constructor(props) {
     super(props);
-    this.getResearcher();
 
-    this.state = {
+		this.state = {
        	loading : true,
-		data : [
-			{
-
-				img : Img,
-				title: 'Name 1',
-				description: "",
-				joindate:"",
-
-			},
-			{
-				img : Img,
-				title: 'Name 2',
-			},
-			{
-				img : Img,
-				title: 'Name 3',
-			},
-			{
-				img : Img,
-				title: 'Name 4',
-			}
-			]
+		// data : [
+		// 	{
+		//
+		// 		img : Img,
+		// 		title: 'Name 1',
+		// 		description: "",
+		// 		joindate:"",
+		//
+		// 	},
+		// 	{
+		// 		img : Img,
+		// 		title: 'Name 2',
+		// 	},
+		// 	{
+		// 		img : Img,
+		// 		title: 'Name 3',
+		// 	},
+		// 	{
+		// 		img : Img,
+		// 		title: 'Name 4',
+		// 	}
+		// 	]
     };
+
   }
 
 
@@ -92,14 +92,14 @@ class Body extends React.Component {
 					bordered={false}
 
 
-					dataSource={this.state.data}
+					dataSource={data}
 					renderItem={item => (
 						<div>
 						<List.Item style={{borderColor:'red', borderWidth:4,borderStyle:'solid',borderRadius:20}}>
 							<List.Item.Meta style={{marginLeft:20}}
 								avatar={<Avatar icon={<UserOutlined />} size={80}/>}
-								title={<a href="https://ant.design" style={{fontSize:25}}>{item.title}</a>}
-								description={<p style={{width:"50%", fontSize:20, wordBreak:"break-all"}}>Description111111111111111111111111111111111111111111111111111111111111111111111111111111<br/>joined: {item.title}</p>}
+								title={<a style={{fontSize:25}}>{item.fullname}</a>}
+								description={<p style={{width:"50%", fontSize:20, wordBreak:"break-all"}}>{item.description}<br/>joined: {item.title}</p>}
 							/>
 
 							<div>
