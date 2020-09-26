@@ -91,12 +91,12 @@ exports.getUser = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
         // first get some info from firebase auth
-        auth.getUser(data.uid)
+        return auth.getUser(data.uid)
             .then(userAuth => {
                 console.info(`${CLASS_NAME} | getUser | successfully retrieve data from firebase auth`);
                 let uid = userAuth.uid;
                 // then get the rest from firestore
-                userDocs.doc(uid).get()
+                return userDocs.doc(uid).get()
                     .then(userData => {
                         console.info(`${CLASS_NAME} | getUser | successfully retrieve data from firestore`);
                         let user = {
