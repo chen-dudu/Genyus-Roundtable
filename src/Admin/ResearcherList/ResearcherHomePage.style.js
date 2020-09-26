@@ -151,9 +151,7 @@ export const ButtonWrapper = styled.div`
 export const ListWrapper = styled.div`
       width: 70%;
       margin: auto;
-      > List {
-      background-color: #61dafb;
-      }
+      
       
   `;
 

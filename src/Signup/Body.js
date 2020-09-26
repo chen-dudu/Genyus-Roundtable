@@ -45,7 +45,9 @@ class Body extends React.Component{
     }
 
 
-
+    onEmailEnter(e) {
+        this.setState({email: e.target.value});
+    }
 
     onPasswordEnter(e) {
         this.setState({password: e.target.value});
