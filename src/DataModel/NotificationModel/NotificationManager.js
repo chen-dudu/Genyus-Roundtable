@@ -25,7 +25,7 @@ export default {
         try {
             let noDoc = await noDocs.doc(nid).get();
             console.info(`${CLASS_NAME} | getNotification | successfully retrieve notification data from DB`);
-            let newNotification = new Notification(nid, noDoc.get('title'), noDoc.get('description'), noDoc.get('timeReceived'), noDoc.get('isRead'), noDoc.get('sid'));
+            let newNotification = new Notification(noDoc.get('title'), noDoc.get('description'), noDoc.get('timeReceived'), noDoc.get('isRead'), nid, noDoc.get('sid'));
             return Promise.resolve(newNotification);
         } catch (err) {
             console.error(`${CLASS_NAME} | getNotification | failed to retrieve notification data from DB, received error message: ${err.message}`);
