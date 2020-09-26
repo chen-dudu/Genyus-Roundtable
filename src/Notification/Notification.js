@@ -4,12 +4,12 @@ import Footer from './Footer.js';
 import Body from './Body.js';
 
 const Notification = props => {
-    const [image, setImage] = useState();
+    const [image, setImage, notification, setNotification] = useState();
     return(
         <div>
             <container>
                 <Header setImage={setImage} image={image}></Header>
-                <Body></Body>
+                <Body> setNotification={setNotification} notification={notification}></Body>
                 <Footer></Footer>
             </container>
         </div>

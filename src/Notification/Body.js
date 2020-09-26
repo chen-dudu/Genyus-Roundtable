@@ -3,6 +3,7 @@ import {Body1Wrapper} from './Notification.style';
 import {Button} from 'antd';
 import 'antd/dist/antd.css';
 import {Card} from 'antd';
+import {withRouter} from "react-router-dom";
 import UserManager from '../DataModel/UserModel/UserManager';
 import NotificationManager from "../DataModel/NotificationModel/NotificationManager";
 
@@ -14,6 +15,47 @@ class Body extends React.Component {
 
 	onChange = checked => {
 		this.setState({ loading: !checked });
+	};
+
+	constructor(props) {
+		super(props);
+		this.getNotification();
+	}
+
+	getNotification = () => {
+		UserManager.getCurrentUser()
+			.then(user => {
+				console.log('getCurrentUser successful');
+				console.log('photourl:' + user.photoURL);
+				this.setState({full_name: user.fullname, nick_name: user.nickname});
+				console.log("PrintFullname!!!!!!!!!!!!!",user.fullname);
+				console.log("PrintNickname!!!!!!!!!!!!!",user.nickname);
+
+				if (user.notifications) {
+					console.log('have notification');
+					console.log('set notification');
+					console.log(user.notifications);
+				}
+
+				let notification;
+				for (notification of user.notifications) {
+					NotificationManager.getNotification(notification)
+						.then(noti => {
+							console.log("notification title");
+							console.log(noti.title);
+							console.log("notification time");
+							console.log(noti.timeReceived);
+							console.log("notification descrip");
+							console.log(noti.description);
+						})
+				}
+
+
+			})
+			.catch(error => {
+				console.log(error);
+			});
+		console.log('print notification at the end');
 	};
 
 	render() {
@@ -80,4 +122,4 @@ class Body extends React.Component {
 	}
 }
 
-export default Body;
+export default withRouter(Body);
