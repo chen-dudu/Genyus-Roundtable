@@ -37,6 +37,7 @@ exports.createUser = functions.https.onCall((user, context) => {
             console.info(`${CLASS_NAME} | createUser | successfully create a new user for auth part, assigned uid ${uid}`);
             // now create a new record in firestore
             userDocs.doc(uid).set({
+                email: user.email,
                 fullname: user.fullname,
                 nickname: user.fullname,
                 type: "researcher",
@@ -190,40 +191,30 @@ exports.getUsers = functions.https.onCall((data, context) => {
 exports.getResearchers = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-        let user_list = [];
-        auth.listUsers()
-            .then(response => {
-                response.users.forEach(user => {
-                    let uid = user.uid;
-                    userDocs.doc(uid).get()
-                        .then(doc => {
-                            if (doc.get('type') === "researcher") {
-                                let user = {
-                                    uid: user.uid,
-                                    fullname: doc.get('fullname'),
-                                    nickname: doc.get('nickname'),
-                                    phoneNumber: user.phoneNumber,
-                                    photoURL: user.photoURL,
-                                    providerID: user.providerData,
-                                    type: doc.get('type'),
-                                    creationTime: user.metadata.creationTime,
-                                    description: doc.get('description'),
-                                    sessions: doc.get('sessions'),
-                                    notifications: doc.get('notifications')
-                                };
-                                user_list.unshift(Promise.resolve(user));
-                            }
-                        })
-                        .catch(err => {
-                            console.error(`${CLASS_NAME} | getResearchers | failed to retrieve user record from firestore for uid ${uid}, error: ${err}`);
-                            return Promise.reject(err);
-                        });
+        return userDocs.get()
+            .then(docs => {
+                let users = docs.docs.map(doc => {
+                    if (doc.get('type') === "researcher") {
+                        let user = {
+                            uid: doc.id,
+                            fullname: doc.get('fullname'),
+                            nickname: doc.get('nickname'),
+                            photoURL: doc.get('photoURL'),
+                            type: doc.get('type'),
+                            creationTime: doc.get('creationTime'),
+                            description: doc.get('description'),
+                            sessions: doc.get('sessions'),
+                            notifications: doc.get('notifications')
+                        };
+                        console.info(`${CLASS_NAME} | getResearchers | finished processing record for uid ${doc.id}`);
+                        return Promise.resolve(user);
+                    }
                 });
                 console.info(`${CLASS_NAME} | getResearchers | finished pre-processing, data is ready to be returned`);
-                return Promise.all(user_list);
+                return Promise.all(users);
             })
             .catch(err => {
-                console.error(`${CLASS_NAME} | getResearchers| failed to retrieve all users from DB, received error message ${err}`);
+                console.error(`${CLASS_NAME} | getResearchers | failed to retrieved user record from firestore, err: ${err}`);
                 return Promise.reject(err);
             });
     }
