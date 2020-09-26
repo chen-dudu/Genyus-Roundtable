@@ -181,6 +181,7 @@ exports.getUsers = functions.https.onCall((data, context) => {
 });
 
 
+
 /**
  * a method used by admin to retrieve a list of researchers from DB
  * @return {Promise<Object[]|String>} upon successful retrieval, a promise with resolve value of a list of needed researchers is returned
