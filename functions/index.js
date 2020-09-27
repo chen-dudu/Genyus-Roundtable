@@ -370,3 +370,16 @@ exports.updateUserAvatar = functions.https.onCall((data, context) => {
         return Promise.reject(new Error('admin is not login!'));
     }
 });
+
+/**********************************************************************************************************************/
+
+exports.autoDelete = functions.auth.user().onDelete(async user => {
+    try {
+        let feedback = await userDocs.doc(user.uid).delete();
+        console.info(`${CLASS_NAME} | autoDelete | the corresponding record in firestore has been successfully deleted`);
+        return feedback;
+    } catch (err) {
+        console.error(`${CLASS_NAME} | autoDelete | failed to auto delete the corresponding record in firestore, error ${err}`);
+        return null;
+    }
+})
