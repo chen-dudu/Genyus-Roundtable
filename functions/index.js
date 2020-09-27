@@ -195,19 +195,28 @@ exports.getResearchers = functions.https.onCall((data, context) => {
             .then(docs => {
                 let users = docs.docs.map(doc => {
                     if (doc.get('type') === "researcher") {
-                        let user = {
-                            uid: doc.id,
-                            fullname: doc.get('fullname'),
-                            nickname: doc.get('nickname'),
-                            photoURL: doc.get('photoURL'),
-                            type: doc.get('type'),
-                            creationTime: doc.get('creationTime'),
-                            description: doc.get('description'),
-                            sessions: doc.get('sessions'),
-                            notifications: doc.get('notifications')
-                        };
-                        console.info(`${CLASS_NAME} | getResearchers | finished processing record for uid ${doc.id}`);
-                        return Promise.resolve(user);
+                        let uid = doc.id;
+                        return auth.getUser(uid)
+                            .then(userAuth => {
+                                let user = {
+                                    uid: userAuth.uid,
+                                    email: userAuth.email,
+                                    fullname: doc.get('fullname'),
+                                    nickname: doc.get('nickname'),
+                                    photoURL: userAuth.photoURL,
+                                    type: doc.get('type'),
+                                    creationTime: userAuth.metadata.creationTime,
+                                    description: doc.get('description'),
+                                    sessions: doc.get('sessions'),
+                                    notifications: doc.get('notifications')
+                                };
+                                console.info(`${CLASS_NAME} | getResearchers | finished processing record for uid ${doc.id}`);
+                                return Promise.resolve(user);
+                            })
+                            .catch(err => {
+                                console.error(`${CLASS_NAME} | getResearchers | failed to retrieve info from firebase auth, err: ${err}`);
+                                return Promise.reject(err);
+                            });
                     }
                 });
                 console.info(`${CLASS_NAME} | getResearchers | finished pre-processing, data is ready to be returned`);
