@@ -2,14 +2,15 @@ import React, {useState} from 'react';
 import Header from './Header.js';
 import Footer from './Footer.js';
 import Body from './Body.js';
+import {withRouter} from "react-router-dom";
 
 const Notification = props => {
-    const [image, setImage, notification, setNotification] = useState();
+    const [image, setImage] = useState();
     return(
         <div>
             <container>
                 <Header setImage={setImage} image={image}></Header>
-                <Body> setNotification={setNotification} notification={notification}></Body>
+                <Body></Body>
                 <Footer></Footer>
             </container>
         </div>
@@ -28,4 +29,4 @@ const Notification = props => {
 // }
 // }
 
-export default Notification;
+export default withRouter(Notification);
