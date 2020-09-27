@@ -141,34 +141,34 @@ exports.getUsers = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
         let user_list = [];
-        auth.listUsers()
-            .then(response => {
-                response.users.forEach(user => {
-                    let uid = user.uid;
-                    userDocs.doc(uid).get()
-                        .then(doc => {
+        return userDocs.get()
+            .then(docs => {
+                let users = docs.docs.map(doc => {
+                    let uid = doc.id;
+                    return auth.getUser(uid)
+                        .then(userAuth => {
                             let user = {
-                                uid: user.uid,
+                                uid: userAuth.uid,
                                 fullname: doc.get('fullname'),
                                 nickname: doc.get('nickname'),
-                                phoneNumber: user.phoneNumber,
-                                photoURL: user.photoURL,
-                                providerID: user.providerData,
+                                phoneNumber: userAuth.phoneNumber,
+                                photoURL: userAuth.photoURL,
+                                providerID: userAuth.providerData,
                                 type: doc.get('type'),
-                                creationTime: user.metadata.creationTime,
+                                creationTime: userAuth.metadata.creationTime,
                                 description: doc.get('description'),
                                 sessions: doc.get('sessions'),
                                 notifications: doc.get('notifications')
                             };
-                            user_list.unshift(Promise.resolve(user));
+                            return Promise.resolve(user);
                         })
                         .catch(err => {
-                            console.error(`${CLASS_NAME} | getUsers | failed to retrieve user record from firestore for uid ${uid}, error: ${err}`);
+                            console.error(`${CLASS_NAME} | getUsers | failed to retrieve user record from auth for uid ${uid}, error: ${err}`);
                             return Promise.reject(err);
-                        });
+                        })
                 });
                 console.info(`${CLASS_NAME} | getUsers | finished pre-processing, data is ready to be returned`);
-                return Promise.all(user_list);
+                return Promise.all(users);
             })
             .catch(err => {
                 console.error(`${CLASS_NAME} | getUsers| failed to retrieve all users from DB, received error message ${err}`);
