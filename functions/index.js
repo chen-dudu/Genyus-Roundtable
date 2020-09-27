@@ -27,7 +27,7 @@ exports.createUser = functions.https.onCall((user, context) => {
     // only login admin can do operation
     if (context.auth) {
         // first create a new user for auth part
-        auth.createUser({
+        return auth.createUser({
             email: user.email,
             emailVerified: false,
             password: user.password,
@@ -36,7 +36,7 @@ exports.createUser = functions.https.onCall((user, context) => {
             let uid = userRecord.uid;
             console.info(`${CLASS_NAME} | createUser | successfully create a new user for auth part, assigned uid ${uid}`);
             // now create a new record in firestore
-            userDocs.doc(uid).set({
+            return userDocs.doc(uid).set({
                 email: user.email,
                 fullname: user.fullname,
                 nickname: user.fullname,
@@ -50,7 +50,7 @@ exports.createUser = functions.https.onCall((user, context) => {
                 if (avatar) {
                     // last step, store the avatar photo
                     let path = 'avatars/' + uid + '/' + avatar.name;
-                    storage.bucket(BUCKET_NAME).upload(path)
+                    return storage.bucket(BUCKET_NAME).upload(path)
                         .then(response => {
                             console.info(`${CLASS_NAME} | createUser | successfully stored the avatar file to DB`);
                             return Promise.resolve(undefined);
