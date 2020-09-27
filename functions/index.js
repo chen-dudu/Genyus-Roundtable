@@ -242,7 +242,7 @@ exports.getResearchers = functions.https.onCall((data, context) => {
 exports.updateUserEmail = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-        auth.updateUser(data.uid, {
+        return auth.updateUser(data.uid, {
             email: data.email
         }).then(response => {
             console.info(`${CLASS_NAME} | updateUserEmail | successfully updated the email address of the user with uid ${data.uid}`);
@@ -267,7 +267,7 @@ exports.updateUserEmail = functions.https.onCall((data, context) => {
 exports.updateUserPassword = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-        auth.updateUser(data.uid, {
+        return auth.updateUser(data.uid, {
             password: data.password
         }).then(response => {
             console.info(`${CLASS_NAME} | updateUserPassword | successfully updated the password of the user with uid ${data.uid}`);
@@ -292,7 +292,7 @@ exports.updateUserPassword = functions.https.onCall((data, context) => {
 exports.updateUserFullname = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-       userDocs.doc(data.uid).update({
+       return userDocs.doc(data.uid).update({
            fullname: data.fullname
        }).then(response => {
            console.info(`${CLASS_NAME} | updateUserFullname | successfully updated the full name of user with uid ${data.uid}`);
@@ -317,7 +317,7 @@ exports.updateUserFullname = functions.https.onCall((data, context) => {
 exports.updateUserDescription = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-        userDocs.doc(data.uid).update({
+        return userDocs.doc(data.uid).update({
             description: data.description
         }).then(response => {
             console.info(`${CLASS_NAME} | updateUserDescription | successfully updated the description of user with uid ${data.uid}`);
@@ -345,11 +345,11 @@ exports.updateUserAvatar = functions.https.onCall((data, context) => {
         let uid = data.uid;
         let path = 'avatars/' + uid + '/' + data.avatar.name;
         // first, upload the new file to DB
-        storage.bucket(BUCKET_NAME).upload(path)
+        return storage.bucket(BUCKET_NAME).upload(path)
             .then(uploadResponse => {
                 console.info(`${CLASS_NAME} | updateUserAvatar | successfully uploaded the new avatar to DB for user with uid ${uid}`);
                 // then update the user's attribute
-                auth.updateUser(uid, {
+                return auth.updateUser(uid, {
                     photoURL: path
                 }).then(updateResponse => {
                     console.info(`${CLASS_NAME} | updateUserAvatar | successfully updated user attribute "photoURL" for uid ${uid}`);
