@@ -55,8 +55,9 @@ export default {
         try {
             let sDoc = await sDocs.doc(sid).get();
             console.info(`${CLASS_NAME} | getSession | successfully retrieved the needed session from DB`);
+            let timeSlots = sDoc.get('timeSlots').toDate();
             let newSession =  new Session(sDoc.id, sDoc.get('title'), sDoc.get('description'), sDoc.get('duration'),
-                                          sDoc.get('youtubeLink'), sDoc.get('zoomLink'), sDoc.get('timeSlots'),
+                                          sDoc.get('youtubeLink'), sDoc.get('zoomLink'), timeSlots,
                                           sDoc.get('questions'), sDoc.get('status'), sDoc.get('researchers'),
                                           sDoc.get('participants'), sDoc.get('notification'));
             return Promise.resolve(newSession);
@@ -290,13 +291,17 @@ export default {
 
 // convert a Session object to a form that can be processed by firebase
 function converter(session) {
+    let timeSlots = [];
+    session.timeSlots.forEach(slot => {
+        timeSlots.unshift(firebase.firestore.Timestamp.fromDate(slot));
+    });
     return {
         title: session.title,
         description: session.description,
         duration: session.duration,
         youtubeLink: session.youtubeLink,
         zoomLink: session.zoomLink,
-        timeSlots: session.timeSlots,
+        timeSlots: timeSlots,
         questions: session.questions,
         status: session.status,
         researchers: session.researchers,

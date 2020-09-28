@@ -25,7 +25,8 @@ export default {
         try {
             let noDoc = await noDocs.doc(nid).get();
             console.info(`${CLASS_NAME} | getNotification | successfully retrieve notification data from DB`);
-            let newNotification = new Notification(noDoc.get('title'), noDoc.get('description'), noDoc.get('timeReceived'), noDoc.get('isRead'), nid, noDoc.get('sid'));
+            let timeReceived = noDoc.get('timeReceived').toDate();
+            let newNotification = new Notification(noDoc.get('title'), noDoc.get('description'), timeReceived, noDoc.get('isRead'), nid, noDoc.get('sid'));
             return Promise.resolve(newNotification);
         } catch (err) {
             console.error(`${CLASS_NAME} | getNotification | failed to retrieve notification data from DB, received error message: ${err.message}`);
@@ -176,7 +177,7 @@ export default {
 function converter(notification) {
     return {title: notification.title,
             description: notification.description,
-            timeReceived: notification.timeReceived,
+            timeReceived: firebase.firestore.Timestamp.fromDate(notification.timeReceived),
             isRead: notification.isRead,
             sid: notification.sid
     };
