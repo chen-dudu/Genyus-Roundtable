@@ -24,7 +24,7 @@ function App(){
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
         <Route path="/users" component={Users}></Route>
         <Route path="/Notification" component={Notification}></Route>
-        <Route path="/ViewAcceptedSession" component={ViewAcceptedSession}></Route>
+        <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
         <Route path="/StatusAndRewards" component={StatusAndRewards}></Route>
     </Router>
   );

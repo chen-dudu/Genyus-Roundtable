@@ -198,9 +198,17 @@ export const TitleWrapper = styled.div`
       } 
   `;
 
+
 export const ListWrapper = styled.div`
-      width: 50%;
+      width: 70%;
       margin: auto;
+      
+      > h1 {
+      font-size: 40px;
+      font-weight: bold;
+      color:#4682B4;
+      margin-left:20px;
+    }
       
       
   `;
