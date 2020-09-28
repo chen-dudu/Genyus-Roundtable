@@ -32,6 +32,7 @@ class Body extends React.Component {
 			sessionQues: null,
 			researcher: null,
 			timeslot: null,
+			sessionTitle: null,
 			youtubeLink: null,
 			zoomLink: null
 		}
@@ -43,8 +44,25 @@ class Body extends React.Component {
 		SessionManager.getSession(this.state.sid)
 			.then(result => {
 				console.log('get Session successful');
-				console.log(result.duration);
-				// this.setState()
+				console.log(typeof(result.duration));
+				console.log(typeof(result.questions));
+				console.log(result.timeSlots);
+				Object.keys(result.questions).forEach(key => {
+					console.log("get questions key value");
+					console.log(typeof(key));
+					console.log(key);
+					console.log(result.questions[key]);
+				})
+				this.setState({
+					sessionDes: result.description,
+					sessionDur: result.duration,
+					sessionQues: result.questions,
+					researcher: result.researchers,
+					timeslot: result.timeSlots,
+					sessionTitle: result.title,
+					youtubeLink: result.youtubeLink,
+					zoomLink: result.zoomLink
+				})
 			})
 	}
 
