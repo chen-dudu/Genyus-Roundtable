@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Body1Wrapper, ProfileWrapper } from './Users.style';
+import { Body1Wrapper, ProfileWrapper } from './Researchers.style';
 import { Upload, message, Button } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
@@ -120,8 +120,6 @@ class Body1 extends React.Component {
 			.then(response => {
 				console.log('getCurrentUser successful');
 				console.log('photourl:' + response.photoURL);
-				// let displayedName = response.email;
-				// console.log('email*******:', displayedName);
 				this.setState({displayedName:response.nickname});
 
 				if (response.photoURL) {
@@ -129,7 +127,6 @@ class Body1 extends React.Component {
 						.then(photo => {
 							console.log('getAvatar successful');
 							console.log('setImage successful');
-							// this.setState({imageUrl: photo});
 							this.props.setImage(photo);
 						})
 						.catch(error => {
@@ -141,9 +138,6 @@ class Body1 extends React.Component {
 				console.log(error);
 			});
 	};
-	handleClick = () => {
-		this.props.history.push('/ProfileSetting');
-	}
 
 	constructor(props) {
 		super(props);
@@ -156,21 +150,17 @@ class Body1 extends React.Component {
 	render() {
 
 		return (
-
 			<Body1Wrapper>
-				<h1>Welcome to Genyus Roundtable!</h1>
-				<Button  type="primary" style={{ margin: '8% 58% 0', width: '12%', height: '10%', position: 'absolute' }}>My Notification</Button>
-				{/* <NotificationButton>My Notification</NotificationButton> */}
-				<Button  type="primary" style={{ margin: '13% 58% 0', width: '12%', height: '10%', position: 'absolute' }}>My Pod Schedule</Button>
-				{/* <ScheduleButton>My Roundtable Schedule</ScheduleButton> */}
+				<h1>Home</h1>
+				<Button  type="primary" style={{ margin: '8% 55% 0', width: '15%', height: '10%', position: 'absolute' }}>My Schedule</Button>
 				<ProfileWrapper>
-				<h2 style={{color:'red'}}>Hey there, {this.state.displayedName}</h2>
+				<h2 style={{color:'red'}}>Hey there, {this.state.displayedName}!</h2>
 					<br /><br/>
 					<Avatar setImage={this.props.setImage} size="large" />
 					<br /><br /><br /><br />
-					<Button danger style={{ margin: '0', width: '55%', height: '12%', fontSize: '120%' }} onClick={this.handleClick}>Profile Settings</Button>
+					{/* <Button danger style={{ margin: '0', width: '55%', height: '12%', fontSize: '120%' }} onClick={this.handleClick}>Profile Settings</Button> */}
 
-					<Button danger style={{ margin: '5% 5% 0', width: '55%', height: '12%', fontSize: '120%' }} onClick={() => this.props.history.push('/ProfileSetting')}>Status and Rewards</Button>
+					{/* <Button danger style={{ margin: '5% 5% 0', width: '55%', height: '12%', fontSize: '120%' }} onClick={() => this.props.history.push('/ProfileSetting')}>Status and Rewards</Button> */}
 
 					{/* <StatusButton>Status and Rewards</StatusButton> */}
 				</ProfileWrapper>
