@@ -63,20 +63,16 @@ class Body extends React.Component {
 		if (info.file.status === 'done') {
 			// Get this url from response in real world.
 			console.log(info.file.originFileObj);
-			this.setState({
-				avatar : info.file.originFileObj
-			});
+			this.setState({avatar : info.file.originFileObj});
+
 			getBase64(info.file.originFileObj, imageUrl => {
-					// 用这个方法给imageUrl赋值
 					this.setState({
 						imageUrl,
-
 						loading: false,
 					});
 
 				},
 			);
-
 		}
 	};
 
@@ -102,14 +98,17 @@ class Body extends React.Component {
 		this.setState({
 			confirmLoading: true,
 		});
-		createUser({fullname: this.state.fullname, password :this.state.password,email :this.state.email,description :this.state.description, avatar:this.state.avatar})
+		console.log(this.state);
+		createUser({fullname: this.state.fullname, password :this.state.password,email :this.state.email,description :this.state.description})
 			.then(result => {
-				UserManager.updateAvatar(this.state.avatar)
-					.then(result =>{
-
-					}).catch(err =>{
-
-				});
+				console.log(this.state.imageUrl,result.data.uid);
+				UserManager.updateAvatar(this.state.avatar,result.data.uid)
+					.then(response => {
+						console.log('update successful');
+					})
+					.catch(error => {
+						console.log("avatar "+error);
+					});
 				this.setState({Modalvisible: false, confirmLoading: false,});
 			}).catch(err => {
 				console.log("something wrong: ", err);
