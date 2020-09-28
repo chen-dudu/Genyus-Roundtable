@@ -1,5 +1,5 @@
 import React from 'react';
-import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './HomePage.style'
+import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './Notification.style'
 import leftImg from "../img/footleft.png"
 import middleImg from "../img/footmid.png"
 import rightImg from "../img/footright.png"

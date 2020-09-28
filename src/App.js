@@ -1,15 +1,13 @@
 import React,{useState} from 'react';
 import './App.css';
-import logo from './img/logo.svg';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import HomePage from './HomePage/HomePage';
 import Signup from './Signup/Signup'
 import Login from './Login/Login'
+import Notification from './Notification/Notification'
 import Users from './Users/Users'
 import ProfileSetting from './ProfileSetting/ProfileSetting'
 // import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
@@ -29,6 +27,9 @@ function App(){
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
         <Route path="/Admins" component={Admins}></Route>
         <Route path="/Researchers" component={Researchers}></Route>
+        <Route path="/Notification" component={Notification}></Route>
+        {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
+
     </Router>
   );
 }

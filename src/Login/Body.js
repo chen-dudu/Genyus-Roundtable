@@ -2,7 +2,6 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { BodyWrapper, SubmitButton, GoSignup } from './Login.style';
 import noteImg from "../img/note.png"
-
 import UserManager from "../DataModel/UserModel/UserManager";
 import { Input, Button } from 'antd';
 import 'antd/dist/antd.css';
