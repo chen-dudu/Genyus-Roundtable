@@ -79,7 +79,7 @@ class Body extends React.Component {
 						width: "20%", height: 40, fontWeight: "bold",
 						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
 						fontSize: 15, color: "white"}}
-							href="\ViewAcceptedSession"
+							onClick={() => this.props.history.push('/ViewAcceptedSession')}
 					>Go To Event Page</Button>
 				</Card>
 				<br></br> <br></br>
