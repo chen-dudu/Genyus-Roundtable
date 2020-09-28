@@ -14,6 +14,7 @@ class Header extends React.Component {
         this.state ={
             AdminAvatar:this.props.history.location.state.AdminAvatar,
         };
+        console.log(this.state.AdminAvatar);
 
     }
     render(){
