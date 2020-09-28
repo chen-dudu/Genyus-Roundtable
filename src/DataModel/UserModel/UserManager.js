@@ -93,6 +93,8 @@ export default {
             let uid = signupFeedback.user.uid;
             let storeFeedback = await userDocs.doc(uid).set({fullname: fullname, nickname: nickname, type: type, description: description, sessions: [], notifications: []});
             console.info(`${CLASS_NAME} | signup | feedback from firestore: ${storeFeedback}`);
+            await auth.currentUser.sendEmailVerification();
+            console.info(`${CLASS_NAME} | signup | verification email has been sent to user`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | signup | signup/name-update/data-storing failed, with error message: ${err.message}`);
