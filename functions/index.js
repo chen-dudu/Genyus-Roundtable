@@ -45,7 +45,7 @@ exports.createUser = functions.https.onCall((user, context) => {
                 description: user.description,
                 sessions: [],
                 notifications: [],
-                photoURL: userRecord.photoURL
+                photoURL: ""
             }).then(storeFeedback => {
                 console.info(`${CLASS_NAME} | createUser | successfully created a new user record on firestore`);
                 return Promise.resolve(userRecord);
