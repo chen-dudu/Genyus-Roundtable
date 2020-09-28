@@ -25,6 +25,7 @@ const CLASS_NAME = "function/index";
  */
 exports.createUser = functions.https.onCall((user, context) => {
     // only login admin can do operation
+    console.info('new version of create user');
     if (context.auth) {
         // first create a new user for auth part
         return auth.createUser({
@@ -46,24 +47,25 @@ exports.createUser = functions.https.onCall((user, context) => {
                 notifications: []
             }).then(storeFeedback => {
                 console.info(`${CLASS_NAME} | createUser | successfully created a new user record on firestore`);
-                let avatar = user.avatar;
-                if (avatar) {
-                    // last step, store the avatar photo
-                    let path = 'avatars/' + uid + '/' + avatar.name;
-                    return storage.bucket(BUCKET_NAME).upload(path)
-                        .then(response => {
-                            console.info(`${CLASS_NAME} | createUser | successfully stored the avatar file to DB`);
-                            return Promise.resolve(undefined);
-                        })
-                        .catch(err => {
-                            console.error(`${CLASS_NAME} | createUser | failed to upload avatar file to DB, ${err}`);
-                            return Promise.reject(err);
-                        })
-                }
-                else {
-                    console.error(`${CLASS_NAME} | createUser | avatar used to create user is null`);
-                    return Promise.reject(new Error("given avatar is null"));
-                }
+                return Promise.resolve(userRecord);
+                // let avatar = user.avatar;
+                // if (avatar) {
+                //     // last step, store the avatar photo
+                //     let path = 'avatars/' + uid + '/' + avatar.name;
+                //     return storage.bucket(BUCKET_NAME).upload(path)
+                //         .then(response => {
+                //             console.info(`${CLASS_NAME} | createUser | successfully stored the avatar file to DB`);
+                //             return Promise.resolve(undefined);
+                //         })
+                //         .catch(err => {
+                //             console.error(`${CLASS_NAME} | createUser | failed to upload avatar file to DB, ${err}`);
+                //             return Promise.reject(err);
+                //         })
+                // }
+                // else {
+                //     console.error(`${CLASS_NAME} | createUser | avatar used to create user is null`);
+                //     return Promise.reject(new Error("given avatar is null"));
+                // }
                 // return Promise.resolve('placeholder');
             }).catch(err => {
                 console.error(`${CLASS_NAME} | createUser | failed to create a new user record on firestore, received error message ${err}`);
