@@ -1,16 +1,20 @@
-import React from 'react';
-import HomePage from './HomePage';
+import React, {useState} from 'react';
+import Header from './Header.js';
+import Footer from './Footer.js';
+import Body from './Body.js';
+import {withRouter} from "react-router-dom";
 
-class ViewAcceptedSession extends React.Component{
-
-
-    render(){
-        return (
-            <div>
-                <HomePage></HomePage>
-            </div>
-        );
-    }
+const ViewAcceptedSession = props => {
+    const [image, setImage] = useState();
+    return(
+        <div>
+            <container>
+                <Header setImage={setImage} image={image}></Header>
+                <Body></Body>
+                <Footer></Footer>
+            </container>
+        </div>
+    )
 }
 
-export default ViewAcceptedSession;
+export default withRouter(ViewAcceptedSession);
