@@ -184,3 +184,8 @@ export const Body3Wrapper = styled.div`
   }
  
 `
+export const ListWrapper = styled.div`
+      width: 100%;
+      margin: 0%;
+
+`;

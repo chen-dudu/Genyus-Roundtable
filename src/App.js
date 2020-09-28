@@ -31,7 +31,6 @@ function App(){
         <Route path="/Notification" component={Notification}></Route>
 
         <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
-        <Route path="/StatusAndRewards" component={StatusAndRewards}></Route>
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}8
     </Router>
   );

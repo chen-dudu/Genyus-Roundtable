@@ -78,6 +78,21 @@ class Body extends React.Component {
 		console.log('print state information');
 	};
 
+	formatDate(date) {
+		let d = new Date(date);
+
+		let month = '' + (d.getMonth() + 1);
+		let day = '' + d.getDate();
+		let year = d.getFullYear();
+
+		if (month.length < 2)
+			month = '0' + month;
+		if (day.length < 2)
+			day = '0' + day;
+
+		return [year, month, day].join('-');
+	}
+
 	render() {
 		return (
 			<Body1Wrapper>
@@ -105,7 +120,7 @@ class Body extends React.Component {
 										{/*		onClick={() => this.props.history.push('/ViewAcceptedSession/'+this.state.nid, this.state)}*/}
 										{/*>Go To Event Page</Button>*/}
 										<h1 style={{color: "red", fontSize: "20px", textAlign:"left", float:"left", marginLeft:'2%'}}>{item.title}</h1>
-										<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right", marginRight:'2%'}}>{(new Date(item.timeReceived.seconds)).toString()}</h1>
+										<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right", marginRight:'2%'}}>{this.formatDate(item.timeReceived)}</h1>
 										<br></br>
 										<br></br>
 										<p style={{color: "black", fontSize: "20px", marginLeft:'2%'}}>{item.description}</p>

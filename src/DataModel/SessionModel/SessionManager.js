@@ -55,7 +55,11 @@ export default {
         try {
             let sDoc = await sDocs.doc(sid).get();
             console.info(`${CLASS_NAME} | getSession | successfully retrieved the needed session from DB`);
-            let timeSlots = sDoc.get('timeSlots').toDate();
+            let timeSlots = [];
+            sDoc.get('timeSlots').forEach(key => {
+                timeSlots.unshift(key.toDate());
+            });
+            // let timeSlots = sDoc.get('timeSlots').toDate();
             let newSession =  new Session(sDoc.id, sDoc.get('title'), sDoc.get('description'), sDoc.get('duration'),
                                           sDoc.get('youtubeLink'), sDoc.get('zoomLink'), timeSlots,
                                           sDoc.get('questions'), sDoc.get('status'), sDoc.get('researchers'),

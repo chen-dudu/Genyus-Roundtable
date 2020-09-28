@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom'
-import {Body2Wrapper, BodyWrapper, Body3Wrapper} from './ViewAcceptedSession.style';
-import {Button, Card, Tooltip, Avatar} from 'antd';
+import {Body2Wrapper, BodyWrapper, Body3Wrapper, ListWrapper} from './ViewAcceptedSession.style';
+import {Button, Card, Tooltip, Avatar, Spin, List} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
 import {QuestionOutlined, UserOutlined} from '@ant-design/icons';
-import {Body1Wrapper} from "../Notification/Notification.style";
 import Img from "../img/person.gif";
 import UserManager from '../DataModel/UserModel/UserManager';
 import NotificationManager from "../DataModel/NotificationModel/NotificationManager";
@@ -23,13 +22,13 @@ class Body extends React.Component {
 			nid: this.props.history.location.state.item.nid,
 			title: this.props.history.location.state.item.title,
 			description: this.props.history.location.state.item.description,
-			time: (new Date(this.props.history.location.state.item.timeReceived.seconds)).toString(),
+			time: this.formatDate(this.props.history.location.state.item.timeReceived),
 			sid: this.props.history.location.state.item.sid,
 
-			loading: false,
+			loading: true,
 			sessionDes: null,
 			sessionDur: null,
-			sessionQues: null,
+			sessionQues: {},
 			researcher: null,
 			timeslot: null,
 			sessionTitle: null,
@@ -41,6 +40,8 @@ class Body extends React.Component {
 	}
 
 	getSession = () => {
+		console.log("check sid");
+		console.log(this.state.sid);
 		SessionManager.getSession(this.state.sid)
 			.then(result => {
 				console.log('get Session successful');
@@ -61,9 +62,27 @@ class Body extends React.Component {
 					timeslot: result.timeSlots,
 					sessionTitle: result.title,
 					youtubeLink: result.youtubeLink,
-					zoomLink: result.zoomLink
+					zoomLink: result.zoomLink,
+					loading: false
 				})
-			})
+			}).catch(error => {
+			console.log(error);
+		});
+	}
+
+	formatDate(date) {
+		let d = new Date(date);
+
+		let month = '' + (d.getMonth() + 1);
+		let day = '' + d.getDate();
+		let year = d.getFullYear();
+
+		if (month.length < 2)
+			month = '0' + month;
+		if (day.length < 2)
+			day = '0' + day;
+
+		return [year, month, day].join('-');
 	}
 
 	render() {
@@ -111,7 +130,7 @@ class Body extends React.Component {
 						</Col>
 						<Col className="gutter-row" span={12}>
 							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
-								2/5/20,  6:30 pm</div>
+								{this.state.time}</div>
 						</Col>
 						<Col className="gutter-row" span={12}>
 							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
@@ -119,7 +138,7 @@ class Body extends React.Component {
 						</Col>
 						<Col className="gutter-row" span={12}>
 							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
-								https://zoom.com/join39436?pwd=iisbado8b</div>
+								{this.state.zoomLink}</div>
 						</Col>
 						<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
 							boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
@@ -141,31 +160,59 @@ class Body extends React.Component {
 						gutter={[5, 5]}
 						style={{marginLeft:"20px", marginRight:"40%"}}
 					>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
-								fontSize:"16px"}}>Are you willing for the data collected to be used for research
-								purposes?</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '20.5px 0', textAlign:"center",
-								fontSize:"16px"}}>Yes</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
-								fontSize:"16px"}}>Have you suffered a stroke?</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
-								Yes</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
-								fontSize:"16px"}}>What is your current employment status?</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
-								Employed full time</div>
-						</Col>
+
+						<ListWrapper>
+							<Spin spinning={this.state.loading}>
+								<List
+									bordered={false}
+									itemLayout="horizontal"
+									dataSource={Object.keys(this.state.sessionQues)}
+									renderItem={item => (
+										<div>
+											<List.Item style={{borderColor:'red', borderWidth:0,borderStyle:'solid',borderRadius:20}}>
+												<Col className="gutter-row" span={12}>
+													<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+														fontSize:"16px", marginBottom:"-5%"}}>{item}</div>
+												</Col>
+												<Col className="gutter-row" span={12}>
+													<div style={{background: 'white', padding: '8px 0', textAlign:"center",
+														fontSize:"16px", marginBottom:"-5%"}}>{this.state.sessionQues[item]}</div>
+												</Col>
+											</List.Item>
+										</div>
+										)}
+									/>
+							</Spin>
+						</ListWrapper>
+
+						{/*<Col className="gutter-row" span={12}>*/}
+						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
+						{/*		fontSize:"16px"}}>Are you willing for the data collected to be used for research*/}
+						{/*		purposes?</div>*/}
+						{/*</Col>*/}
+						{/*<Col className="gutter-row" span={12}>*/}
+						{/*	<div style={{background: 'white', padding: '20.5px 0', textAlign:"center",*/}
+						{/*		fontSize:"16px"}}>Yes</div>*/}
+						{/*</Col>*/}
+
+						{/*<Col className="gutter-row" span={12}>*/}
+						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
+						{/*		fontSize:"16px"}}>Have you suffered a stroke?</div>*/}
+						{/*</Col>*/}
+						{/*<Col className="gutter-row" span={12}>*/}
+						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>*/}
+						{/*		Yes</div>*/}
+						{/*</Col>*/}
+
+						{/*<Col className="gutter-row" span={12}>*/}
+						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
+						{/*		fontSize:"16px"}}>What is your current employment status?</div>*/}
+						{/*</Col>*/}
+						{/*<Col className="gutter-row" span={12}>*/}
+						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>*/}
+						{/*		Employed full time</div>*/}
+						{/*</Col>*/}
+
 						<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
 							boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
 							width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"40%",
@@ -199,10 +246,8 @@ class Body extends React.Component {
 					<br/>
 
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Session Information</h2>
-					<h3>Session name : Meaningful Vocation</h3>
-					<h3>In this session we'll be discussing how you've returned to meaningful vocation post stroke.
-						We want to share stories about hurdles you've experienced and overcome, and how we could help
-						remove those obstacles for future survivors!</h3>
+					<h3>Session name : {this.state.sessionTitle}</h3>
+					<h3>{this.state.sessionDes}</h3>
 
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Available times</h2>
 					<h3>The session will be run at the following times:</h3>
@@ -250,7 +295,7 @@ class Body extends React.Component {
 						<h2>Learn more about the Session!!</h2>
 						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
 								mozallowfullscreen="" allowFullScreen=""
-								src="https://www.youtube.com/embed/Xm_F_UBjrq8"></iframe>
+								src={this.state.youtubeLink}></iframe>
 					</div>
 
 				</Body3Wrapper>
