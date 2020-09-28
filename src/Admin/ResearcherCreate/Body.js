@@ -52,7 +52,6 @@ class Body extends React.Component {
 			Modalvisible : false,
 			confirmLoading : false,
 			loading: false,
-
 		};
 	}
 
@@ -105,6 +104,12 @@ class Body extends React.Component {
 		});
 		createUser({fullname: this.state.fullname, password :this.state.password,email :this.state.email,description :this.state.description, avatar:this.state.avatar})
 			.then(result => {
+				UserManager.updateAvatar(this.state.avatar)
+					.then(result =>{
+
+					}).catch(err =>{
+
+				});
 				this.setState({Modalvisible: false, confirmLoading: false,});
 			}).catch(err => {
 				console.log("something wrong: ", err);

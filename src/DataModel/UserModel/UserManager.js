@@ -218,7 +218,7 @@ export default {
                     // now, update the user's photoURL property
                     userDocs.doc(uid).update({photoURL: path})
                         .then(updateFeedback => {
-                            console.info(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${value}`);
+                            console.info(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${updateFeedback}`);
                             return Promise.resolve(undefined);
                         })
                         .catch(err => {

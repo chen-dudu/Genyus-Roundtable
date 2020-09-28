@@ -80,7 +80,7 @@ class Body extends React.Component {
 		if (info.file.status === 'done') {
 			// Get this url from response in real world.
 			console.log(info.file.originFileObj);
-			updateUserAvatar({uid :this.state.uid, avatar: info.file.originFileObj})
+			UserManager.updateAvatar(info.file.originFileObj,this.state.uid)
 				.then(response => {
 					console.log('update successful');
 				})

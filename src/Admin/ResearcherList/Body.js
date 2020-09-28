@@ -24,11 +24,7 @@ const getResearchers = firebase.functions().httpsCallable('getResearchers');
 
 
 class Body extends React.Component {
-	state = {
-		loading : true,
-		data : [],
-		AdminAvatar: <UserOutlined/>
-	};
+
 
 	getAdminImage = () => {
 		UserManager.getCurrentUser()
@@ -49,49 +45,83 @@ class Body extends React.Component {
 				console.log(error);
 			});
 	};
-	getResearcherImage = () => {
-		UserManager.getCurrentUser()
-			.then(response => {
-				if (response.photoURL) {
-					UserManager.getAvatar(response.photoURL)
-						.then(photo => {
-							this.setState({ AdminAvatar: photo });
-							this.props.setImage(photo);
-						})
-						.catch(error => {
-							console.log(error);
-						});
+
+	getImage = () => {
+		this.getResearchers1()
+			.then(result =>{
+				console.log(result);
+				// this.setState({ data : this.state.data.concat(result)});
+				let list=[];
+				result.forEach(function (item,index,array){
+
+					if(item){
+						list.unshift(item);
+					}
+				});
+				console.log(list);
+				this.setState({ data : list, loading : false})
+				console.log(this.state.data);
+
+
+			})
+			.catch(error =>{
+				console.error(error);
+			});
+
+	}
+
+
+	getResearchers1 = () => {
+
+
+		return getResearchers().then(result => {
+			let researchers = result.data.map(item => {
+				if(item){
+					if(item.photoURL){
+
+						return UserManager.getAvatar(item.photoURL)
+							.then(photo => {
+								item.photoURL = photo;
+								console.log(item.photoURL);
+								return Promise.resolve(item);
+							})
+							.catch(error => {
+								console.log(error);
+								return Promise.reject(error);
+							});
+					}else{
+						item.photoURL = null;
+						console.log("get researcher : " + item);
+						return Promise.resolve(item);
+					}
+
+				}else{
+					console.log("get researcher : " + item);
+					return Promise.resolve(item);
 				}
 			})
-			.catch(error => {
+			return Promise.all(researchers);
+			})
+			.catch(error =>{
 				console.log(error);
+				return Promise.reject(error);
 			});
-	};
-
-
-	getResearchers = () => {
-		getResearchers().then(result => {
-			let researchers = [];
-			result.data.forEach(function (item, index, array) {
-				if (item != null) {
-					researchers.unshift(item);
-				}
-			});
-			this.setState({data: researchers});
-			this.setState({loading: false});
-
-		}).catch(err => {
-			console.log("something wrong: ", err);
-		})
 	};
 
 
 	constructor(props) {
     	super(props);
-		this.getResearchers();
+		this.getImage();
 		this.getAdminImage();
+		this.state = {
+			loading : true,
+			data : [],
+			AdminAvatar: <UserOutlined/>,
+
+		};
 
   }
+
 
 
 
@@ -104,6 +134,7 @@ class Body extends React.Component {
 		return(
 			<container>
 			<Body1Wrapper setImage={this.props.setImage}>
+
 
 				<TitleWrapper>
 					<br/>
@@ -126,17 +157,19 @@ class Body extends React.Component {
 
 
 					dataSource={this.state.data}
+
 					renderItem={item => (
 						<div>
 						<List.Item style={{borderColor:'red', borderWidth:4,borderStyle:'solid',borderRadius:20}}>
+
 							<List.Item.Meta style={{marginLeft:20}}
-								avatar={<Avatar src={item.imageUrl} icon={<UserOutlined />} size={120}/>}
+								avatar={<Avatar src={item.photoURL} icon={<UserOutlined />} size={120}/>}
 								title={<a style={{fontSize:25}}>{item.fullname}</a>}
 								description={<p style={{width:"70%", fontSize:20, wordBreak:"break-all"}}>{item.description}<br/>joined: {item.creationTime}</p>}
 							/>
 
 							<div>
-								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherDetail/'+item.fullname,state:{AdminAvatar:this.state.AdminAvatar,item:item}})}>Edit</Button>
+								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherDetail/'+item.fullname,state:{item:item}})}>Edit</Button>
 							</div>
 
 
