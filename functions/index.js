@@ -27,7 +27,7 @@ exports.createUser = functions.https.onCall((user, context) => {
     // only login admin can do operation
     if (context.auth) {
         // first create a new user for auth part
-        auth.createUser({
+        return auth.createUser({
             email: user.email,
             emailVerified: false,
             password: user.password,
@@ -36,7 +36,7 @@ exports.createUser = functions.https.onCall((user, context) => {
             let uid = userRecord.uid;
             console.info(`${CLASS_NAME} | createUser | successfully create a new user for auth part, assigned uid ${uid}`);
             // now create a new record in firestore
-            userDocs.doc(uid).set({
+            return userDocs.doc(uid).set({
                 email: user.email,
                 fullname: user.fullname,
                 nickname: user.fullname,
@@ -50,7 +50,7 @@ exports.createUser = functions.https.onCall((user, context) => {
                 if (avatar) {
                     // last step, store the avatar photo
                     let path = 'avatars/' + uid + '/' + avatar.name;
-                    storage.bucket(BUCKET_NAME).upload(path)
+                    return storage.bucket(BUCKET_NAME).upload(path)
                         .then(response => {
                             console.info(`${CLASS_NAME} | createUser | successfully stored the avatar file to DB`);
                             return Promise.resolve(undefined);
@@ -91,12 +91,12 @@ exports.getUser = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
         // first get some info from firebase auth
-        auth.getUser(data.uid)
+        return auth.getUser(data.uid)
             .then(userAuth => {
                 console.info(`${CLASS_NAME} | getUser | successfully retrieve data from firebase auth`);
                 let uid = userAuth.uid;
                 // then get the rest from firestore
-                userDocs.doc(uid).get()
+                return userDocs.doc(uid).get()
                     .then(userData => {
                         console.info(`${CLASS_NAME} | getUser | successfully retrieve data from firestore`);
                         let user = {
@@ -141,34 +141,34 @@ exports.getUsers = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
         let user_list = [];
-        auth.listUsers()
-            .then(response => {
-                response.users.forEach(user => {
-                    let uid = user.uid;
-                    userDocs.doc(uid).get()
-                        .then(doc => {
+        return userDocs.get()
+            .then(docs => {
+                let users = docs.docs.map(doc => {
+                    let uid = doc.id;
+                    return auth.getUser(uid)
+                        .then(userAuth => {
                             let user = {
-                                uid: user.uid,
+                                uid: userAuth.uid,
                                 fullname: doc.get('fullname'),
                                 nickname: doc.get('nickname'),
-                                phoneNumber: user.phoneNumber,
-                                photoURL: user.photoURL,
-                                providerID: user.providerData,
+                                phoneNumber: userAuth.phoneNumber,
+                                photoURL: userAuth.photoURL,
+                                providerID: userAuth.providerData,
                                 type: doc.get('type'),
-                                creationTime: user.metadata.creationTime,
+                                creationTime: userAuth.metadata.creationTime,
                                 description: doc.get('description'),
                                 sessions: doc.get('sessions'),
                                 notifications: doc.get('notifications')
                             };
-                            user_list.unshift(Promise.resolve(user));
+                            return Promise.resolve(user);
                         })
                         .catch(err => {
-                            console.error(`${CLASS_NAME} | getUsers | failed to retrieve user record from firestore for uid ${uid}, error: ${err}`);
+                            console.error(`${CLASS_NAME} | getUsers | failed to retrieve user record from auth for uid ${uid}, error: ${err}`);
                             return Promise.reject(err);
-                        });
+                        })
                 });
                 console.info(`${CLASS_NAME} | getUsers | finished pre-processing, data is ready to be returned`);
-                return Promise.all(user_list);
+                return Promise.all(users);
             })
             .catch(err => {
                 console.error(`${CLASS_NAME} | getUsers| failed to retrieve all users from DB, received error message ${err}`);
@@ -195,19 +195,28 @@ exports.getResearchers = functions.https.onCall((data, context) => {
             .then(docs => {
                 let users = docs.docs.map(doc => {
                     if (doc.get('type') === "researcher") {
-                        let user = {
-                            uid: doc.id,
-                            fullname: doc.get('fullname'),
-                            nickname: doc.get('nickname'),
-                            photoURL: doc.get('photoURL'),
-                            type: doc.get('type'),
-                            creationTime: doc.get('creationTime'),
-                            description: doc.get('description'),
-                            sessions: doc.get('sessions'),
-                            notifications: doc.get('notifications')
-                        };
-                        console.info(`${CLASS_NAME} | getResearchers | finished processing record for uid ${doc.id}`);
-                        return Promise.resolve(user);
+                        let uid = doc.id;
+                        return auth.getUser(uid)
+                            .then(userAuth => {
+                                let user = {
+                                    uid: userAuth.uid,
+                                    email: userAuth.email,
+                                    fullname: doc.get('fullname'),
+                                    nickname: doc.get('nickname'),
+                                    photoURL: userAuth.photoURL,
+                                    type: doc.get('type'),
+                                    creationTime: userAuth.metadata.creationTime,
+                                    description: doc.get('description'),
+                                    sessions: doc.get('sessions'),
+                                    notifications: doc.get('notifications')
+                                };
+                                console.info(`${CLASS_NAME} | getResearchers | finished processing record for uid ${doc.id}`);
+                                return Promise.resolve(user);
+                            })
+                            .catch(err => {
+                                console.error(`${CLASS_NAME} | getResearchers | failed to retrieve info from firebase auth, err: ${err}`);
+                                return Promise.reject(err);
+                            });
                     }
                 });
                 console.info(`${CLASS_NAME} | getResearchers | finished pre-processing, data is ready to be returned`);
@@ -233,7 +242,7 @@ exports.getResearchers = functions.https.onCall((data, context) => {
 exports.updateUserEmail = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-        auth.updateUser(data.uid, {
+        return auth.updateUser(data.uid, {
             email: data.email
         }).then(response => {
             console.info(`${CLASS_NAME} | updateUserEmail | successfully updated the email address of the user with uid ${data.uid}`);
@@ -258,7 +267,7 @@ exports.updateUserEmail = functions.https.onCall((data, context) => {
 exports.updateUserPassword = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-        auth.updateUser(data.uid, {
+        return auth.updateUser(data.uid, {
             password: data.password
         }).then(response => {
             console.info(`${CLASS_NAME} | updateUserPassword | successfully updated the password of the user with uid ${data.uid}`);
@@ -283,7 +292,7 @@ exports.updateUserPassword = functions.https.onCall((data, context) => {
 exports.updateUserFullname = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-       userDocs.doc(data.uid).update({
+       return userDocs.doc(data.uid).update({
            fullname: data.fullname
        }).then(response => {
            console.info(`${CLASS_NAME} | updateUserFullname | successfully updated the full name of user with uid ${data.uid}`);
@@ -308,7 +317,7 @@ exports.updateUserFullname = functions.https.onCall((data, context) => {
 exports.updateUserDescription = functions.https.onCall((data, context) => {
     // only login admin can do operation
     if (context.auth) {
-        userDocs.doc(data.uid).update({
+        return userDocs.doc(data.uid).update({
             description: data.description
         }).then(response => {
             console.info(`${CLASS_NAME} | updateUserDescription | successfully updated the description of user with uid ${data.uid}`);
@@ -336,11 +345,11 @@ exports.updateUserAvatar = functions.https.onCall((data, context) => {
         let uid = data.uid;
         let path = 'avatars/' + uid + '/' + data.avatar.name;
         // first, upload the new file to DB
-        storage.bucket(BUCKET_NAME).upload(path)
+        return storage.bucket(BUCKET_NAME).upload(path)
             .then(uploadResponse => {
                 console.info(`${CLASS_NAME} | updateUserAvatar | successfully uploaded the new avatar to DB for user with uid ${uid}`);
                 // then update the user's attribute
-                auth.updateUser(uid, {
+                return auth.updateUser(uid, {
                     photoURL: path
                 }).then(updateResponse => {
                     console.info(`${CLASS_NAME} | updateUserAvatar | successfully updated user attribute "photoURL" for uid ${uid}`);
@@ -361,3 +370,16 @@ exports.updateUserAvatar = functions.https.onCall((data, context) => {
         return Promise.reject(new Error('admin is not login!'));
     }
 });
+
+/**********************************************************************************************************************/
+
+exports.autoDelete = functions.auth.user().onDelete(async user => {
+    try {
+        let feedback = await userDocs.doc(user.uid).delete();
+        console.info(`${CLASS_NAME} | autoDelete | the corresponding record in firestore has been successfully deleted`);
+        return feedback;
+    } catch (err) {
+        console.error(`${CLASS_NAME} | autoDelete | failed to auto delete the corresponding record in firestore, error ${err}`);
+        return null;
+    }
+})
