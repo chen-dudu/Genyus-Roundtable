@@ -4,64 +4,96 @@ import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper} from './ResearcherH
 import Img from '../../img/Avatar.png';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
-import {List, Avatar, Button, Spin} from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import {List, Avatar, Button, Spin, message, Upload} from 'antd';
+import {LoadingOutlined, PlusOutlined, UserOutlined} from '@ant-design/icons';
 import UserManager from "../../DataModel/UserModel/UserManager";
 import firebase from "firebase";
+import ImgCrop from "antd-img-crop";
+import {Body2Wrapper} from "../../Users/Users.style";
 
 
 
-let data = [];
+
 
 
 const getResearchers = firebase.functions().httpsCallable('getResearchers');
-getResearchers().then(result=>{
 
-	console.log(result);
 
-}).catch(err=>{
-	console.log("something wrong");
-});
+
+
 
 
 class Body extends React.Component {
+	state = {
+		loading : true,
+		data : [],
+		AdminAvatar: <UserOutlined/>
+	};
 
-	// this.setState({loading:false});
+	getAdminImage = () => {
+		UserManager.getCurrentUser()
+			.then(response => {
+				if (response.photoURL) {
+
+					UserManager.getAvatar(response.photoURL)
+						.then(photo => {
+							this.setState({ AdminAvatar: photo });
+							this.props.setImage(photo);
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+	getResearcherImage = () => {
+		UserManager.getCurrentUser()
+			.then(response => {
+				if (response.photoURL) {
+					UserManager.getAvatar(response.photoURL)
+						.then(photo => {
+							this.setState({ AdminAvatar: photo });
+							this.props.setImage(photo);
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
 
 
+	getResearchers = () => {
+		getResearchers().then(result => {
+			let researchers = [];
+			result.data.forEach(function (item, index, array) {
+				if (item != null) {
+					researchers.unshift(item);
+				}
+			});
+			this.setState({data: researchers});
+			this.setState({loading: false});
 
+		}).catch(err => {
+			console.log("something wrong: ", err);
+		})
+	};
 
 
 	constructor(props) {
-    super(props);
-
-		this.state = {
-       	loading : true,
-		// data : [
-		// 	{
-		//
-		// 		img : Img,
-		// 		title: 'Name 1',
-		// 		description: "",
-		// 		joindate:"",
-		//
-		// 	},
-		// 	{
-		// 		img : Img,
-		// 		title: 'Name 2',
-		// 	},
-		// 	{
-		// 		img : Img,
-		// 		title: 'Name 3',
-		// 	},
-		// 	{
-		// 		img : Img,
-		// 		title: 'Name 4',
-		// 	}
-		// 	]
-    };
+    	super(props);
+		this.getResearchers();
+		this.getAdminImage();
 
   }
+
+
 
 
 
@@ -70,8 +102,8 @@ class Body extends React.Component {
 	render(){
 
 		return(
-			
-			<Body1Wrapper>
+			<container>
+			<Body1Wrapper setImage={this.props.setImage}>
 
 				<TitleWrapper>
 					<br/>
@@ -81,7 +113,7 @@ class Body extends React.Component {
 					<br/>
 
 				<h1>Researcher list</h1>
-				<Button style={{width:241, height:53,fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherCreate')}>Create a new account</Button>
+				<Button style={{width:241, height:53,fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherCreate',query:{AdminAvatar:this.state.AdminAvatar}})}>Create a new account</Button>
 				</TitleWrapper>
 
 
@@ -89,21 +121,22 @@ class Body extends React.Component {
 					<Spin spinning={this.state.loading}>
 				<List
 
+
 					bordered={false}
 
 
-					dataSource={data}
+					dataSource={this.state.data}
 					renderItem={item => (
 						<div>
 						<List.Item style={{borderColor:'red', borderWidth:4,borderStyle:'solid',borderRadius:20}}>
 							<List.Item.Meta style={{marginLeft:20}}
-								avatar={<Avatar icon={<UserOutlined />} size={80}/>}
+								avatar={<Avatar src={item.imageUrl} icon={<UserOutlined />} size={120}/>}
 								title={<a style={{fontSize:25}}>{item.fullname}</a>}
-								description={<p style={{width:"50%", fontSize:20, wordBreak:"break-all"}}>{item.description}<br/>joined: {item.title}</p>}
+								description={<p style={{width:"70%", fontSize:20, wordBreak:"break-all"}}>{item.description}<br/>joined: {item.creationTime}</p>}
 							/>
 
 							<div>
-								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherDetail')}>Edit</Button>
+								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherDetail/'+item.fullname,state:{AdminAvatar:this.state.AdminAvatar,item:item}})}>Edit</Button>
 							</div>
 
 
@@ -115,9 +148,22 @@ class Body extends React.Component {
 					</Spin>
 				</ListWrapper>
                 <br/>
+
                 
 
 			</Body1Wrapper>
+			<Body2Wrapper>
+				<br />
+				<h1>Genyus Roundtable Is...</h1>
+				<p>·...An online peer-led focus group</p>
+				<p>·...Led by fellow survivors</p>
+				<p>·...About sharing what’s been most impactful and important to you in your experience</p>
+				<p>·...Aiming to pay it forward, and help others along their journeys!</p>
+				<br />
+				<br />
+			</Body2Wrapper>
+			</container>
+
 
 
 		)

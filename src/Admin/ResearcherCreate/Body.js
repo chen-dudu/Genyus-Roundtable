@@ -1,50 +1,85 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Body1Wrapper,SubmitButton,Body2Wrapper,TitleWrapper,BodyWrapper} from './ResearcherCreate.style';
+import {Body1Wrapper,SubmitButton,ProfileWrapper,TitleWrapper,BodyWrapper} from './ResearcherCreate.style';
 import Img from '../../img/Avatar.png';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
-import {Input, text,Avatar, Button} from 'antd';
+import {Input, text, Avatar, Button, Modal, Upload, message} from 'antd';
 import noteImg from "../../img/note.png";
-import {UserOutlined} from "@ant-design/icons";
+import {LoadingOutlined, PlusOutlined, UserOutlined} from "@ant-design/icons";
 import UserManager from "../../DataModel/UserModel/UserManager";
+import firebase from "firebase";
+import ImgCrop from "antd-img-crop";
 
 
-const CLASS_NAME = "Admin/ResearcherCreate/Body";
+
 const { TextArea } = Input;
+const createUser = firebase.functions().httpsCallable('createUser');
+const updateUserAvatar = firebase.functions().httpsCallable('updateUserAvatar');
+
+function getBase64(img, callback) {
+	const reader = new FileReader();
+	reader.addEventListener('load', () => callback(reader.result));
+	reader.readAsDataURL(img);
+}
+
+function beforeUpload(file) {
+	const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+	if (!isJpgOrPng) {
+		message.error('You can only upload JPG/PNG file!');
+	}
+	const isLt2M = file.size / 1024 / 1024 < 2;
+	if (!isLt2M) {
+		message.error('Image must smaller than 2MB!');
+	}
+	return isJpgOrPng && isLt2M;
+}
 
 
 class Body extends React.Component {
 	constructor(props) {
 		super(props);
-		this.signup = this.signup.bind(this);
 		this.onEmailEnter = this.onEmailEnter.bind(this);
 		this.onPasswordEnter = this.onPasswordEnter.bind(this);
 		this.onDescriptionEnter = this.onDescriptionEnter.bind(this);
 		this.onFullnameEnter = this.onFullnameEnter.bind(this);
 		this.state = {
-			img : Img,
-			Fullname: '',
-			description: '',
-			email:'',
-			password:'',
-			nickname:''
+			fullname : '',
+			description : '',
+			email : '',
+			password : '',
+			avatar : '',
+			Modalvisible : false,
+			confirmLoading : false,
+			loading: false,
+
 		};
 	}
-	signup(e) {
-		e.preventDefault();
-		console.log('information of a researcher', this.state);
 
-		// UserManager.signup(this.state.email, this.state.password, this.state.full_name, this.state.nick_name,"researcher", this.state.description)
-		// 	.then(response => {
-		// 		this.props.history.push('/Admin/ResearcherList');
-		// 	})
-		// 	.catch(err => {
-		// 		console.error(`${CLASS_NAME}| create | failed to create a researcher with email ${this.state.email}`);
-		// 		alert(err);
-		// 	});
-	}
+	handleChange = info => {
+		if (info.file.status === 'uploading') {
+			this.setState({ loading: true });
+			return;
+		}
+		if (info.file.status === 'done') {
+			// Get this url from response in real world.
+			console.log(info.file.originFileObj);
+			this.setState({
+				avatar : info.file.originFileObj
+			});
+			getBase64(info.file.originFileObj, imageUrl => {
+					// 用这个方法给imageUrl赋值
+					this.setState({
+						imageUrl,
 
+						loading: false,
+					});
+
+				},
+			);
+
+		}
+	};
 
 
 	onEmailEnter (e){
@@ -60,13 +95,35 @@ class Body extends React.Component {
 	}
 
 	onFullnameEnter(e) {
-		this.setState({Fullname: e.target.value});
+		this.setState({fullname: e.target.value});
 	}
 
+	showModal = () => {this.setState({Modalvisible: true,});};
+	handleModalOk = () => {
+		this.setState({
+			confirmLoading: true,
+		});
+		createUser({fullname: this.state.fullname, password :this.state.password,email :this.state.email,description :this.state.description, avatar:this.state.avatar})
+			.then(result => {
+				this.setState({Modalvisible: false, confirmLoading: false,});
+			}).catch(err => {
+				console.log("something wrong: ", err);
+				this.setState({confirmLoading: false,});
+		});
+
+	};
+	handleModalCancel = () => {this.setState({Modalvisible: false,});};
 
 
 
 	render(){
+		const { loading, imageUrl } = this.state;
+		const uploadButton = (
+			<div>
+				{loading ? <LoadingOutlined style={{ background: 'red' }} /> : <PlusOutlined />}
+				<div style={{ marginTop: 8 }}></div>
+			</div>
+		);
 		return(
 
 			<Body1Wrapper>
@@ -82,16 +139,40 @@ class Body extends React.Component {
 					<br />
 					<br />
 					<form>
+						<br />
+						<br />
 						<div align={'center'}>
 							<label htmlFor="Photo" style={{fontSize:"25px"}}>Photo</label>
 						</div>
-						<text>&emsp;&emsp;&emsp;&emsp;&emsp;</text>
-						<Avatar icon={<UserOutlined />}  size={150}/>
-						<text>&emsp;&emsp;&emsp;</text>
-						<Button style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" >Upload picture</Button>
+
+						<ProfileWrapper>
+
+							<ImgCrop rotate>
+								<Upload
+									name="avatar"
+									listType="picture-card"
+									className="avatar-uploader"
+									showUploadList={false}
+									action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+									beforeUpload={beforeUpload}
+									onChange={this.handleChange}
+								>
+									{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '150%', borderRadius: '100%' }} /> : uploadButton}
+								</Upload>
+							</ImgCrop>
+						</ProfileWrapper>
+
+
+						<text>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</text>
+						<text style={{ fontWeight:"bold",color: '#4682B4' }}>Click on the photo to change</text>
+
+
 
 						<br />
 						<br />
+						<br />
+						<br />
+
 						<div align={'center'}>
 							<label htmlFor="Full Name" style={{fontSize:"25px"}}>Full Name</label>
 						</div>
@@ -131,7 +212,20 @@ class Body extends React.Component {
 
 						<div>
 							<Button className="cancelButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Cancel</Button>
-							<Button className="confirmButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={this.signup}>Confirm</Button>
+							<Button className="confirmButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={this.showModal}>Confirm</Button>
+							<Modal
+								title="Confirm to create a new researcher?"
+								visible={this.state.Modalvisible}
+								onOk={this.handleModalOk}
+								confirmLoading={this.state.confirmLoading}
+								onCancel={this.handleModalCancel}
+							>
+								<p>Confirm information</p>
+								<p>Fullname: {this.state.fullname}</p>
+								<p>Description: {this.state.description}</p>
+								<p>Email: {this.state.email}</p>
+								<p>Password: {this.state.password}</p>
+							</Modal>
 						</div>
 						<br/>
 						<br/>

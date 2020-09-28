@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {HeaderWrapper,ImageWrapper,Seperator} from './ResearcherHomePage.style';
 
@@ -8,17 +8,18 @@ import Body from './Body.js';
 import { withRouter } from 'react-router-dom'
 import Header from './Header.js'
 
-class ResearcherHomePage extends React.Component {
-  render(){
+const ResearcherHomePage = props => {
+    const [image, setImage] = useState();
+
     return(
       <container>
-        <Header/>
-        <Body/>
-        <Footer/>
+          <Header image={image}></Header>
+          <Body setImage={setImage}></Body>
+          <Footer/>
       </container>
     )
   }
-}
+
 
 // ========================================
 export default withRouter(ResearcherHomePage);

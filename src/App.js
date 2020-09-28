@@ -33,7 +33,7 @@ function App(){
         <Route path="/Notification" component={Notification}></Route>
         <Route path="/StatusAndRewards" component={StatusAndRewards}></Route>
         <Route path="/Admin/ResearcherList" component={ResearcherList}/>
-        <Route path="/Admin/ResearcherDetail" component={ResearcherDetail}/>
+        <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
         <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
 
     </Router>

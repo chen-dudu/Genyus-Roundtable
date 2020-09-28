@@ -16,6 +16,16 @@ export const FooterWrapper = styled.div`
   
 `;
 
+export const ProfileWrapper = styled.div`
+    
+
+    position: absolute;
+    left: 25%;
+    top: 15%;
+
+   
+`;
+
 export const BodyWrapper = styled.div`
   width: 70%;
   height: 100%;
@@ -49,12 +59,12 @@ export const BodyWrapper = styled.div`
   .cancelButton{
     position: absolute;
     bottom: 30px;
-    left:20px;    
+    left:30px;    
   }
   .confirmButton{
     position: absolute;
     bottom: 30px;
-    right:20px;    
+    right:30px;    
   }
 
   > form > div {

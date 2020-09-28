@@ -17,22 +17,24 @@ export const FooterWrapper = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  margin-left: 0;
+   
+  
   > img {
     height: 130px;
   }
-  > p {
-    font-size: 40px;
-    font-weight: bold;
-    color:#4682B4;
-    margin-left:20px;
+  > Avatar{
+    position: absolute;
+    right:150px;
+    top: 25px;
   }
+  
   > Button {
     position: absolute;
     right:25px;
     top: 25px;
     
   }
+  
 `;
 
 export const Seperator = styled.div`
