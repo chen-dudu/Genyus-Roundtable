@@ -58,7 +58,8 @@ class Body extends React.Component {
 			description : this.props.history.location.state.item.description,
 			email : this.props.history.location.state.item.email,
 			password : this.props.history.location.state.item.password,
-			url: this.props.history.location.state.item.photoURL,
+			imageUrl : this.props.history.location.state.item.photoURL,
+
 
 			loading: false,
 			Modal1visible: false,
@@ -68,9 +69,12 @@ class Body extends React.Component {
 			confirmLoading: false,
 
 		}
-		console.log(this.state.uid);
-		this.getImage();
+        console.log(this.state.uid);
+		console.log(this.state.imageUrl);
+		// this.getImage();
+
 	}
+
 
 	handleChange = info => {
 		if (info.file.status === 'uploading') {
@@ -80,7 +84,7 @@ class Body extends React.Component {
 		if (info.file.status === 'done') {
 			// Get this url from response in real world.
 			console.log(info.file.originFileObj);
-			updateUserAvatar({uid :this.state.uid, avatar: info.file.originFileObj})
+			UserManager.updateAvatar(info.file.originFileObj,this.state.uid)
 				.then(response => {
 					console.log('update successful');
 				})
@@ -89,7 +93,6 @@ class Body extends React.Component {
 				});
 
 			getBase64(info.file.originFileObj, imageUrl => {
-					// 用这个方法给imageUrl赋值
 					this.setState({
 						imageUrl,
 						loading: false,
@@ -97,36 +100,9 @@ class Body extends React.Component {
 
 				},
 			);
-
 		}
 	};
 
-	getImage = () => {
-		getUser({uid :this.state.uid})
-			.then(user => {
-				console.log('getCurrentUser successful');
-				console.log('photourl:' + user.photoURL);
-				this.setState({full_name: user.fullname, nick_name: user.nickname});
-				console.log("PrintFullname!!!!!!!!!!!!!",user.fullname);
-				console.log("PrintNickname!!!!!!!!!!!!!",user.nickname);
-
-				if (user.photoURL) {
-					UserManager.getAvatar(user.photoURL)
-						.then(photo => {
-							console.log('getAvatar successful');
-							console.log('setImage successful');
-							this.setState({imageUrl: photo});
-
-						})
-						.catch(error => {
-							console.log(error);
-						});
-				}
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	};
 
 	onFullNameEnter(e) {
 		this.setState({fullname: e.target.value});
@@ -204,7 +180,8 @@ class Body extends React.Component {
 	handleModal4Cancel = () => {this.setState({Modal4visible: false,});};
 
 	render(){
-		const { loading, imageUrl } = this.state;
+		const { loading, imageUrl} = this.state;
+
 		const uploadButton = (
 			<div>
 				{loading ? <LoadingOutlined style={{ background: 'red' }} /> : <PlusOutlined />}
@@ -344,8 +321,8 @@ class Body extends React.Component {
 
 
 						<div>
-							<Button className="cancelButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Cancel</Button>
-							<Button className="confirmButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Confirm</Button>
+							<Button className="backButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Back</Button>
+
 						</div>
 						<br/>
 						<br/>

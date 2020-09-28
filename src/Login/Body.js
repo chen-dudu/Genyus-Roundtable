@@ -26,8 +26,16 @@ class Body extends React.Component {
             .then(userType => {
                 // redirect to user home page
                 console.info(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
-                this.props.history.push("users");
 
+                if (userType == "participant") {
+                    this.props.history.push("users");
+                }
+                else if (userType == "admin") {
+                    this.props.history.push("Admins");
+                }
+                else {
+                    this.props.history.push("Researchers");
+                }
             })
             .catch(err => {
                 console.error(`${CLASS_NAME} | login | failed to login the user with email ${this.state.email}`);
@@ -96,6 +104,7 @@ class Body extends React.Component {
 
                 <br></br>
                 <Button type="text" danger onClick={this.handleChange}>Don't have an account? Sign up</Button>
+
                 <br />
                 <br />
             </BodyWrapper>

@@ -46,10 +46,10 @@ export const BodyWrapper = styled.div`
     font-size: 30px;
     
   }
-  .cancelButton{
+  .backButton{
     position: absolute;
     bottom: 30px;
-    left:30px;    
+    left:40%;    
   }
   .confirmButton{
     position: absolute;

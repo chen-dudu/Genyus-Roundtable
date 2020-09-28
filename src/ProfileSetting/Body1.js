@@ -51,7 +51,6 @@ class UploadTrigger extends React.Component {
 				});
 
 			getBase64(info.file.originFileObj, imageUrl => {
-				// 用这个方法给imageUrl赋值
 				this.setState({
 					imageUrl,
 					loading: false,
