@@ -205,6 +205,10 @@ export default {
      */
     async updateTimeSlots(sid, slots) {
         try {
+            let slots = [];
+            slots.forEach(slot => {
+                slots.unshift(firebase.firestore.Timestamp.fromDate(slot));
+            });
             let updateFeedback = await sDocs.doc(sid).update({timeSlots: slots});
             console.info(`${CLASS_NAME} | updateTimeSlots | successfully update time slots on DB, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
