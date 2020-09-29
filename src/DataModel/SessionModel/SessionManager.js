@@ -296,6 +296,11 @@ export default {
         }
     },
 
+    /**
+     * a method used to retrieve all session records from DB
+     * @return {Promise<Session[]>} upon successful retrieval, a promise with resolve value of an array of sessions is returned
+     *                              upon failed retrieval, a promise with reject value of received error message is returned
+     */
     async getAllSessions() {
         try {
             let queryResult = await sDocs.get();
@@ -318,7 +323,7 @@ export default {
                 let participants = doc.get('participants');
                 let notifications = doc.get('notifications');
                 let session = new Session(sid, title, description, duration, youtubeLink, zoomLink, timeSlots, questions, status, researchers, participants, notifications);
-                sessions.unshift(session);
+                sessions.unshift(Promise.resolve(session));
             })
             console.info(`${CLASS_NAME} | getAllSessions | finished data pre-processing, ready to return`);
             return Promise.all(sessions);
