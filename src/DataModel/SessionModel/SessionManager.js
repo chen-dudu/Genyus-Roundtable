@@ -21,7 +21,7 @@ export default {
         try {
             let toSend = converter(session);
             let createFeedback = await sDocs.add(toSend);
-            console.info(`${CLASS_NAME} | createSession | new session has been successfully created in DB, id assigned is: ${createFeedback.id}`);
+            console.debug(`${CLASS_NAME} | createSession | new session has been successfully created in DB, id assigned is: ${createFeedback.id}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | createSession | failed to create a new session on DB, received error message: ${err.message}`);
@@ -54,7 +54,7 @@ export default {
     async getSession(sid) {
         try {
             let sDoc = await sDocs.doc(sid).get();
-            console.info(`${CLASS_NAME} | getSession | successfully retrieved the needed session from DB`);
+            console.debug(`${CLASS_NAME} | getSession | successfully retrieved the needed session from DB`);
             let timeSlots = [];
             sDoc.get('timeSlots').forEach(key => {
                 timeSlots.unshift(key.toDate());
@@ -84,7 +84,7 @@ export default {
                 let session = await this.getNotification(sids[i]);
                 sessions.unshift(Promise.resolve(session));
             }
-            console.info(`${CLASS_NAME} | getSessions | successfully get all sessions from DB`);
+            console.debug(`${CLASS_NAME} | getSessions | successfully get all sessions from DB`);
             return Promise.all(sessions);
         } catch (err) {
             console.error(`${CLASS_NAME} | getSessions | failed to get sessions, received error message: ${err}`);
@@ -102,7 +102,7 @@ export default {
     async updateTitle(sid, title) {
         try {
             let updateFeedback = await sDocs.doc(sid).update({title: title});
-            console.info(`${CLASS_NAME} | updateTitle | successfully update title on DB, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateTitle | successfully update title on DB, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateTitle | failed to update title, received error message: ${err.message}`);
@@ -120,7 +120,7 @@ export default {
     async updateResearcher(sid, researchers) {
         try {
             let updateFeedback = await sDocs.doc(sid).update({researchers: researchers});
-            console.info(`${CLASS_NAME} | updateResearchers | successfully update researchers on DB, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateResearchers | successfully update researchers on DB, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateResearchers | failed to update researchers, received error message: ${err.message}`);
@@ -138,7 +138,7 @@ export default {
     async updateDuration(sid, duration) {
         try {
             let updateFeedback = await sDocs.doc(sid).update({duration: duration});
-            console.info(`${CLASS_NAME} | updateDuration | successfully update duration on DB, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateDuration | successfully update duration on DB, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateDuration | failed to update duration, received error message: ${err.message}`);
@@ -156,7 +156,7 @@ export default {
     async updateYoutubeLink(sid, link) {
         try {
             let updateFeedback = await sDocs.doc(sid).update({youtubeLink: link});
-            console.info(`${CLASS_NAME} | updateYoutubeLink | successfully update youtube link on DB, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateYoutubeLink | successfully update youtube link on DB, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateYoutubeLink | failed to update youtube link, received error message: ${err.message}`);
@@ -174,7 +174,7 @@ export default {
     async updateDescription(sid, description) {
         try {
             let updateFeedback = await sDocs.doc(sid).update({description: description});
-            console.info(`${CLASS_NAME} | updateDescription | successfully update description on DB, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateDescription | successfully update description on DB, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateDescription | failed to update description, received error message: ${err.message}`);
@@ -192,7 +192,7 @@ export default {
     async updateZoomLink(sid, link) {
         try {
             let updateFeedback = await sDocs.doc(sid).update({zoomLink: link});
-            console.info(`${CLASS_NAME} | updateZoomLink | successfully update zoom link on DB, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateZoomLink | successfully update zoom link on DB, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateZoomLink | failed to update zoom link, received error message: ${err.message}`);
@@ -214,7 +214,7 @@ export default {
                 slots.unshift(firebase.firestore.Timestamp.fromDate(slot));
             });
             let updateFeedback = await sDocs.doc(sid).update({timeSlots: slots});
-            console.info(`${CLASS_NAME} | updateTimeSlots | successfully update time slots on DB, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateTimeSlots | successfully update time slots on DB, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateTimeSlots | failed to update time slot, received error message: ${err.message}`);
@@ -232,7 +232,7 @@ export default {
     async updateQuestions(sid, questions) {
         try {
             let updateFeedback = await sDocs.doc(sid).update({questions: questions});
-            console.info(`${CLASS_NAME} | updateQuestions | successfully update questions on DB, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateQuestions | successfully update questions on DB, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateQuestions | failed to update questions, received error message: ${err.message}`);
@@ -255,7 +255,7 @@ export default {
             let participants = sDoc.get('participants');
             participants.unshift(uid);
             let updateFeedback = await sRef.update({participants: participants});
-            console.info(`${CLASS_NAME} | signup | successfully sign up a participant for the given session, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | signup | successfully sign up a participant for the given session, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | signup | failed to sign up a participant for the given sesison, error message received: ${err.message} `);
@@ -304,7 +304,7 @@ export default {
     async getAllSessions() {
         try {
             let queryResult = await sDocs.get();
-            console.info(`${CLASS_NAME} | getAllSessions | successfully retrieve all session records from firestore, start pre-processing`);
+            console.debug(`${CLASS_NAME} | getAllSessions | successfully retrieve all session records from firestore, start pre-processing`);
             let sessions = [];
             queryResult.docs.forEach(doc => {
                 let sid = doc.id;
@@ -325,7 +325,7 @@ export default {
                 let session = new Session(sid, title, description, duration, youtubeLink, zoomLink, timeSlots, questions, status, researchers, participants, notifications);
                 sessions.unshift(Promise.resolve(session));
             })
-            console.info(`${CLASS_NAME} | getAllSessions | finished data pre-processing, ready to return`);
+            console.debug(`${CLASS_NAME} | getAllSessions | finished data pre-processing, ready to return`);
             return Promise.all(sessions);
         } catch (err) {
             console.error(`${CLASS_NAME} | getAllSessions | failed to retrieve session record from firestore, error: ${err}`);
