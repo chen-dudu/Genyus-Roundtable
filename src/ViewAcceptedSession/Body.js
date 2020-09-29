@@ -36,7 +36,8 @@ class Body extends React.Component {
 			zoomLink: null,
 			researcherFullName: null,
 			researcherDes: null,
-			researcherAvatar: null
+			researcherAvatar: null,
+			notifications: [1]
 		}
 		console.log(this.state.nid);
 		this.getSession();
@@ -85,6 +86,7 @@ class Body extends React.Component {
 				})
 				console.log(this.state.timeslot);
 				console.log(this.state.researcher);
+
 				UserManager.getUser(this.state.researcher[0])
 					.then(res => {
 						console.log('get Researcher successful');
@@ -99,6 +101,30 @@ class Body extends React.Component {
 					}).catch(error => {
 						console.log(error);
 				});
+
+				console.log("start to get notis");
+				console.log(typeof(result.notifications))
+				console.log(result.notifications)
+				let list2 = [];
+				result.notifications.forEach(function (item,index,array){
+					if(item){
+						list2.unshift(item);
+					}
+				});
+				console.log("check list");
+				console.log(list2);
+				NotificationManager.getNotifications(list2)
+					.then(notis => {
+						console.log('get notifications successful');
+						console.log(notis);
+
+						this.setState({
+							notifications: notis
+						})
+					}).catch(error => {
+					console.log(error);
+				});
+
 			}).catch(error => {
 			console.log(error);
 		});
@@ -335,6 +361,33 @@ class Body extends React.Component {
 
 					<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Event Updates:</h1>
 					<br></br> <br></br>
+
+					<ListWrapper>
+						<Spin spinning={this.state.loading}>
+							<List
+								bordered={false}
+								itemLayout="vertical"
+								dataSource={this.state.notifications}
+								renderItem={item => (
+									<div>
+										<List.Item style={{borderColor:'red', borderWidth:4,borderStyle:'solid',borderRadius:20}}>
+											<h1 style={{color: "red", fontSize: "20px", textAlign:"left", float:"left", marginLeft:'2%'}}>{item.title}</h1>
+											<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right", marginRight:'2%'}}>{this.formatDate(item.timeReceived)}</h1>
+											<br></br>
+											<br></br>
+											<p style={{color: "black", fontSize: "20px", marginLeft:'2%'}}>{item.description}</p>
+											<Button style={{background: "#3399ff", borderRadius: 5,
+												width: "20%", height: 40, fontWeight: "bold",
+												boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+												fontSize: 15, color: "white", marginLeft:'2%'}}
+													onClick={() => this.props.history.push({pathname: '/ViewAcceptedSession/'+item.nid, state:{item: item}})}>Go To Event Page</Button>
+										</List.Item>
+										<br/><br/></div>
+								)}
+							/>
+						</Spin>
+					</ListWrapper>
+
 					<Card style={{width: 1000, borderColor:"red", background: "transparent",
 						borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>
 						<h1 style={{color: "red", fontSize: "20px", textAlign:"left",
