@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import './App.css';
+
 import {
   BrowserRouter as Router,
   Route
@@ -10,16 +11,23 @@ import Login from './Login/Login'
 import Notification from './Notification/Notification'
 import ViewAcceptedSession from "./ViewAcceptedSession/ViewAcceptedSession";
 import Users from './Users/Users'
+
+import ResearcherList from './Admin/ResearcherList/ResearcherHomePage'
+import ResearcherDetail from './Admin/ResearcherDetail/ResearcherDetail'
+import ResearcherCreate from './Admin/ResearcherCreate/ResearcherCreate'
+
 import ProfileSetting from './ProfileSetting/ProfileSetting'
 // import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
 import Admins from './Admins/Admins'
 import Researchers from './Researchers/Researchers'
 
 
+
 function App(){
   // const [nickName, setNickName] = useState("");
   return (
     <Router>
+
         <Route path="/HomePage" component={HomePage}></Route>
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Login" component={Login}></Route>
@@ -30,8 +38,15 @@ function App(){
         <Route path="/Researchers" component={Researchers}></Route>
         <Route path="/Notification" component={Notification}></Route>
 
+        {/*<Route path="/StatusAndRewards" component={StatusAndRewards}></Route>*/}
+        <Route path="/Admin/ResearcherList" component={ResearcherList}/>
+        <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
+        <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
+
+        {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
+
         <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
-        {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}8
+        {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
     </Router>
   );
 }

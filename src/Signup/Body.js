@@ -44,6 +44,7 @@ class Body extends React.Component{
             });
     }
 
+
     onEmailEnter(e) {
         this.setState({email: e.target.value});
     }
@@ -140,5 +141,6 @@ class Body extends React.Component{
 }
 
 Body.propTypes = {};
+
 
 export default withRouter(Body);

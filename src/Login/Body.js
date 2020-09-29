@@ -101,6 +101,7 @@ class Body extends React.Component {
                         {/*       type={'submit'} value={'Log in'} />*/}
                     </div>
                 </form>
+
                 <br></br>
                 <Button type="text" danger onClick={this.handleChange}>Don't have an account? Sign up</Button>
 
@@ -158,5 +159,6 @@ class Body extends React.Component {
 
 
 // Body.propTypes = {};
+
 
 export default withRouter(Body);

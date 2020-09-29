@@ -32,7 +32,8 @@ export default {
                 let notifications = userDoc.get('notifications');
                 let type = userDoc.get('type');
                 let description = userDoc.get('description');
-                currentUser = new User(current.uid, current.email, current.displayName, fullname, nickname, current.phoneNumber, current.photoURL, current.providerId, type, creationTime, description, sessions, notifications);
+                let photoURL = userDoc.get('photoURL');
+                currentUser = new User(current.uid, current.email, current.displayName, fullname, nickname, current.phoneNumber, photoURL, current.providerId, type, creationTime, description, sessions, notifications);
                 // return current;
                 return Promise.resolve(currentUser);
             } catch (err) {
@@ -91,7 +92,7 @@ export default {
             let updateProfileFeedback = await signupFeedback.user.updateProfile({displayName: nickname});
             console.info(`${CLASS_NAME} | signup | feedback from updating display name: ${updateProfileFeedback}`);
             let uid = signupFeedback.user.uid;
-            let storeFeedback = await userDocs.doc(uid).set({fullname: fullname, nickname: nickname, type: type, description: description, sessions: [], notifications: []});
+            let storeFeedback = await userDocs.doc(uid).set({fullname: fullname, nickname: nickname, type: type, description: description, sessions: [], notifications: [], photoURL: signupFeedback.user.photoURL, email: email});
             console.info(`${CLASS_NAME} | signup | feedback from firestore: ${storeFeedback}`);
             await auth.currentUser.sendEmailVerification();
             console.info(`${CLASS_NAME} | signup | verification email has been sent to user`);
@@ -185,18 +186,21 @@ export default {
     /**
      * a method used to update the avatar of the user
      * @param avatarFile the new avatar file which will be stored in the database
-     * @returns {Promise<string>} upon successful update, a promise wit resolve value of undefined is returned.
+     * @param uid        the uid of the user whose avatar is to be updated
+     * @returns {Promise<undefined|string>} upon successful update, a promise wit resolve value of undefined is returned.
      *                            upon failed update, a promise with reject value of error message string is returned.
      */
-    async updateAvatar (avatarFile) {
+    async updateAvatar (avatarFile, uid=null) {
         try {
-            let currentUser = auth.currentUser;
-            if (!currentUser) {
-                // current is null
-                console.error(`${CLASS_NAME} | updateAvatar | failed to retrieve the current user to perform update`);
-                return Promise.reject('current user is null');
+            if (!uid) {
+                let currentUser = auth.currentUser;
+                if (!currentUser) {
+                    // current is null
+                    console.error(`${CLASS_NAME} | updateAvatar | failed to retrieve the current user to perform update`);
+                    return Promise.reject('current user is null');
+                }
+                uid = auth.currentUser.uid;
             }
-            let uid = auth.currentUser.uid;
             let path = 'avatars/' + uid + '/' + avatarFile.name;
             let storageRef = storage.ref(path);
             // put is not async
@@ -214,15 +218,25 @@ export default {
                 function complete () {
                     console.info(`${CLASS_NAME} | updateAvatar | uploading successful, start updating user property`);
                     // now, update the user's photoURL property
-                    auth.currentUser.updateProfile({photoURL: path})
-                        .then(value => {
-                            console.info(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${value}`);
+                    userDocs.doc(uid).update({photoURL: path})
+                        .then(updateFeedback => {
+                            console.info(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${updateFeedback}`);
                             return Promise.resolve(undefined);
                         })
                         .catch(err => {
                             console.error(`${CLASS_NAME} | | failed to update user property photoURL, received error message: ${err.message}`);
                             return Promise.reject(err.message);
-                        });
+                        })
+
+                    // auth.currentUser.updateProfile({photoURL: path})
+                    //     .then(value => {
+                    //         console.info(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${value}`);
+                    //         return Promise.resolve(undefined);
+                    //     })
+                    //     .catch(err => {
+                    //         console.error(`${CLASS_NAME} | | failed to update user property photoURL, received error message: ${err.message}`);
+                    //         return Promise.reject(err.message);
+                    //     });
                 }
             );
         } catch (err) {
