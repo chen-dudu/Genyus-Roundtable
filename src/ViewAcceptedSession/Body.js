@@ -311,13 +311,15 @@ class Body extends React.Component {
 								renderItem={item => (
 									<div>
 										<List.Item style={{borderColor:'red', borderWidth:0,borderStyle:'solid',borderRadius:20}}>
-											<h3 style={{marginBottom:"-10px"}}>{this.formatDate(item)}</h3>
+											<h3 style={{fontSize:"20px", marginLeft:"5%", color: "black", marginBottom:"-10%"}}>{this.formatDate(item)}</h3>
 										</List.Item>
 									</div>
 								)}
 							/>
 						</Spin>
 					</ListWrapper>
+					<br/>
+					<br/>
 
 					{/*<h3 style={{marginBottom:"-10px"}}>4/5/2020 - 6pm-8pm</h3>*/}
 					{/*<h3 style={{marginBottom:"-10px"}}>6/5/2020 - 10am - 8am</h3>*/}

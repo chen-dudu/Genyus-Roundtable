@@ -84,13 +84,21 @@ class Body extends React.Component {
 		let month = '' + (d.getMonth() + 1);
 		let day = '' + d.getDate();
 		let year = d.getFullYear();
+		let hour = d.getHours();
+		let min = ('0'+d.getMinutes()).slice(-2);
 
 		if (month.length < 2)
 			month = '0' + month;
 		if (day.length < 2)
 			day = '0' + day;
 
-		return [year, month, day].join('-');
+		let res = [year, month, day].join('-');
+		res = res.concat(' ');
+		res = res.concat(hour.toString());
+		res = res.concat(':');
+		res = res.concat(min.toString());
+
+		return res;
 	}
 
 	render() {
