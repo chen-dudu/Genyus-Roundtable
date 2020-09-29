@@ -184,6 +184,34 @@ export default {
     },
 
     /**
+     * a method used to retrieve a record from DB for user with the specified uid
+     * @param uid the id of the user whose record is to be retrieved from DB
+     * @return {Promise<Object|String>} upon successful retrieval, a promise with resolve of an object containing all relevant data is returned
+     *                                  upon failed retrieval, a promise with reject value of the received error message is returned
+     */
+    async getUser(uid) {
+        try {
+            let doc = await userDocs.doc(uid).get();
+            console.info(`${CLASS_NAME} | getUser | successfully retrieve user record from firestore for uid ${uid}`);
+            let user = {
+                email: doc.get('email'),
+                photoURL: doc.get('photoURL'),
+                description: doc.get('description'),
+                fullname: doc.get('fullname'),
+                nickname: doc.get('nickname'),
+                notifications: doc.get('notifications'),
+                sessions: doc.get('sessions'),
+                type: doc.get('type')
+            };
+            console.info(`${CLASS_NAME} | getUser | finished pre-processing for uid ${uid}, data is ready to be returned`);
+            return Promise.resolve(user);
+        } catch (err) {
+            console.error();
+            return Promise.reject(err);
+        }
+    },
+
+    /**
      * a method used to update the avatar of the user
      * @param avatarFile the new avatar file which will be stored in the database
      * @param uid        the uid of the user whose avatar is to be updated
