@@ -24,7 +24,7 @@ export default {
     async getNotification(nid) {
         try {
             let noDoc = await noDocs.doc(nid).get();
-            console.info(`${CLASS_NAME} | getNotification | successfully retrieve notification data from DB`);
+            console.debug(`${CLASS_NAME} | getNotification | successfully retrieve notification data from DB`);
             let timeReceived = noDoc.get('timeReceived').toDate();
             let newNotification = new Notification(noDoc.get('title'), noDoc.get('description'), timeReceived, noDoc.get('isRead'), nid, noDoc.get('sid'));
             return Promise.resolve(newNotification);
@@ -65,7 +65,7 @@ export default {
             let toSend = converter(notification);
             let noFeedback = await noDocs.add(toSend);
             let noID = noFeedback.id;
-            console.info(`${CLASS_NAME} | sendNotification | successfully add the notification to DB, new id ${noID}`);
+            console.debug(`${CLASS_NAME} | sendNotification | successfully add the notification to DB, new id ${noID}`);
             let sid = notification.sid;
             // first add the new notification to the session's notification list
             let sessionRef = SessionManager.getSessionRef(sid);
@@ -83,13 +83,13 @@ export default {
             }
 
             let sessionUpdateFeedback = await sessionRef.update({notifications: notifications});
-            console.info(`${CLASS_NAME} | sendNotification | successfully update session's notification list`);
+            console.debug(`${CLASS_NAME} | sendNotification | successfully update session's notification list`);
 
             // then add this new notification to all signed up participants
             // first use sid to get participant list
             // let sessionFeedback = await sessionDocs.doc(sid).get();
             let participants = sessionDoc.get('participants');
-            console.info(`${CLASS_NAME} | sendNotification | successfully get the participant list from DB`);
+            console.debug(`${CLASS_NAME} | sendNotification | successfully get the participant list from DB`);
             // start update each user's notification list
             for (let i = 0; i < participants.length; i++) {
                 let id = participants[i];
@@ -104,9 +104,9 @@ export default {
                 let newList = userDoc.get('notifications').unshift(noID);
                 // and then update the database
                 await useRef.update({notifications: newList});
-                console.info(`${CLASS_NAME} | sendNotification | successfully send notification to user with id ${id}`);
+                console.debug(`${CLASS_NAME} | sendNotification | successfully send notification to user with id ${id}`);
             }
-            console.info(`${CLASS_NAME} | sendNotification | notification has been sent to all signed up participants`);
+            console.debug(`${CLASS_NAME} | sendNotification | notification has been sent to all signed up participants`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | sendNotification | failed to send notification, received error message: ${err.message}`);
@@ -141,7 +141,7 @@ export default {
             }
             // push new data to DB (update session)
             let sessionUpdateFeedback = await sessionRef.update({notifications: notifications});
-            console.info(`${CLASS_NAME} | deleteNotification | successfully update session's notification list`);
+            console.debug(`${CLASS_NAME} | deleteNotification | successfully update session's notification list`);
 
             // then, move on to update participants
             let participants = sessionDoc.get('participants');
@@ -164,7 +164,7 @@ export default {
                 // push updated list to DB
                 await userRef.update({notifications: noList});
             }
-            console.info(`${CLASS_NAME} | deleteNotification | notification has been deleted from associated session and participant's notification list`);
+            console.debug(`${CLASS_NAME} | deleteNotification | notification has been deleted from associated session and participant's notification list`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | deleteNotification | failed to delete notification, received error message: ${err.message}`);
