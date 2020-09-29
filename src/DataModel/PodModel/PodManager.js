@@ -19,7 +19,7 @@ export default {
         try {
             let toSend = converter(pod);
             let feedback = await podDocs.add(toSend);
-            console.info(`${CLASS_NAME} | createPod | successfully created a new pod on DB, with id ${feedback.id}`);
+            console.debug(`${CLASS_NAME} | createPod | successfully created a new pod on DB, with id ${feedback.id}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | createPod | failed to create new pod on DB, received error message ${err.message}`);
@@ -36,7 +36,7 @@ export default {
     async getPod(pid) {
         try {
             let pod = await podDocs.doc(pid).get();
-            console.info(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
+            console.debug(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
             return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('description'), pod.get('researcher'), pod.get('sessions')));
         } catch (err) {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
@@ -52,7 +52,7 @@ export default {
     async getAllPods() {
         try {
             let queryResult = await podDocs.get();
-            console.info(`${CLASS_NAME} | getAllPods| successfully retrievel all pod records from firestore, start pre-processing`);
+            console.debug(`${CLASS_NAME} | getAllPods| successfully retrievel all pod records from firestore, start pre-processing`);
             let pods = [];
             queryResult.docs.forEach(doc => {
                 let pid = doc.id;
@@ -63,7 +63,7 @@ export default {
                 let pod = new Pod(pid, title, description, researcher, sessions);
                 pods.unshift(Promise.resolve(pod));
             });
-            console.info(`${CLASS_NAME} | getAllPods | finished pre-processing, data is ready to be returned`);
+            console.debug(`${CLASS_NAME} | getAllPods | finished pre-processing, data is ready to be returned`);
             return Promise.all(pods);
         } catch (err) {
             console.error(`${CLASS_NAME} | getAllPods | failed to retrieve pod records from firestore, error: ${err}`);
