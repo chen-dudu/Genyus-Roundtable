@@ -21,7 +21,7 @@ export default {
         try {
             let toSend = convertor(application);
             let feedback = await appDocs.add(toSend);
-            console.info(`${CLASS_NAME} | applyForSession | successfully process the application on DB`);
+            console.debug(`${CLASS_NAME} | applyForSession | successfully process the application on DB`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | applyForSession | failed to process the application on DB, received error message ${err.message}`);
@@ -38,7 +38,7 @@ export default {
     async getApplication(aid) {
         try {
             let application = await appDocs.doc(aid).get();
-            console.info(`${CLASS_NAME} | getApplication | successfully retrieved the needed application from DB`);
+            console.debug(`${CLASS_NAME} | getApplication | successfully retrieved the needed application from DB`);
             return Promise.resolve(new Application(application.id, application.get('applicant'), application.get('session'), application.get('status'), application.get('optional')));
         } catch (err) {
             console.error(`${CLASS_NAME} | getApplication | failed to retrieved the needed application from DB, received eror message ${err.message}`);
@@ -55,12 +55,12 @@ export default {
         try {
             let applications = [];
             let docs = await appDocs.get();
-            console.info(`${CLASS_NAME} | getApplications | successfully retrieve the application list from DB, start doing pre-processing`);
+            console.debug(`${CLASS_NAME} | getApplications | successfully retrieve the application list from DB, start doing pre-processing`);
             docs.forEach(doc => {
                 let newApp = new Application(doc.id, doc.get('applicant'), doc.get('session'), doc.get('status'), doc.get('optional'));
                 applications.unshift(Promise.resolve(newApp))
             });
-            console.info(`${CLASS_NAME} | getApplications | finished pre-processing, data is ready to be returned to caller`);
+            console.debug(`${CLASS_NAME} | getApplications | finished pre-processing, data is ready to be returned to caller`);
             return Promise.all(applications);
         } catch (err) {
             console.error(`${CLASS_NAME} | getApplications | failed to retrieve application list from DB, received error message ${err.message}`);
@@ -77,7 +77,7 @@ export default {
         try {
             let applications = [];
             let docs = await appDocs.get();
-            console.info(`${CLASS_NAME} | getPendingApplication | successfully retrieve the application list from DB, start doing pre-processing`);
+            console.debug(`${CLASS_NAME} | getPendingApplication | successfully retrieve the application list from DB, start doing pre-processing`);
             docs.forEach(doc => {
                 let status = doc.get('status');
                 if (status === 'pending') {
@@ -85,7 +85,7 @@ export default {
                     applications.unshift(Promise.resolve(newApp))
                 }
             });
-            console.info(`${CLASS_NAME} | getPendingApplication | finished pre-processing, data is ready to be returned to caller`);
+            console.debug(`${CLASS_NAME} | getPendingApplication | finished pre-processing, data is ready to be returned to caller`);
             return Promise.all(applications);
         } catch (err) {
             console.error(`${CLASS_NAME} | getPendingApplication | failed to retrieve application list from DB, received error message ${err.message}`);
@@ -102,7 +102,7 @@ export default {
         try {
             let applications = [];
             let docs = await appDocs.get();
-            console.info(`${CLASS_NAME} | getApprovedApplication | successfully retrieve the application list from DB, start doing pre-processing`);
+            console.debug(`${CLASS_NAME} | getApprovedApplication | successfully retrieve the application list from DB, start doing pre-processing`);
             docs.forEach(doc => {
                 let status = doc.get('status');
                 if (status === 'approved') {
@@ -110,7 +110,7 @@ export default {
                     applications.unshift(Promise.resolve(newApp))
                 }
             });
-            console.info(`${CLASS_NAME} | getApprovedApplication | finished pre-processing, data is ready to be returned to caller`);
+            console.debug(`${CLASS_NAME} | getApprovedApplication | finished pre-processing, data is ready to be returned to caller`);
             return Promise.all(applications);
         } catch (err) {
             console.error(`${CLASS_NAME} | getApprovedApplication | failed to retrieve application list from DB, received error message ${err.message}`);
@@ -127,7 +127,7 @@ export default {
         try {
             let applications = [];
             let docs = await appDocs.get();
-            console.info(`${CLASS_NAME} | getRejectedApplication | successfully retrieve the application list from DB, start doing pre-processing`);
+            console.debug(`${CLASS_NAME} | getRejectedApplication | successfully retrieve the application list from DB, start doing pre-processing`);
             docs.forEach(doc => {
                 let status = doc.get('status');
                 if (status === 'rejected') {
@@ -135,7 +135,7 @@ export default {
                     applications.unshift(Promise.resolve(newApp))
                 }
             });
-            console.info(`${CLASS_NAME} | getRejectedApplication | finished pre-processing, data is ready to be returned to caller`);
+            console.debug(`${CLASS_NAME} | getRejectedApplication | finished pre-processing, data is ready to be returned to caller`);
             return Promise.all(applications);
         } catch (err) {
             console.error(`${CLASS_NAME} | getRejectedApplication | failed to retrieve application list from DB, received error message ${err.message}`);
@@ -153,7 +153,7 @@ export default {
         try {
             // first update application status
             let feedback = await appDocs.doc(aid).update({status: 'approved'});
-            console.info(`${CLASS_NAME} | approve | successfully update application status on DB`);
+            console.debug(`${CLASS_NAME} | approve | successfully update application status on DB`);
 
             let application = await appDocs.doc(aid).get();
             let uid = application.applicant;
@@ -161,19 +161,19 @@ export default {
             let userRef = UserManager.getUserRef(uid);
             let participant = await userRef.get();
             let session = await SessionManager.getSession(sid);
-            console.info(`${CLASS_NAME} | approve | finished setup for update`);
+            console.debug(`${CLASS_NAME} | approve | finished setup for update`);
 
             // then add this session to participant's session list
             let session_list = participant.get('sessions');
             session_list.unshift(sid);
             await userRef.update({sessions: session_list});
-            console.info(`${CLASS_NAME} | approve | successfully updated participant's session list`);
+            console.debug(`${CLASS_NAME} | approve | successfully updated participant's session list`);
 
             // then move on to add this participant to session's participant list
             let participant_list = session.get('participants');
             participant_list.unshift(uid);
             await SessionManager.getSessionRef(sid).update({participants: participant_list});
-            console.info(`${CLASS_NAME} | approve | successfully updated session's participant list`);
+            console.debug(`${CLASS_NAME} | approve | successfully updated session's participant list`);
 
             return Promise.resolve(undefined);
         } catch (err) {
@@ -192,7 +192,7 @@ export default {
         try {
             // update application status, nothing else needs to do
             let feedback = await appDocs.doc(aid).update({status: 'rejected'});
-            console.info(`${CLASS_NAME} | reject | the given application has been successfully rejected on DB`);
+            console.debug(`${CLASS_NAME} | reject | the given application has been successfully rejected on DB`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | reject | failed to process the application rejection, received error message ${err.message}`);
