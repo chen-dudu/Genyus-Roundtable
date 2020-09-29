@@ -30,10 +30,13 @@ class Body extends React.Component {
 			sessionDur: null,
 			sessionQues: {},
 			researcher: null,
-			timeslot: null,
+			timeslot: [],
 			sessionTitle: null,
 			youtubeLink: null,
-			zoomLink: null
+			zoomLink: null,
+			researcherFullName: null,
+			researcherDes: null,
+			researcherAvatar: null
 		}
 		console.log(this.state.nid);
 		this.getSession();
@@ -48,23 +51,54 @@ class Body extends React.Component {
 				console.log(typeof(result.duration));
 				console.log(typeof(result.questions));
 				console.log(result.timeSlots);
+				console.log(typeof(result.timeSlots));
 				Object.keys(result.questions).forEach(key => {
 					console.log("get questions key value");
 					console.log(typeof(key));
 					console.log(key);
 					console.log(result.questions[key]);
 				})
+				Object.values(result.timeSlots).forEach(value => {
+					console.log("get timeslot key value");
+					console.log(typeof(value));
+					console.log(value);
+				})
+				let list = []
+				result.timeSlots.forEach(function (item,index,array){
+					if(item){
+						list.unshift(item);
+					}
+				});
+				console.log("check list");
+				console.log(list);
+
 				this.setState({
 					sessionDes: result.description,
 					sessionDur: result.duration,
 					sessionQues: result.questions,
 					researcher: result.researchers,
-					timeslot: result.timeSlots,
+					timeslot: list,
 					sessionTitle: result.title,
 					youtubeLink: result.youtubeLink,
 					zoomLink: result.zoomLink,
 					loading: false
 				})
+				console.log(this.state.timeslot);
+				console.log(this.state.researcher);
+				UserManager.getUser(this.state.researcher[0])
+					.then(res => {
+						console.log('get Researcher successful');
+						console.log(typeof(res));
+						console.log(Object.keys(res));
+						console.log(Object.values(res));
+						this.setState({
+							researcherFullName: Object.values(res)[3],
+							researcherDes: Object.values(res)[2],
+							researcherAvatar: Object.values(res)[1]
+						})
+					}).catch(error => {
+						console.log(error);
+				});
 			}).catch(error => {
 			console.log(error);
 		});
@@ -76,18 +110,34 @@ class Body extends React.Component {
 		let month = '' + (d.getMonth() + 1);
 		let day = '' + d.getDate();
 		let year = d.getFullYear();
+		let hour = d.getHours();
+		let min = ('0'+d.getMinutes()).slice(-2);
 
 		if (month.length < 2)
 			month = '0' + month;
 		if (day.length < 2)
 			day = '0' + day;
 
-		return [year, month, day].join('-');
+		let res = [year, month, day].join('-');
+		res = res.concat(' ');
+		res = res.concat(hour.toString());
+		res = res.concat(':');
+		res = res.concat(min.toString());
+
+		return res;
+	}
+
+	arrayToList(array) {
+		let list = null;
+		for (let i = array.length - 1; i >= 0; i--) {
+			list = { value: array[i], rest: list };
+		}
+		return list;
 	}
 
 	render() {
 		return (
-			<div>
+			<div style={{minWidth:500}}>
 				<BodyWrapper>
 					<h1>Roundtable Confirmation</h1>
 					<h2 style={{fontStyle:"italic"}}>Meaningful Vocation: Stroke Recovery Stories</h2>
@@ -251,15 +301,32 @@ class Body extends React.Component {
 
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Available times</h2>
 					<h3>The session will be run at the following times:</h3>
-					<h3 style={{marginBottom:"-10px"}}>4/5/2020 - 6pm-8pm</h3>
-					<h3 style={{marginBottom:"-10px"}}>6/5/2020 - 10am - 8am</h3>
-					<h3>7/5/2020 6pm-8pm</h3>
+
+					<ListWrapper>
+						<Spin spinning={this.state.loading}>
+							<List
+								bordered={false}
+								itemLayout="vertical"
+								dataSource={this.state.timeslot}
+								renderItem={item => (
+									<div>
+										<List.Item style={{borderColor:'red', borderWidth:0,borderStyle:'solid',borderRadius:20}}>
+											<h3 style={{marginBottom:"-10px"}}>{this.formatDate(item)}</h3>
+										</List.Item>
+									</div>
+								)}
+							/>
+						</Spin>
+					</ListWrapper>
+
+					{/*<h3 style={{marginBottom:"-10px"}}>4/5/2020 - 6pm-8pm</h3>*/}
+					{/*<h3 style={{marginBottom:"-10px"}}>6/5/2020 - 10am - 8am</h3>*/}
+					{/*<h3>7/5/2020 6pm-8pm</h3>*/}
 
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>About the Researcher</h2>
-					<h3>Researcher Name: Joan Perez</h3>
-					<h3 style={{marginRight:"30%"}}>Joan Perez is a stroke researcher working at Monash University.
-						She's been in the field for over 15 years, and has been working with Genyus for the last 2 years!</h3>
-					<Avatar src={this.props.image} size={128} style={{position:"absolute", left: '80%', bottom:"48%",
+					<h3> Researcher Name: {this.state.researcherFullName}</h3>
+					<h3 style={{marginRight:"30%"}}>{this.state.researcherDes}</h3>
+					<Avatar src={this.state.researcherAvatar} size={128} style={{position:"absolute", left: '80%', bottom:"48%",
 						margin: '2% auto'}} icon={<UserOutlined />} />
 					<br/>
 					<br/>
