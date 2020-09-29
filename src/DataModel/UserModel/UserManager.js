@@ -66,7 +66,7 @@ export default {
             // let fileRef = storage.ref().child(path);
             let fileRef = storage.ref(path);
             let url = await fileRef.getDownloadURL();
-            console.info(`${CLASS_NAME} | getAvatar | successfully get the download URL of avatar file, ${url}`);
+            console.debug(`${CLASS_NAME} | getAvatar | successfully get the download URL of avatar file, ${url}`);
             return Promise.resolve(url);
         } catch (err) {
             console.error(`${CLASS_NAME}| getAvatar | failed to get the download URL for avatar file, received error message: ${err.message}`);
@@ -88,14 +88,14 @@ export default {
     async signup(email, password, fullname, nickname, type='participant', description='') {
         try {
             let signupFeedback = await auth.createUserWithEmailAndPassword(email, password);
-            console.info(`${CLASS_NAME} | signup | feedback from user signup: ${signupFeedback}`);
+            console.debug(`${CLASS_NAME} | signup | feedback from user signup: ${signupFeedback}`);
             let updateProfileFeedback = await signupFeedback.user.updateProfile({displayName: nickname});
-            console.info(`${CLASS_NAME} | signup | feedback from updating display name: ${updateProfileFeedback}`);
+            console.debug(`${CLASS_NAME} | signup | feedback from updating display name: ${updateProfileFeedback}`);
             let uid = signupFeedback.user.uid;
             let storeFeedback = await userDocs.doc(uid).set({fullname: fullname, nickname: nickname, type: type, description: description, sessions: [], notifications: [], photoURL: signupFeedback.user.photoURL, email: email});
-            console.info(`${CLASS_NAME} | signup | feedback from firestore: ${storeFeedback}`);
+            console.debug(`${CLASS_NAME} | signup | feedback from firestore: ${storeFeedback}`);
             await auth.currentUser.sendEmailVerification();
-            console.info(`${CLASS_NAME} | signup | verification email has been sent to user`);
+            console.debug(`${CLASS_NAME} | signup | verification email has been sent to user`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | signup | signup/name-update/data-storing failed, with error message: ${err.message}`);
@@ -145,7 +145,7 @@ export default {
     async login(email, password) {
         try {
             let loginFeedback = await auth.signInWithEmailAndPassword(email, password);
-            console.info(`${CLASS_NAME} | login |successful login for account ${email} and returned credential ${loginFeedback}`);
+            console.debug(`${CLASS_NAME} | login |successful login for account ${email} and returned credential ${loginFeedback}`);
             let uid = loginFeedback.user.uid;
             // get the user first, before get the attribute "type", otherwise it would be undefined
             let user = await userDocs.doc(uid).get();
@@ -166,7 +166,7 @@ export default {
         try {
             let signoutFeedback = await auth.signOut();
             // TODO log to see the structure of credential, need to change later on
-            console.info(`${CLASS_NAME} | logout |signoutFeedback`);
+            console.debug(`${CLASS_NAME} | logout |signoutFeedback`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | logout | failed to logout current user, with error message: ${err.message}`);
@@ -192,7 +192,7 @@ export default {
     async getUser(uid) {
         try {
             let doc = await userDocs.doc(uid).get();
-            console.info(`${CLASS_NAME} | getUser | successfully retrieve user record from firestore for uid ${uid}`);
+            console.debug(`${CLASS_NAME} | getUser | successfully retrieve user record from firestore for uid ${uid}`);
             let user = {
                 email: doc.get('email'),
                 photoURL: doc.get('photoURL'),
@@ -203,7 +203,7 @@ export default {
                 sessions: doc.get('sessions'),
                 type: doc.get('type')
             };
-            console.info(`${CLASS_NAME} | getUser | finished pre-processing for uid ${uid}, data is ready to be returned`);
+            console.debug(`${CLASS_NAME} | getUser | finished pre-processing for uid ${uid}, data is ready to be returned`);
             return Promise.resolve(user);
         } catch (err) {
             console.error(`${CLASS_NAME} | getUser | failed to retrieve user record from firestore for uid ${uid}, err: ${err}`);
@@ -244,11 +244,11 @@ export default {
                 },
 
                 function complete () {
-                    console.info(`${CLASS_NAME} | updateAvatar | uploading successful, start updating user property`);
+                    console.debug(`${CLASS_NAME} | updateAvatar | uploading successful, start updating user property`);
                     // now, update the user's photoURL property
                     userDocs.doc(uid).update({photoURL: path})
                         .then(updateFeedback => {
-                            console.info(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${updateFeedback}`);
+                            console.debug(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${updateFeedback}`);
                             return Promise.resolve(undefined);
                         })
                         .catch(err => {
@@ -290,10 +290,10 @@ export default {
             }
             let uid = currentUser.uid;
             let DBupdateFeedback = await userDocs.doc(uid).update({fullname: fullname, nickname: nickname});
-            console.info(`${CLASS_NAME} | updateProfile | successfully update the user's full name and nick name in database, feedback received: ${DBupdateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateProfile | successfully update the user's full name and nick name in database, feedback received: ${DBupdateFeedback}`);
             // also need to update user's display name (using the value of nick name)
             let userUpdateFeedback = await auth.currentUser.updateProfile({displayName: nickname});
-            console.info(`${CLASS_NAME} | updateProfile | successfully update user property displaneName, feedback received: ${userUpdateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateProfile | successfully update user property displaneName, feedback received: ${userUpdateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateProfile | failed to update user's full name and nick name, with error message: ${err.message}`);
@@ -317,7 +317,7 @@ export default {
             }
             let uid = currentUser.uid;
             let updateFeedback = await userDocs.doc(uid).update({fullname: fullname});
-            console.info(`${CLASS_NAME} | updateFullname | successfully update the user's full name, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateFullname | successfully update the user's full name, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateFullname | failed to update user's full name, with error message: ${err.message}`);
@@ -341,10 +341,10 @@ export default {
             }
             let uid = currentUser.uid;
             let DBupdateFeedback = await userDocs.doc(uid).update({nickname: nickname});
-            console.info(`${CLASS_NAME} | updateNickname | successfully update the user's nick name, feedback received: ${DBupdateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateNickname | successfully update the user's nick name, feedback received: ${DBupdateFeedback}`);
             // also need to update user's display name (using the value of nick name)
             let userUpdateFeedback = await auth.currentUser.updateProfile({displayName: nickname});
-            console.info(`${CLASS_NAME} | updateNickname | successfully update user property displaneName, feedback received: ${userUpdateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateNickname | successfully update user property displaneName, feedback received: ${userUpdateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateNickname | failed to update user's and nick name, with error message: ${err.message}`);
@@ -368,7 +368,7 @@ export default {
             }
             let uid = currentUser.uid;
             let updateFeedback = userDocs.doc(uid).update({description: des});
-            console.info(`${CLASS_NAME} | updateDescription | successfully retrieved user data for uid ${uid}, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateDescription | successfully retrieved user data for uid ${uid}, feedback received: ${updateFeedback}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateDescription | failed to update user description, received error message: ${err.mesage}`);
