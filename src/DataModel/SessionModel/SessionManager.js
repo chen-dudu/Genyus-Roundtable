@@ -63,7 +63,7 @@ export default {
             let newSession =  new Session(sDoc.id, sDoc.get('title'), sDoc.get('description'), sDoc.get('duration'),
                                           sDoc.get('youtubeLink'), sDoc.get('zoomLink'), timeSlots,
                                           sDoc.get('questions'), sDoc.get('status'), sDoc.get('researchers'),
-                                          sDoc.get('participants'), sDoc.get('notification'));
+                                          sDoc.get('participants'), sDoc.get('notifications'));
             return Promise.resolve(newSession);
         } catch (err) {
             console.error(`${CLASS_NAME} | getSession | failed to retrieve the session from DB, received error message: ${err.message}`);

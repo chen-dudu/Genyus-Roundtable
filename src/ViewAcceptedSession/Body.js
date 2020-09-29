@@ -37,7 +37,7 @@ class Body extends React.Component {
 			researcherFullName: null,
 			researcherDes: null,
 			researcherAvatar: null,
-			notifications: [1]
+			notifications: []
 		}
 		console.log(this.state.nid);
 		this.getSession();
@@ -354,7 +354,7 @@ class Body extends React.Component {
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>About the Researcher</h2>
 					<h3> Researcher Name: {this.state.researcherFullName}</h3>
 					<h3 style={{marginRight:"30%"}}>{this.state.researcherDes}</h3>
-					<Avatar src={this.state.researcherAvatar} size={128} style={{position:"absolute", left: '80%', bottom:"48%",
+					<Avatar src={this.state.researcherAvatar} size={96} style={{position:"absolute", left: '80%', bottom:"30%",
 						margin: '2% auto'}} icon={<UserOutlined />} />
 					<br/>
 					<br/>
@@ -362,7 +362,7 @@ class Body extends React.Component {
 					<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Event Updates:</h1>
 					<br></br> <br></br>
 
-					<ListWrapper>
+					<ListWrapper style={{width: '70%', margin: 'auto'}}>
 						<Spin spinning={this.state.loading}>
 							<List
 								bordered={false}
@@ -376,11 +376,6 @@ class Body extends React.Component {
 											<br></br>
 											<br></br>
 											<p style={{color: "black", fontSize: "20px", marginLeft:'2%'}}>{item.description}</p>
-											<Button style={{background: "#3399ff", borderRadius: 5,
-												width: "20%", height: 40, fontWeight: "bold",
-												boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-												fontSize: 15, color: "white", marginLeft:'2%'}}
-													onClick={() => this.props.history.push({pathname: '/ViewAcceptedSession/'+item.nid, state:{item: item}})}>Go To Event Page</Button>
 										</List.Item>
 										<br/><br/></div>
 								)}
@@ -388,32 +383,32 @@ class Body extends React.Component {
 						</Spin>
 					</ListWrapper>
 
-					<Card style={{width: 1000, borderColor:"red", background: "transparent",
-						borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>
-						<h1 style={{color: "red", fontSize: "20px", textAlign:"left",
-							float:"left"}}>Event Update: "Coming up Soon!"</h1>
-						<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>
-						<br></br>
-						<br></br>
-						<p style={{color: "black", fontSize: "20px"}}> Hi Genyuses! This session is coming up fast!
-							We're excited to see you all there next week! Joan has finalised the questions that will be
-							asked (see the event description!) and we're excited to see all your lovely faces!</p>
-					</Card>
-					<br></br> <br></br>
-					<Card style={{width: 1000, borderColor:"red", background: "transparent",
-						borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>
-						<h1 style={{color: "red", fontSize: "20px", textAlign:"left",
-							float:"left"}}>Event Update: "Ready to go!"</h1>
-						<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>
-						<br></br>
-						<br></br>
-						<p style={{color: "black", fontSize: "20px"}}> Hey everyone! The event description has been
-							updated to include some of the questions that will be asked in the session! Have a
-							looksee if you're interested ♥</p>
-					</Card>
+					{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
+					{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
+					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
+					{/*		float:"left"}}>Event Update: "Coming up Soon!"</h1>*/}
+					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
+					{/*	<br></br>*/}
+					{/*	<br></br>*/}
+					{/*	<p style={{color: "black", fontSize: "20px"}}> Hi Genyuses! This session is coming up fast!*/}
+					{/*		We're excited to see you all there next week! Joan has finalised the questions that will be*/}
+					{/*		asked (see the event description!) and we're excited to see all your lovely faces!</p>*/}
+					{/*</Card>*/}
+					{/*<br></br> <br></br>*/}
+					{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
+					{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
+					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
+					{/*		float:"left"}}>Event Update: "Ready to go!"</h1>*/}
+					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
+					{/*	<br></br>*/}
+					{/*	<br></br>*/}
+					{/*	<p style={{color: "black", fontSize: "20px"}}> Hey everyone! The event description has been*/}
+					{/*		updated to include some of the questions that will be asked in the session! Have a*/}
+					{/*		looksee if you're interested ♥</p>*/}
+					{/*</Card>*/}
 					<br></br> <br></br>
 
-					<div style={{position:"absolute", bottom:"65%", right:"5%"}}>
+					<div style={{position:"absolute", bottom:"50%", right:"5%"}}>
 						<h2>Learn more about the Session!!</h2>
 						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
 								mozallowfullscreen="" allowFullScreen=""
