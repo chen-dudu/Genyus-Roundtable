@@ -44,6 +44,11 @@ export default {
         }
     },
 
+    /**
+     * a method used to retrieve all pod records from DB
+     * @return {Promise<Pod[]>} upon successful retrieval, a promise with resolve value of an array of pods is returned
+     *                          upon failed retrieval, a promise with the received error message is returned
+     */
     async getAllPods() {
         try {
             let queryResult = await podDocs.get();
@@ -61,7 +66,7 @@ export default {
             console.info(`${CLASS_NAME} | getAllPods | finished pre-processing, data is ready to be returned`);
             return Promise.all(pods);
         } catch (err) {
-            console.error();
+            console.error(`${CLASS_NAME} | getAllPods | failed to retrieve pod records from firestore, error: ${err}`);
             return Promise.reject(err);
         }
     }
