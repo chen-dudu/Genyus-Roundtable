@@ -42,6 +42,28 @@ export default {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
             return Promise.reject(err.message);
         }
+    },
+
+    async getAllPods() {
+        try {
+            let queryResult = await podDocs.get();
+            console.info(`${CLASS_NAME} | getAllPods| successfully retrievel all pod records from firestore, start pre-processing`);
+            let pods = [];
+            queryResult.docs.forEach(doc => {
+                let pid = doc.id;
+                let title = doc.get('title');
+                let description = doc.get('description');
+                let researcher = doc.get('researcher');
+                let sessions = doc.get('sessions');
+                let pod = new Pod(pid, title, description, researcher, sessions);
+                pods.unshift(Promise.resolve(pod));
+            });
+            console.info(`${CLASS_NAME} | getAllPods | finished pre-processing, data is ready to be returned`);
+            return Promise.all(pods);
+        } catch (err) {
+            console.error();
+            return Promise.reject(err);
+        }
     }
 }
 
