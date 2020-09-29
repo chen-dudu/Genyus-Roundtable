@@ -206,7 +206,7 @@ export default {
             console.info(`${CLASS_NAME} | getUser | finished pre-processing for uid ${uid}, data is ready to be returned`);
             return Promise.resolve(user);
         } catch (err) {
-            console.error();
+            console.error(`${CLASS_NAME} | getUser | failed to retrieve user record from firestore for uid ${uid}, err: ${err}`);
             return Promise.reject(err);
         }
     },
