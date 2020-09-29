@@ -294,6 +294,38 @@ export default {
             console.error(`${CLASS_NAME} | getNotification | failed to get notification list, received error message: ${err.message}`);
             return Promise.reject(null);
         }
+    },
+
+    async getAllSessions() {
+        try {
+            let queryResult = await sDocs.get();
+            console.info(`${CLASS_NAME} | getAllSessions | successfully retrieve all session records from firestore, start pre-processing`);
+            let sessions = [];
+            queryResult.docs.forEach(doc => {
+                let sid = doc.id;
+                let title = doc.get('title');
+                let description = doc.get('description');
+                let duration = doc.get('duration');
+                let youtubeLink = doc.get('youtubeLink');
+                let zoomLink = doc.get('zoomLink');
+                let timeSlots = [];
+                doc.get('timeSlots').forEach(slot => {
+                    timeSlots.unshift(slot.toDate());
+                });
+                let questions = doc.get('questions');
+                let status = doc.get('status');
+                let researchers = doc.get('researchers');
+                let participants = doc.get('participants');
+                let notifications = doc.get('notifications');
+                let session = new Session(sid, title, description, duration, youtubeLink, zoomLink, timeSlots, questions, status, researchers, participants, notifications);
+                sessions.unshift(session);
+            })
+            console.info(`${CLASS_NAME} | getAllSessions | finished data pre-processing, ready to return`);
+            return Promise.all(sessions);
+        } catch (err) {
+            console.error(`${CLASS_NAME} | getAllSessions | failed to retrieve session record from firestore, error: ${err}`);
+            return Promise.reject(err);
+        }
     }
 }
 
