@@ -189,8 +189,8 @@ class Body1 extends React.Component {
 				{/* <Input type={'text'} id={'full_name'} name={'full_name'} value={this.state.full_name} style={{width: '50%', height: 30}} onChange={this.onFullnameEnter}/> */}
 
 				<form onSubmit={this.updateProfile} style={{ width: '40%', margin: '0 45% auto', position: 'absolute' }}>
-					<div align={'center'}>
-						<label htmlFor="full_name" style={{ fontSize: "10%" }}>Full Name</label>
+					<div align={'left'}>
+						<label htmlFor="full_name" style={{ fontSize: "120%", margin: 'auto 18% auto', position: 'relative' }}>Full Name</label>
 					</div>
 
 					<Input id={'full_name'} size={"large"} allowClear placeholder={'Full Name'} value={this.state.full_name} onChange={this.onFullnameEnter} style={{ width: '55%', margin: '0 18% auto' }} />
@@ -198,8 +198,8 @@ class Body1 extends React.Component {
 					{/*<input type={'text'} id={'full_name'} name={'full_name'} value={this.state.full_name} style={{width: '50%', height: 30}} onChange={this.onFullnameEnter}/>*/}
 					<br />
 					<br />
-					<div align={'center'}>
-						<label htmlFor="nick_name" style={{ fontSize: "10%" }}>Nickname</label>
+					<div align={'left'}>
+						<label htmlFor="nick_name" style={{ fontSize: "120%", margin: 'auto 18% auto', position: 'relative' }}>Nickname</label>
 					</div>
 
 					<Input id={'nick_name'} size={"large"} allowClear placeholder={'Nick Name'} value={this.state.nick_name} onChange={this.onNicknameEnter} style={{ width: '55%', margin: 'auto 18% auto' }} />
