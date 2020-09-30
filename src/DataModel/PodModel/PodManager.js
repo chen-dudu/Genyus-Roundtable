@@ -19,7 +19,7 @@ export default {
         try {
             let toSend = converter(pod);
             let feedback = await podDocs.add(toSend);
-            console.info(`${CLASS_NAME} | createPod | successfully created a new pod on DB, with id ${feedback.id}`);
+            console.debug(`${CLASS_NAME} | createPod | successfully created a new pod on DB, with id ${feedback.id}`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | createPod | failed to create new pod on DB, received error message ${err.message}`);
@@ -36,11 +36,38 @@ export default {
     async getPod(pid) {
         try {
             let pod = await podDocs.doc(pid).get();
-            console.info(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
+            console.debug(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
             return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('description'), pod.get('researcher'), pod.get('sessions')));
         } catch (err) {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
             return Promise.reject(err.message);
+        }
+    },
+
+    /**
+     * a method used to retrieve all pod records from DB
+     * @return {Promise<Pod[]>} upon successful retrieval, a promise with resolve value of an array of pods is returned
+     *                          upon failed retrieval, a promise with the received error message is returned
+     */
+    async getAllPods() {
+        try {
+            let queryResult = await podDocs.get();
+            console.debug(`${CLASS_NAME} | getAllPods| successfully retrievel all pod records from firestore, start pre-processing`);
+            let pods = [];
+            queryResult.docs.forEach(doc => {
+                let pid = doc.id;
+                let title = doc.get('title');
+                let description = doc.get('description');
+                let researcher = doc.get('researcher');
+                let sessions = doc.get('sessions');
+                let pod = new Pod(pid, title, description, researcher, sessions);
+                pods.unshift(Promise.resolve(pod));
+            });
+            console.debug(`${CLASS_NAME} | getAllPods | finished pre-processing, data is ready to be returned`);
+            return Promise.all(pods);
+        } catch (err) {
+            console.error(`${CLASS_NAME} | getAllPods | failed to retrieve pod records from firestore, error: ${err}`);
+            return Promise.reject(err);
         }
     }
 }

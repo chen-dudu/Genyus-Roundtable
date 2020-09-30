@@ -9,6 +9,7 @@ import HomePage from './HomePage/HomePage';
 import Signup from './Signup/Signup'
 import Login from './Login/Login'
 import Notification from './Notification/Notification'
+import ViewAcceptedSession from "./ViewAcceptedSession/ViewAcceptedSession";
 import Users from './Users/Users'
 
 import ResearcherList from './Admin/ResearcherList/ResearcherHomePage'
@@ -44,6 +45,8 @@ function App(){
 
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
 
+        <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
+        {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
     </Router>
   );
 }

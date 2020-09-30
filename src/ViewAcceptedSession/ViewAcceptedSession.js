@@ -4,7 +4,7 @@ import Footer from './Footer.js';
 import Body from './Body.js';
 import {withRouter} from "react-router-dom";
 
-const Notification = props => {
+const ViewAcceptedSession = props => {
     const [image, setImage] = useState();
     return(
         <div>
@@ -17,16 +17,4 @@ const Notification = props => {
     )
 }
 
-// class Notification extends React.Component{
-//
-//
-//   render(){
-//   return (
-//     <div>
-//     	<Header> image={image} </Header>
-//     </div>
-//   );
-// }
-// }
-
-export default withRouter(Notification);
+export default withRouter(ViewAcceptedSession);
