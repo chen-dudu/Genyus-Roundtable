@@ -14,8 +14,8 @@ import Users from './Users/Users'
 
 import ResearcherList from './Admin/ResearcherList/ResearcherHomePage'
 import ResearcherDetail from './Admin/ResearcherDetail/ResearcherDetail'
+import PodLandingPage from './PodLandingPage/PodLandingPage'
 import ResearcherCreate from './Admin/ResearcherCreate/ResearcherCreate'
-
 import ProfileSetting from './ProfileSetting/ProfileSetting'
 // import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
 import Admins from './Admins/Admins'
@@ -42,6 +42,7 @@ function App(){
         <Route path="/Admin/ResearcherList" component={ResearcherList}/>
         <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
         <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
+        <Route path="/PodLandingPage" component={PodLandingPage}/>
 
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
 
