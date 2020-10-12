@@ -143,7 +143,7 @@ class Body1 extends React.Component {
 			console.log("PrintNickname",this.state.nick_name);
 			UserManager.updateProfile(this.state.full_name, this.state.nick_name)
 				.then(response => {
-					this.props.history.push("users");
+					this.props.history.push("ParticipantHomePage");
 					console.log("update profile information successful");
 
 				})
@@ -212,7 +212,7 @@ class Body1 extends React.Component {
 						<Button htmlType={"submit"} id={'signup-button'} type={"primary"} block size={"large"} style={{ borderRadius: 5, width: '31%', position: 'relative', margin: '5% 10% auto' }} >
 							Save Changes
                         </Button>
-						<Button type="primary" style={{ margin: '5% 10% 0', width: '31%', position: 'relative', height: '200%', borderRadius: 5, fontSize: '120%' }} onClick={() => this.props.history.push('/users')}>Go Back</Button>
+						<Button type="primary" style={{ margin: '5% 10% 0', width: '31%', position: 'relative', height: '200%', borderRadius: 5, fontSize: '120%' }} onClick={() => this.props.history.push('/ParticipantHomePage')}>Go Back</Button>
 
 					</div>
 				</form>
