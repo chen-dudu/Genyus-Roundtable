@@ -5,21 +5,21 @@ import {
   BrowserRouter as Router,
   Route
 } from "react-router-dom";
-import HomePage from './HomePage/HomePage';
-import Signup from './Signup/Signup'
-import Login from './Login/Login'
-import Notification from './Notification/Notification'
-import ViewAcceptedSession from "./ViewAcceptedSession/ViewAcceptedSession";
-import Users from './Users/Users'
+import HomePage from './UILayer/HomePage/HomePage';
+import Signup from './UILayer/Signup/Signup'
+import Login from './UILayer/Login/Login'
+import Notification from './UILayer/Notification/Notification'
+import ViewAcceptedSession from "./UILayer/Participant/ViewAcceptedSession/ViewAcceptedSession";
+import ParticipantHomePage from './UILayer/Participant/ParticipantHomePage/ParticipantHomePage'
 
-import ResearcherList from './Admin/ResearcherList/ResearcherHomePage'
-import ResearcherDetail from './Admin/ResearcherDetail/ResearcherDetail'
-import ResearcherCreate from './Admin/ResearcherCreate/ResearcherCreate'
+import ResearcherList from './UILayer/Admin/ResearcherList/ResearcherHomePage'
+import ResearcherDetail from './UILayer/Admin/ResearcherDetail/ResearcherDetail'
+import ResearcherCreate from './UILayer/Admin/ResearcherCreate/ResearcherCreate'
 
-import ProfileSetting from './ProfileSetting/ProfileSetting'
+import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 // import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
-import Admins from './Admins/Admins'
-import Researchers from './Researchers/Researchers'
+import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
+import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
 
 
 
@@ -32,10 +32,10 @@ function App(){
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Login" component={Login}></Route>
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
-        <Route path="/users" component={Users}></Route>
+        <Route path="/ParticipantHomePage" component={ParticipantHomePage}></Route>
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
-        <Route path="/Admins" component={Admins}></Route>
-        <Route path="/Researchers" component={Researchers}></Route>
+        <Route path="/AdminHomePage" component={AdminHomePage}></Route>
+        <Route path="/ResearcherHomePage" component={ResearcherHomePage}></Route>
         <Route path="/Notification" component={Notification}></Route>
 
         {/*<Route path="/StatusAndRewards" component={StatusAndRewards}></Route>*/}
