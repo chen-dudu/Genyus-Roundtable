@@ -28,13 +28,13 @@ class Body extends React.Component {
                 console.info(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
 
                 if (userType == "participant") {
-                    this.props.history.push("users");
+                    this.props.history.push("ParticipantHomePage");
                 }
                 else if (userType == "admin") {
-                    this.props.history.push("Admins");
+                    this.props.history.push("AdminHomePage");
                 }
                 else {
-                    this.props.history.push("Researchers");
+                    this.props.history.push("ResearcherHomePage");
                 }
             })
             .catch(err => {

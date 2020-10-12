@@ -10,16 +10,16 @@ import Signup from './UILayer/Signup/Signup'
 import Login from './UILayer/Login/Login'
 import Notification from './UILayer/Notification/Notification'
 import ViewAcceptedSession from "./UILayer/Participant/ViewAcceptedSession/ViewAcceptedSession";
-import Users from './UILayer/Participant/Users/Users'
+import ParticipantHomePage from './UILayer/Participant/ParticipantHomePage/ParticipantHomePage'
 
-import ResearcherList from './UILayer/Admin/Admin/ResearcherList/ResearcherHomePage'
-import ResearcherDetail from './UILayer/Admin/Admin/ResearcherDetail/ResearcherDetail'
-import ResearcherCreate from './UILayer/Admin/Admin/ResearcherCreate/ResearcherCreate'
+import ResearcherList from './UILayer/Admin/ResearcherList/ResearcherHomePage'
+import ResearcherDetail from './UILayer/Admin/ResearcherDetail/ResearcherDetail'
+import ResearcherCreate from './UILayer/Admin/ResearcherCreate/ResearcherCreate'
 
 import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 // import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
-import Admins from './UILayer/Admin/Admins/Admins'
-import Researchers from './UILayer/Researcher/Researchers/Researchers'
+import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
+import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
 
 
 
@@ -32,10 +32,10 @@ function App(){
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Login" component={Login}></Route>
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
-        <Route path="/users" component={Users}></Route>
+        <Route path="/users" component={ParticipantHomePage}></Route>
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
-        <Route path="/Admins" component={Admins}></Route>
-        <Route path="/Researchers" component={Researchers}></Route>
+        <Route path="/AdminHomePage" component={AdminHomePage}></Route>
+        <Route path="/ResearcherHomePage" component={ResearcherHomePage}></Route>
         <Route path="/Notification" component={Notification}></Route>
 
         {/*<Route path="/StatusAndRewards" component={StatusAndRewards}></Route>*/}

@@ -3,7 +3,7 @@ import {Avatar, Button} from 'antd';
 import 'antd/dist/antd.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import logo from '../../../../img/logo.png';
+import logo from '../../../img/logo.png';
 import {HeaderWrapper,ImageWrapper,Seperator} from './ResearcherCreate.style';
 import {UserOutlined} from "@ant-design/icons";
 

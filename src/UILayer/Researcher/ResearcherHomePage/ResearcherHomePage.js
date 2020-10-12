@@ -7,7 +7,7 @@ import Body from './Body.js';
 import {withRouter} from 'react-router-dom';
 
 
-const Admins = props => {
+const ResearcherHomePage = props => {
   const [image, setImage] = useState();
     return(
       <div>
@@ -21,4 +21,4 @@ const Admins = props => {
 }
 
 // ========================================
-export default Admins;
+export default ResearcherHomePage;

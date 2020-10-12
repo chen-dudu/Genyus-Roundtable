@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper} from './ResearcherHomePage.style';
-import Img from '../../../../img/Avatar.png';
+import Img from '../../../img/Avatar.png';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
 import {List, Avatar, Button, Spin, message, Upload} from 'antd';
 import {LoadingOutlined, PlusOutlined, UserOutlined} from '@ant-design/icons';
-import UserManager from "../../../../FoundationLayer/UserModel/UserManager";
+import UserManager from "../../../FoundationLayer/UserModel/UserManager";
 import firebase from "firebase";
 import ImgCrop from "antd-img-crop";
-import {Body2Wrapper} from "../../../Participant/Users/Users.style";
+import {Body2Wrapper} from "../../Participant/ParticipantHomePage/ParticipantHomePage.style";
 
 
 

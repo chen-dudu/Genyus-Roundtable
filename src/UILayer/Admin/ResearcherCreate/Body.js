@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Body1Wrapper,SubmitButton,ProfileWrapper,TitleWrapper,BodyWrapper} from './ResearcherCreate.style';
-import Img from '../../../../img/Avatar.png';
+import Img from '../../../img/Avatar.png';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
 import {Input, text, Avatar, Button, Modal, Upload, message} from 'antd';
-import noteImg from "../../../../img/note.png";
+import noteImg from "../../../img/note.png";
 import {LoadingOutlined, PlusOutlined, UserOutlined} from "@ant-design/icons";
-import UserManager from "../../../../FoundationLayer/UserModel/UserManager";
+import UserManager from "../../../FoundationLayer/UserModel/UserManager";
 import firebase from "firebase";
 import ImgCrop from "antd-img-crop";
 

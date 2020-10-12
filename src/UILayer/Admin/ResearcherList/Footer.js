@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './ResearcherDetail.style'
-import leftImg from "../../../../img/footleft.png"
-import middleImg from "../../../../img/footmid.png"
-import rightImg from "../../../../img/footright.png"
+import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './ResearcherHomePage.style'
+import leftImg from "../../../img/footleft.png"
+import middleImg from "../../../img/footmid.png"
+import rightImg from "../../../img/footright.png"
 
 class Footer extends React.Component {
 	render(){

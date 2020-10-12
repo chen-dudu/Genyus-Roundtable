@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import {HeaderWrapper,ImageWrapper,Seperator,LogoutWrapper} from './Users.style';
+import {HeaderWrapper,ImageWrapper,Seperator,LogoutWrapper} from './AdminHomePage.style';
 import logo from '../../../img/logo.png';
 import { Avatar,Button } from 'antd';
 import {withRouter} from 'react-router-dom';

@@ -1,5 +1,5 @@
 import React,{ useState } from 'react';
-import {Body2Wrapper} from './Admins.style';
+import {Body2Wrapper} from './AdminHomePage.style';
 import Body1 from './Body1.js';
 import {withRouter} from 'react-router-dom';
 

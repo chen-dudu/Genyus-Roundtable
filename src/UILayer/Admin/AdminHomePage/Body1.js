@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Body1Wrapper, ProfileWrapper } from './Admins.style';
+import { Body1Wrapper, ProfileWrapper } from './AdminHomePage.style';
 import { Upload, message, Button } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';

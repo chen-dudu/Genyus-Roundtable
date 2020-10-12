@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './Admins.style'
+import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './ParticipantHomePage.style'
 import leftImg from "../../../img/footleft.png"
 import middleImg from "../../../img/footmid.png"
 import rightImg from "../../../img/footright.png"
