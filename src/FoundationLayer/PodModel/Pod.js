@@ -3,18 +3,19 @@ class Pod {
 
     /**
      * a private constructor which will be called by pod manager to creat a new pod object
-     * @param pid         the unique id of the pod
-     * @param title       the title of the pod
-     * @param description the description of the pod
-     * @param researcher  the researcher who is responsible for the pod
-     * @param sessions    the list of roundtable sessions the pod contains
+     * @param pid          the unique id of the pod
+     * @param title        the title of the pod
+     * @param calendlyLink the calendly sharing link of the pod
+     * @param researcher   the researcher who is responsible for the pod
+     * @param participants the list of participants who sign up for the pod
      */
-    constructor(pid, title, description, researcher, sessions) {
+    constructor(pid, title, calendlyLink, researcher, participants) {
         this._pid = pid;
         this._title = title;
-        this._description = description;
+        this._calendlyLink = calendlyLink;
         this._researcher = researcher;
-        this._sessions = sessions
+        this._participants = participants;
+        // this._sessions = sessions
     }
 
     get pid() {
@@ -25,17 +26,21 @@ class Pod {
         return this._title;
     }
 
-    get description() {
-        return this._description;
+    get calendlyLink() {
+        return this._calendlyLink;
     }
 
     get researcher() {
         return this._researcher;
     }
 
-    get sessions() {
-        return this._sessions;
+    get participants() {
+        return this._participants;
     }
+
+    // get sessions() {
+    //     return this._sessions;
+    // }
 
     set pid(newID) {
         this._pid = newID;
@@ -45,16 +50,27 @@ class Pod {
         this._title = newTitle;
     }
 
-    set description(newDescription) {
-        this._description = newDescription;
+    set calendlyLink(newLink) {
+        this._calendlyLink = newLink;
     }
 
     set researcher(newResearcher) {
         this._researcher = newResearcher;
     }
 
-    addSession(session) {
-        this._sessions.unshift(session);
+    // addSession(session) {
+    //     this._sessions.unshift(session);
+    // }
+
+    addParticipant(participant) {
+        this._participants.unshift(participant);
+    }
+
+    removeParticipant(participant) {
+        let index = this._participants.indexOf(participant);
+        if (index !== -1) {
+            this._participants.splice(index, 1);
+        }
     }
 
     deleteSession(session) {
