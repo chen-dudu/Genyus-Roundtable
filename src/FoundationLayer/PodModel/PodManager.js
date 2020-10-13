@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import Pod from "./Pod";
+import UserManager from "../UserModel/UserManager";
 
 const CLASS_NAME = "PodManager";
 const POD_COLLECTION = "pods";
@@ -37,7 +38,7 @@ export default {
         try {
             let pod = await podDocs.doc(pid).get();
             console.debug(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
-            return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('description'), pod.get('researcher'), pod.get('sessions')));
+            return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants')));
         } catch (err) {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
             return Promise.reject(err.message);
@@ -52,21 +53,52 @@ export default {
     async getAllPods() {
         try {
             let queryResult = await podDocs.get();
-            console.debug(`${CLASS_NAME} | getAllPods| successfully retrievel all pod records from firestore, start pre-processing`);
+            console.debug(`${CLASS_NAME} | getAllPods| successfully retrieval all pod records from firestore, start pre-processing`);
             let pods = [];
             queryResult.docs.forEach(doc => {
                 let pid = doc.id;
                 let title = doc.get('title');
-                let description = doc.get('description');
+                let calendlyLink = doc.get('calendlyLink');
                 let researcher = doc.get('researcher');
-                let sessions = doc.get('sessions');
-                let pod = new Pod(pid, title, description, researcher, sessions);
+                let participants = doc.get('participants');
+                // let sessions = doc.get('sessions');
+                let pod = new Pod(pid, title, calendlyLink, researcher, participants);
                 pods.unshift(Promise.resolve(pod));
             });
             console.debug(`${CLASS_NAME} | getAllPods | finished pre-processing, data is ready to be returned`);
             return Promise.all(pods);
         } catch (err) {
             console.error(`${CLASS_NAME} | getAllPods | failed to retrieve pod records from firestore, error: ${err}`);
+            return Promise.reject(err);
+        }
+    },
+
+    async signup(pid) {
+        try {
+            let pRef = podDocs.doc(pid);
+            console.debug(`${CLASS_NAME} | signup | successfully get ref to pod doc`);
+            let pDoc = await pRef.get();
+            let pid = pDoc.id;
+            console.debug(`${CLASS_NAME} | signup | successfully get pod doc from DB`);
+            let user = await UserManager.getCurrentUser();
+            let uid = user.uid;
+            console.debug(`${CLASS_NAME} | signup | successfully get user doc from DB`);
+            let participants = pDoc.get('participants');
+            // TODO rename var name sessions -> pods
+            let pods = user.get('sessions');
+            if (!participants.includes(uid) && !pods.includes(pid)) {
+                participants.unshift(uid);
+                pods.unshift(uid);
+                console.debug(`${CLASS_NAME} | signup | successfully update pod and user information, start updating DB`);
+            }
+            await pRef.update({participants: participants});
+            console.debug(`${CLASS_NAME} | signup | successfully updated DB for pods`);
+            // TODO rename var name sessions -> pods
+            await db.collection('users').doc(uid).update({sessions: pods});
+            console.debug(`${CLASS_NAME} | signup | successfully updated DB for user`);
+            return Promise.resolve(undefined);
+        } catch (err) {
+            console.error(`${CLASS_NAME} | signup | failed to process the pod sign up, error: ${err}`);
             return Promise.reject(err);
         }
     }
@@ -76,8 +108,9 @@ export default {
 function converter(pod) {
     return {
         title: pod.title,
-        description: pod.description,
+        calendlyLink: pod.calendlyLink,
         researcher: pod.researcher,
-        sessions: pod.sessions
+        participants: pod.participants
+        // sessions: pod.sessions
     };
 }
