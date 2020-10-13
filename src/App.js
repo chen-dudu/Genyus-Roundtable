@@ -21,6 +21,8 @@ import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
 import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
 
+import PodCreate from './UILayer/Admin/PodCreate/PodCreate'
+
 
 
 function App(){
@@ -47,6 +49,8 @@ function App(){
 
         <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
+
+        <Route path="/Admin/PodCreate" component={PodCreate}></Route>
     </Router>
   );
 }
