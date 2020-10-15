@@ -91,7 +91,8 @@ class Body extends React.Component {
                     <br />
                     <br />
                     <div align={'center'} style={{ width: "90%" }} >
-                        <Button htmlType={"submit"} id={'login-button'} type={"primary"} block size={"large"} style={{ fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5 }}>
+                        <Button htmlType={"submit"} id={'login-button'} type={"primary"} size = {"large"}
+						        style={{ fontSize:"large", display:"block", margin: "0% auto 5%", width:"100%" }} >
                             Log in
                         </Button>
 

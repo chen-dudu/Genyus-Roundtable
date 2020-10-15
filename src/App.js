@@ -21,14 +21,17 @@ import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
 import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
 
+import PodCreate from './UILayer/Admin/PodCreate/PodCreate'
+
 
 
 function App(){
   // const [nickName, setNickName] = useState("");
   return (
     <Router>
-
-        <Route path="/HomePage" component={HomePage}></Route>
+      <switch>
+        {/* <Route path="/HomePage" component={HomePage}></Route> */}
+        <Route exact path="/" component={HomePage}></Route>
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Login" component={Login}></Route>
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
@@ -47,6 +50,9 @@ function App(){
 
         <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
+
+        <Route path="/Admin/PodCreate" component={PodCreate}></Route>
+        </switch>
     </Router>
   );
 }
