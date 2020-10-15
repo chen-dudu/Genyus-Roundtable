@@ -124,7 +124,8 @@ function converter(pod) {
         title: pod.title,
         calendlyLink: pod.calendlyLink,
         researcher: pod.researcher,
-        participants: pod.participants
+        participants: pod.participants,
+        notifications: pod.notifications
         // sessions: pod.sessions
     };
 }
