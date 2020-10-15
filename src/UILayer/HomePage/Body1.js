@@ -20,8 +20,9 @@ class Body1 extends React.Component {
                 </div>
                 <br />
                 {/* <Link to="Signup"><SubmitButton>Sign Up!</SubmitButton></Link> */}
-                <Button  type="primary"
-						 style={{ display:"block", margin: "2% auto 2%",width:"15%" }}
+				<Button  type="primary"
+						 size = {"large"}
+						 style={{ fontSize:"large", display:"block", margin: "2% auto 2%",width:"15%" }}
                 
 						// style={{ margin: '8% 58% 0', width: '12%', height: '10%', position: 'absolute' }}
 						 onClick={() => this.props.history.push('/Signup')}
@@ -29,7 +30,8 @@ class Body1 extends React.Component {
                 {/* <Link to="Login"><SubmitButton>Log in!</SubmitButton></Link> */}
 				<Button  type="primary"
 						//  style={{ margin: '8% 58% 0', width: '12%', height: '10%', position: 'absolute' }}
-						style={{ display:"block", margin: "0% auto 5%", width:"15%" }}
+						size = {"large"}
+						style={{ fontSize:"large", display:"block", margin: "0% auto 5%", width:"15%" }}
                         onClick={() => this.props.history.push('/Login')}
 				>Log in!</Button>
                 <br />
