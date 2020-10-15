@@ -60,13 +60,14 @@ class Body extends React.Component {
 		PodManager.createPod(pod)
 			.then(response => {
 				console.log("create pod successful");
+				console.log("print id", response);
+
 			}
 			)
 			.catch(err => {
 				alert(err);
 				console.log("error when creating pod");
 			});
-		console.log("print id", pod.pid);
 	}
 
 	onTitleEnter = (e) => {
