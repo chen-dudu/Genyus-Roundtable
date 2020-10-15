@@ -50,6 +50,9 @@ Genyus Roundtable is a part of the offerings of the Genyus Network. Roundtable i
 ## Project Structure
 ```
 root
+ |
+ |-- functions
+ |      - where firebase cloud functions codes live
  |-- public
  |      - the website landing page is here
  |-- src
