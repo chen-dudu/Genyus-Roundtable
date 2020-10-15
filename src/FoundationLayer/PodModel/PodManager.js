@@ -4,24 +4,38 @@ import UserManager from "../UserModel/UserManager";
 
 const CLASS_NAME = "PodManager";
 const POD_COLLECTION = "pods";
+const USER_COLLECTION = 'users';
 
 const db = firebase.firestore();
 const podDocs = db.collection(POD_COLLECTION);
+const userDocs = db.collection(USER_COLLECTION)
 
 export default {
 
     /**
      * a method used to create a new pod document on DB, with auto-assigned ID
      * @param pod the pod to be created on DB
+     * @param uid the id of the researcher user
      * @returns {Promise<String|String>} upon successful creation, a promise with resolve value of the id of the created pod is returned
      *                                   upon failed creation, a promise with reject value of the received error message is returned
      */
-    async createPod(pod) {
+    async createPod(pod, uid) {
         try {
             let toSend = converter(pod);
+            // add user to pod's participant list
+            toSend.participants.unshift(uid);
+            // create a new pod on DB
             let feedback = await podDocs.add(toSend);
             console.debug(`${CLASS_NAME} | createPod | successfully created a new pod on DB, with id ${feedback.id}`);
-            return Promise.resolve(feedback.id);
+            let pid = feedback.id;
+            // then, add the new pod to user's pod list
+            let user = await userDocs.doc(uid).get();
+            console.debug(`${CLASS_NAME} | signup | successfully get user record from firestore`);
+            let pod_list = user.get('pods');
+            pod_list.unshift(pid);
+            await userDocs.doc(uid).update({pods: pod_list});
+            console.debug(`${CLASS_NAME} | signup | successfully added new pod to user's pod list`);
+            return Promise.resolve(pid);
         } catch (err) {
             console.error(`${CLASS_NAME} | createPod | failed to create new pod on DB, received error message ${err.message}`);
             return Promise.reject(err.message);
