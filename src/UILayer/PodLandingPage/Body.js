@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Body1Wrapper,SubmitButton,BodyLeftWrapper,BodyRightWrapper,Body2Wrapper} from './PodLandingPage.style';
-import Img from '../img/person.gif';
+import Img from '../../img/person.gif';
 import { Link } from "react-router-dom";
 import { InlineWidget } from "react-calendly"
 import {List, Avatar, Button, Spin, message, Upload} from 'antd';

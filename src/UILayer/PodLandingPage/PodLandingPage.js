@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {HeaderWrapper,ImageWrapper,Seperator} from './PodLandingPage.style';
-import logo from '../img/logo.png';
+import logo from '../../img/logo.png';
 import Footer from './Footer.js';
 import Body from './Body.js';
 
