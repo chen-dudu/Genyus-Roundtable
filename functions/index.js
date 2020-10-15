@@ -7,12 +7,14 @@ const db = admin.firestore();
 const storage = admin.storage();
 
 const USER_COLLECTION = "users";
-const SESSION_COLLECTION  ="sessions";
+// const SESSION_COLLECTION  ="sessions";
+const POD_COLLECTION = "pods";
 const NO_COLLECTION = "notifications";
 const BUCKET_NAME = "genyus-roundtables.appspot.com";
 
 const userDocs = db.collection(USER_COLLECTION);
-const sessionDocs = db.collection(SESSION_COLLECTION);
+// const sessionDocs = db.collection(SESSION_COLLECTION);
+const podDocs = db.collection(POD_COLLECTION)
 const noDocs = db.collection(NO_COLLECTION);
 
 const CLASS_NAME = "function/index";
@@ -43,7 +45,7 @@ exports.createUser = functions.https.onCall((user, context) => {
                 nickname: user.fullname,
                 type: "researcher",
                 description: user.description,
-                sessions: [],
+                pods: [],
                 notifications: [],
                 photoURL: ""
             }).then(storeFeedback => {
@@ -112,7 +114,7 @@ exports.getUser = functions.https.onCall((data, context) => {
                             type: userData.get('type'),
                             creationTime: userAuth.metadata.creationTime,
                             description: userData.get('description'),
-                            sessions: userData.get('sessions'),
+                            pods: userData.get('pods'),
                             notifications: userData.get('notifications')
                         };
                         console.info(`${CLASS_NAME} | getUser | finished data preparation, data is ready to be returned`);
@@ -160,7 +162,7 @@ exports.getUsers = functions.https.onCall((data, context) => {
                                 type: doc.get('type'),
                                 creationTime: userAuth.metadata.creationTime,
                                 description: doc.get('description'),
-                                sessions: doc.get('sessions'),
+                                pods: doc.get('pods'),
                                 notifications: doc.get('notifications')
                             };
                             return Promise.resolve(user);
@@ -210,7 +212,7 @@ exports.getResearchers = functions.https.onCall((data, context) => {
                                     type: doc.get('type'),
                                     creationTime: userAuth.metadata.creationTime,
                                     description: doc.get('description'),
-                                    sessions: doc.get('sessions'),
+                                    pods: doc.get('pods'),
                                     notifications: doc.get('notifications')
                                 };
                                 console.info(`${CLASS_NAME} | getResearchers | finished processing record for uid ${doc.id}`);
