@@ -168,12 +168,12 @@ class Body extends React.Component {
 
 
 						<text>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</text>
-						<text style={{ fontWeight:"bold",color: '#4682B4' }}>Click on the photo to change</text>
-
-
-
 						<br />
 						<br />
+						<br />
+						<br />
+						<text style={{ fontWeight:"bold",color: '#4682B4',marginLeft:'20%' }}>Click on the photo to make a change</text>
+
 						<br />
 						<br />
 

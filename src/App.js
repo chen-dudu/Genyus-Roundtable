@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React,{useState} from 'react';
 import './App.css';
 
 import {
@@ -21,13 +21,16 @@ import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
 import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
 
+import PodCreate from './UILayer/Admin/PodCreate/PodCreate'
 
 
-function App() {
+
+function App(){
   // const [nickName, setNickName] = useState("");
   return (
     <Router>
       <switch>
+        {/* <Route path="/HomePage" component={HomePage}></Route> */}
         <Route exact path="/" component={HomePage}></Route>
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Login" component={Login}></Route>
@@ -39,15 +42,17 @@ function App() {
         <Route path="/Notification" component={Notification}></Route>
 
         {/*<Route path="/StatusAndRewards" component={StatusAndRewards}></Route>*/}
-        <Route path="/Admin/ResearcherList" component={ResearcherList} />
-        <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail} />
-        <Route path="/Admin/ResearcherCreate" component={ResearcherCreate} />
+        <Route path="/Admin/ResearcherList" component={ResearcherList}/>
+        <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
+        <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
 
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
 
         <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
-      </switch>
+
+        <Route path="/Admin/PodCreate" component={PodCreate}></Route>
+        </switch>
     </Router>
   );
 }
