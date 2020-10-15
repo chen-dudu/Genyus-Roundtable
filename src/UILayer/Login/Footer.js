@@ -6,7 +6,8 @@ import middleImg from "../../img/footmid.png"
 import rightImg from "../../img/footright.png"
 
 
-const Footer = props => {
+class Footer extends React.Component {
+    render(){
     return (
         <FooterWrapper>
             <LeftWrapper>
@@ -29,6 +30,7 @@ const Footer = props => {
             </RightWrapper>
         </FooterWrapper>
     );
+}
 };
 
 Footer.propTypes = {

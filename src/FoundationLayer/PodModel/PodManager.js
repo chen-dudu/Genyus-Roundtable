@@ -13,15 +13,15 @@ export default {
     /**
      * a method used to create a new pod document on DB, with auto-assigned ID
      * @param pod the pod to be created on DB
-     * @returns {Promise<undefined|String>} upon successful creation, a promise with resolve value of undefined is returned
-     *                                      upon failed creation, a promise with reject value of the received error message is returned
+     * @returns {Promise<String|String>} upon successful creation, a promise with resolve value of the id of the created pod is returned
+     *                                   upon failed creation, a promise with reject value of the received error message is returned
      */
     async createPod(pod) {
         try {
             let toSend = converter(pod);
             let feedback = await podDocs.add(toSend);
             console.debug(`${CLASS_NAME} | createPod | successfully created a new pod on DB, with id ${feedback.id}`);
-            return Promise.resolve(undefined);
+            return Promise.resolve(feedback.id);
         } catch (err) {
             console.error(`${CLASS_NAME} | createPod | failed to create new pod on DB, received error message ${err.message}`);
             return Promise.reject(err.message);
