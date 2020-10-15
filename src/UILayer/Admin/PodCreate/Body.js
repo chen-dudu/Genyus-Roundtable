@@ -4,6 +4,8 @@ import 'antd/dist/antd.css';
 import { withRouter } from 'react-router-dom';
 import { Form, Input, Button, Select } from 'antd';
 import firebase from 'firebase';
+import PodManager from '../../../FoundationLayer/PodModel/PodManager';
+
 const { Option } = Select;
 const layout = {
 	labelCol: {
@@ -31,7 +33,7 @@ class Body extends React.Component {
 	getResearcherName = () => {
 		return getResearchers()
 			.then(result => {
-				console.log("print result.data",result.data);
+				console.log("print result.data", result.data);
 				let list = [];
 				result.data.forEach(function (item, index, array) {
 
@@ -39,7 +41,7 @@ class Body extends React.Component {
 						list.unshift(item);
 					}
 				});
-				console.log("print list",list);
+				console.log("print list", list);
 				this.setState({ data: list, loading: false });
 			})
 			.catch(error => {
@@ -47,48 +49,97 @@ class Body extends React.Component {
 			});
 	}
 
+	createPod = (values) => {
+		let pod = {
+			title: this.state.title,
+			calendlyLink: this.state.calendlyLink,
+			researcher: this.state.researcher,
+			participants: [],
+		}
+		console.log("print pod", pod);
+		PodManager.createPod(pod)
+			.then(response => {
+				console.log("create pod successful");
+			}
+			)
+			.catch(err => {
+				alert(err);
+				console.log("error when creating pod");
+			});
+		console.log("print id", pod.pid);
+	}
+
+	onTitleEnter = (e) => {
+		console.log("Title: ", e.target.value);
+		// this.setState({ pod: { title: e.target.value } });
+		this.setState({ title: e.target.value });
+	}
+
+	onResearcherEnter = (name) => {
+		console.log("Researcher: ", name);
+		// this.setState({ pod: { researcher: name } });
+		this.setState({ researcher: name });
+
+	}
+
+	onCalendlyLinkEnter = (e) => {
+		console.log("CalendlyLink: ", e.target.value);
+		// this.setState({ pod: { calendlyLink: e.target.value } });
+		this.setState({ calendlyLink: e.target.value });
+	}
+
 	constructor(props) {
 		super(props);
+		this.onTitleEnter = this.onTitleEnter.bind(this);
+		this.onResearcherEnter = this.onResearcherEnter.bind(this);
+		this.onCalendlyLinkEnter = this.onCalendlyLinkEnter.bind(this);
+
 		this.getResearcherName();
 		this.state = {
-			loading : true,
-			data : [],
+			loading: true,
+			data: [],
+			title: "",
+			calendlyLink: "",
+			researcher: "",
+			participants: [],
 		};
 	}
 
 
 	render() {
-
 		return (
 			<Body1Wrapper>
 				<TitleWrapper>
 					<h2>Create Pod</h2>
 				</TitleWrapper>
 				<BodyWrapper>
-					<Form ref={this.formRef} name="control-ref" onFinish={this.onFinish} style={{ marginLeft: "20%", fontSize: "40px" }}>
+					<br />
+					<br />
+					<Form {...layout} ref={this.formRef} name="control-ref" onFinish={this.createPod}>
 						<br />
+						<Form.Item name="title" label="Pod Title" rules={[{ required: true }]}>
+							<Input style={{ width: "60%" }} onChange={this.onTitleEnter} />
+						</Form.Item>
 						<Form.Item name="researcher" label="Researcher" rules={[{ required: true }]}>
 							<Select
 								placeholder="Select a researcher"
-								style={{ width: "50%" }}
+								style={{ width: "60%" }}
+								onChange={this.onResearcherEnter}
 								allowClear
 							>
-								{this.state.data.map((item) => {
-									return (<Option value={item.fullname}>{item.fullname}</Option>)
+								{console.log(this.state.data)}
+								{this.state.data.map(item => {
+									return (<Option value={item.uid}>{item.fullname}</Option>)
 								})}
-								{/* <Option value="researcher1">researcher1</Option>
-								<Option value="researcher2">researcher2</Option>
-								<Option value="researcher3">researcher3</Option> */}
 							</Select>
 						</Form.Item>
-						<br />
 						<Form.Item name="calendlyLink" label="CalendlyLink" rules={[{ required: true }]}>
-							<Input style={{ width: "50%" }} />
+							<Input style={{ width: "60%" }} onChange={this.onCalendlyLinkEnter} />
 						</Form.Item>
 						<br />
-						<Form.Item >
-							<Button type="primary" htmlType="submit" style={{ margin: "0% 10% 0%", width: "50%" }}>
-								Submit
+						<Form.Item {...tailLayout}>
+							<Button type="primary" htmlType="submit" style={{ width: "50%" }}>
+								Confirm Session
           				</Button></Form.Item>
 					</Form>
 				</BodyWrapper>
