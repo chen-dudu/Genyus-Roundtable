@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import {HeaderWrapper,ImageWrapper,Seperator} from './HomePage.style';
 import logo from '../../img/logo.png';
 import Footer from './Footer.js';
 import Body from './Body.js';
+import { withRouter } from 'react-router-dom';
 
 class Header extends React.Component {
   render(){
@@ -32,4 +33,4 @@ class HomePage extends React.Component {
 }
 
 // ========================================
-export default HomePage;
+export default withRouter(HomePage);

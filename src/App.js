@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import {
@@ -23,12 +23,12 @@ import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/Research
 
 
 
-function App(){
+function App() {
   // const [nickName, setNickName] = useState("");
   return (
     <Router>
-
-        <Route path="/" component={HomePage}></Route>
+      <switch>
+        <Route exact path="/" component={HomePage}></Route>
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Login" component={Login}></Route>
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
@@ -39,14 +39,15 @@ function App(){
         <Route path="/Notification" component={Notification}></Route>
 
         {/*<Route path="/StatusAndRewards" component={StatusAndRewards}></Route>*/}
-        <Route path="/Admin/ResearcherList" component={ResearcherList}/>
-        <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
-        <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
+        <Route path="/Admin/ResearcherList" component={ResearcherList} />
+        <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail} />
+        <Route path="/Admin/ResearcherCreate" component={ResearcherCreate} />
 
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
 
         <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
+      </switch>
     </Router>
   );
 }

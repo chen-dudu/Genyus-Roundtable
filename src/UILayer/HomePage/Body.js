@@ -2,32 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Body1Wrapper,SubmitButton,Body2Wrapper} from './HomePage.style';
 import Img from '../../img/person.gif';
-import { Link } from "react-router-dom";
-
-class Body1 extends React.Component {
-	render(){
-		return(
-			
-			<Body1Wrapper>
-				<h1>Welcome to Genyus Roundtable!</h1>
-				<h2>An online peer-driven focus group</h2>
-                <div>
-                	<img src={Img} alt=""></img>
-                	<p>Play Video!</p>
-                	<iframe id="u35_input" scrolling="auto" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" src="https://www.youtube.com/embed/Xm_F_UBjrq8"></iframe>
-                    <p id="SignUp">Sign up to get involved!</p>   
-                </div>
-                <br />
-                <Link to="Signup"><SubmitButton>Sign Up!</SubmitButton></Link>
-                <Link to="Login"><SubmitButton>Log in!</SubmitButton></Link>
-                <br />
-
-			</Body1Wrapper>
-
-
-		)
-	}
-}
+import { Button } from 'antd';
+import { withRouter } from 'react-router-dom';
+import Body1 from './Body1.js';
 
 class Body2 extends React.Component {
 	render(){
@@ -62,4 +39,4 @@ class Body extends React.Component {
 	}
 }
 
-export default Body;
+export default withRouter(Body);
