@@ -27,8 +27,8 @@ function App(){
   // const [nickName, setNickName] = useState("");
   return (
     <Router>
-
-        <Route path="/" component={HomePage}></Route>
+        <switch>
+        <Route path="/" exact component={HomePage}></Route>
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Login" component={Login}></Route>
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
@@ -47,6 +47,7 @@ function App(){
 
         <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
+        </switch>
     </Router>
   );
 }
