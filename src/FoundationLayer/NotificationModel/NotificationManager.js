@@ -1,17 +1,20 @@
 import firebase from "firebase";
 import Notification from "./Notification";
-import SessionManager from "../SessionModel/SessionManager";
+// import SessionManager from "../SessionModel/SessionManager";
+import PodManager from "../PodModel/PodManager";
 import UserManager from "../UserModel/UserManager";
 
 const NO_COLLECTION = 'notifications';
-const SESSION_COLLECTION = 'sessions';
+// const SESSION_COLLECTION = 'sessions';
+const POD_COLLECTION = "pods";
 const CLASS_NAME = 'NotificationManager';
 
 const auth = firebase.auth();
 const db = firebase.firestore();
 
 const noDocs = db.collection(NO_COLLECTION);
-const sessionDocs = db.collection(SESSION_COLLECTION);
+// const sessionDocs = db.collection(SESSION_COLLECTION);
+const podDocs = db.collection(POD_COLLECTION);
 
 export default {
 
@@ -26,7 +29,7 @@ export default {
             let noDoc = await noDocs.doc(nid).get();
             console.debug(`${CLASS_NAME} | getNotification | successfully retrieve notification data from DB`);
             let timeReceived = noDoc.get('timeReceived').toDate();
-            let newNotification = new Notification(noDoc.get('title'), noDoc.get('description'), timeReceived, noDoc.get('isRead'), nid, noDoc.get('sid'));
+            let newNotification = new Notification(noDoc.get('title'), noDoc.get('description'), timeReceived, noDoc.get('isRead'), nid, noDoc.get('pid'));
             return Promise.resolve(newNotification);
         } catch (err) {
             console.error(`${CLASS_NAME} | getNotification | failed to retrieve notification data from DB, received error message: ${err.message}`);
@@ -55,7 +58,7 @@ export default {
     },
 
     /**
-     * a method used to send a notification to all signed up participants in the associated session
+     * a method used to send a notification to all signed up participants in the associated pod
      * @param notification the notification to be sent
      * @returns {Promise<*>} upon successful sending, a promise with resolve value of undefined is returned.
      *                       upon failed sending, a promise with reject value of received error message is returned.
@@ -66,29 +69,29 @@ export default {
             let noFeedback = await noDocs.add(toSend);
             let noID = noFeedback.id;
             console.debug(`${CLASS_NAME} | sendNotification | successfully add the notification to DB, new id ${noID}`);
-            let sid = notification.sid;
-            // first add the new notification to the session's notification list
-            let sessionRef = SessionManager.getSessionRef(sid);
-            if (!sessionRef) {
-                console.error(`session with sid ${sid} is not found on DB`);
-                return Promise.reject(`session with sid ${sid} is not found on DB`);
+            let pid = notification.pid;
+            // first add the new notification to the pod's notification list
+            let podRef = PodManager.getPodRef(pid);
+            if (!podRef) {
+                console.error(`pod with pid ${pid} is not found on DB`);
+                return Promise.reject(`pod with pid ${pid} is not found on DB`);
             }
 
-            let sessionDoc = await sessionRef.get();
-            let notifications = sessionDoc.get('notifications');
+            let podDoc = await podRef.get();
+            let notifications = podDoc.get('notifications');
 
             let index = notifications.indexOf(noID);
             if (index !== -1) {
                 notifications.splice(index, 1);
             }
 
-            let sessionUpdateFeedback = await sessionRef.update({notifications: notifications});
-            console.debug(`${CLASS_NAME} | sendNotification | successfully update session's notification list`);
+            let podUpdateFeedback = await podRef.update({notifications: notifications});
+            console.debug(`${CLASS_NAME} | sendNotification | successfully update pod's notification list`);
 
             // then add this new notification to all signed up participants
-            // first use sid to get participant list
-            // let sessionFeedback = await sessionDocs.doc(sid).get();
-            let participants = sessionDoc.get('participants');
+            // first use pid to get participant list
+            // let podFeedback = await podDocs.doc(pid).get();
+            let participants = podDoc.get('participants');
             console.debug(`${CLASS_NAME} | sendNotification | successfully get the participant list from DB`);
             // start update each user's notification list
             for (let i = 0; i < participants.length; i++) {
@@ -123,28 +126,28 @@ export default {
     async deleteNotification(notification) {
         try {
             let nid = notification.nid;
-            let sid = notification.sid;
+            let pid = notification.pid;
             // now get all signed up users, and remove notification from their notification list
-            let sessionRef = SessionManager.getSessionRef(sid);
-            if (!sessionRef) {
-                console.error(`${CLASS_NAME} | deleteNotification | failed to get session reference from session manager`);
-                return Promise.reject('failed to get session ref');
+            let podRef = podManager.getPodRef(pid);
+            if (!podRef) {
+                console.error(`${CLASS_NAME} | deleteNotification | failed to get pod reference from pod manager`);
+                return Promise.reject('failed to get pod ref');
             }
 
-            let sessionDoc = await sessionRef.get();
-            let notifications = sessionDoc.get('notifications');
+            let podDoc = await podRef.get();
+            let notifications = podDoc.get('notifications');
 
             let index = notifications.indexOf(nid);
             if (index !== -1) {
                 // remove from list
                 notifications.splice(index, 1);
             }
-            // push new data to DB (update session)
-            let sessionUpdateFeedback = await sessionRef.update({notifications: notifications});
-            console.debug(`${CLASS_NAME} | deleteNotification | successfully update session's notification list`);
+            // push new data to DB (update pod)
+            let podUpdateFeedback = await podRef.update({notifications: notifications});
+            console.debug(`${CLASS_NAME} | deleteNotification | successfully update pod's notification list`);
 
             // then, move on to update participants
-            let participants = sessionDoc.get('participants');
+            let participants = podDoc.get('participants');
             for (let i = 0; i < participants.length; i++) {
                 let id = participants[i];
 
@@ -164,7 +167,7 @@ export default {
                 // push updated list to DB
                 await userRef.update({notifications: noList});
             }
-            console.debug(`${CLASS_NAME} | deleteNotification | notification has been deleted from associated session and participant's notification list`);
+            console.debug(`${CLASS_NAME} | deleteNotification | notification has been deleted from associated pod and participant's notification list`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | deleteNotification | failed to delete notification, received error message: ${err.message}`);
@@ -179,6 +182,6 @@ function converter(notification) {
             description: notification.description,
             timeReceived: firebase.firestore.Timestamp.fromDate(notification.timeReceived),
             isRead: notification.isRead,
-            sid: notification.sid
+            pid: notification.pid
     };
 }
