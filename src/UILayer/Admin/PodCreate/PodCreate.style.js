@@ -120,7 +120,7 @@ export const TitleWrapper = styled.div`
   > h2 {
   position: absolute;
   display: inline-block;
-  left:10%;
+  left:20%;
   color: #4682B4;
   font-size: 40px;
   }
