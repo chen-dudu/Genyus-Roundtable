@@ -43,6 +43,22 @@ export default {
     },
 
     /**
+     * a method used to retrieve a reference to the pod document in DB with the given id
+     * @param pid the id of the pod to be retrieved
+     * @return {null|firebase.firestore.DocumentReference<firebase.firestore.DocumentData>}
+     *          upon successful retrieval, the pod reference is returned.
+     *          upon failed retrieval, null is returned.
+     */
+    getPodRef(pid) {
+        try {
+            return podDocs.doc(pid);
+        } catch (err) {
+            console.error(`${CLASS_NAME} | getPodRef | failed to get pod ref, received error message: ${err.message}`);
+            return null
+        }
+    },
+
+    /**
      * a method used to get the pod with the specified id from DB
      * @param pid the id of the pod to be retrieved fro DB
      * @returns {Promise<Pod|String>} upon successful retrieval, a promise with resolve value of the required pod object is returned
@@ -87,6 +103,12 @@ export default {
         }
     },
 
+    /**
+     * a method used to sign up a user for a pod
+     * @param pid the pod to be signed up for
+     * @return {Promise<unknown>} upon successful signup, a promise with resolve value of undefine is returned
+     *                            upon failed signup, a promise with reject value of received error message is returned
+     */
     async signup(pid) {
         try {
             let pRef = podDocs.doc(pid);
