@@ -128,7 +128,7 @@ export default {
             let nid = notification.nid;
             let pid = notification.pid;
             // now get all signed up users, and remove notification from their notification list
-            let podRef = podManager.getPodRef(pid);
+            let podRef = PodManager.getPodRef(pid);
             if (!podRef) {
                 console.error(`${CLASS_NAME} | deleteNotification | failed to get pod reference from pod manager`);
                 return Promise.reject('failed to get pod ref');
