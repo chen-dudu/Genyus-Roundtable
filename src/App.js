@@ -28,7 +28,7 @@ function App(){
   return (
     <Router>
 
-        <Route path="/HomePage" component={HomePage}></Route>
+        <Route path="/" component={HomePage}></Route>
         <Route path="/Signup" component={Signup}></Route>
         <Route path="/Login" component={Login}></Route>
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
