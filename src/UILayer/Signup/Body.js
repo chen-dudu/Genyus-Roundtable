@@ -1,18 +1,18 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {BodyWrapper,SubmitButton} from './Signup.style';
+import { BodyWrapper, SubmitButton } from './Signup.style';
 import noteImg from "../../img/note.png"
 import { Link } from "react-router-dom";
 
 import UserManager from "../../FoundationLayer/UserModel/UserManager";
-import { Input, Button} from 'antd';
+import { Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { withRouter } from 'react-router-dom';
 
 
 const CLASS_NAME = "Signup/Body";
 
-class Body extends React.Component{
+class Body extends React.Component {
     constructor(props) {
         super(props);
         this.onEmailEnter = this.onEmailEnter.bind(this);
@@ -21,7 +21,7 @@ class Body extends React.Component{
         this.onFullnameEnter = this.onFullnameEnter.bind(this);
         this.onNicknameEnter = this.onNicknameEnter.bind(this);
         this.signup = this.signup.bind(this);
-        this.state = {email: '', password: '', re_password: '', full_name: '', nick_name: ''};
+        this.state = { email: '', password: '', re_password: '', full_name: '', nick_name: '' };
     }
 
     signup(e) {
@@ -46,26 +46,30 @@ class Body extends React.Component{
 
 
     onEmailEnter(e) {
-        this.setState({email: e.target.value});
+        this.setState({ email: e.target.value });
     }
 
     onPasswordEnter(e) {
-        this.setState({password: e.target.value});
+        this.setState({ password: e.target.value });
     }
 
     onRePasswordEnter(e) {
-        this.setState({re_password: e.target.value});
+        this.setState({ re_password: e.target.value });
     }
 
     onFullnameEnter(e) {
-        this.setState({full_name: e.target.value});
+        this.setState({ full_name: e.target.value });
     }
 
     onNicknameEnter(e) {
-        this.setState({nick_name: e.target.value});
+        this.setState({ nick_name: e.target.value });
     }
 
-    render(){
+    handleChange = () => {
+        this.props.history.push("Login");
+    }
+
+    render() {
         // const nname = this.state.nname;
         return (
             <BodyWrapper>
@@ -74,55 +78,56 @@ class Body extends React.Component{
                 <br />
                 <form onSubmit={this.signup}>
                     <div align={'center'}>
-                        <label htmlFor="email" style={{fontSize:"25px"}}>Email</label>
+                        <label htmlFor="email" style={{ fontSize: "25px" }}>Email</label>
                     </div>
 
-                    <Input id={'email'} size={"large"} placeholder={'Email'} allowClear value={this.state.email} onChange={this.onEmailEnter} style={{width: '55%'}}/>
+                    <Input id={'email'} size={"large"} placeholder={'Email'} allowClear value={this.state.email} onChange={this.onEmailEnter} style={{ width: '55%' }} />
                     {/*<Input type="text" id="email" name="email" style={{width:"50%"}}></Input>*/}
                     {/*<input type={'text'} id={'email'} name={'email'} value={this.state.email} style={{width: '50%', height: 30}} onChange={this.onEmailEnter}/>*/}
                     <br />
                     <br />
                     <div align={'center'}>
-                        <label htmlFor="password" style={{fontSize:"25px"}}>Password</label>
+                        <label htmlFor="password" style={{ fontSize: "25px" }}>Password</label>
                     </div>
 
-                    <Input.Password id={'password'} size={"large"} placeholder={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{width: '55%'}} />
+                    <Input.Password id={'password'} size={"large"} placeholder={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{ width: '55%' }} />
                     {/*<Input type="text" id="password" name="password" style={{width:"50%"}}></Input>*/}
                     {/*<input type={'password'} id={'password'} name={'password'} value={this.state.password} style={{width: '50%', height: 30}} onChange={this.onPasswordEnter}/>*/}
                     <br />
                     <br />
                     <div align={'center'}>
-                        <label htmlFor="confirmPassword" style={{fontSize:"25px"}}>Re-enter</label>
+                        <label htmlFor="confirmPassword" style={{ fontSize: "25px" }}>Re-enter</label>
                     </div>
 
-                    <Input.Password id={'confirmPassword'} size={"large"} placeholder={'Re-enter your password'} value={this.state.re_password} onChange={this.onRePasswordEnter} style={{width: '55%'}} />
+                    <Input.Password id={'confirmPassword'} size={"large"} placeholder={'Re-enter your password'} value={this.state.re_password} onChange={this.onRePasswordEnter} style={{ width: '55%' }} />
                     {/*<Input type="text" id="confirmPassword" name="confirmPassword" style={{width:"50%"}}></Input>*/}
                     {/*<input type={'password'} id={'re_password'} name={'re_password'} value={this.state.re_password} style={{width: '50%', height: 30}} onChange={this.onRePasswordEnter}/>*/}
                     <br />
                     <br />
                     <div align={'center'}>
-                        <label htmlFor="full_name" style={{fontSize:"25px"}}>Full Name</label>
+                        <label htmlFor="full_name" style={{ fontSize: "25px" }}>Full Name</label>
                     </div>
 
-                    <Input id={'full_name'} size={"large"} allowClear placeholder={'Full Name'} value={this.state.full_name} onChange={this.onFullnameEnter} style={{width: '55%'}} />
+                    <Input id={'full_name'} size={"large"} allowClear placeholder={'Full Name'} value={this.state.full_name} onChange={this.onFullnameEnter} style={{ width: '55%' }} />
                     {/*<Input type="text" id="full_name" name="fname" style={{width:"50%"}}></Input>*/}
                     {/*<input type={'text'} id={'full_name'} name={'full_name'} value={this.state.full_name} style={{width: '50%', height: 30}} onChange={this.onFullnameEnter}/>*/}
                     <br />
                     <br />
                     <div align={'center'}>
-                        <label htmlFor="nick_name" style={{fontSize:"25px"}}>Nickname</label>
+                        <label htmlFor="nick_name" style={{ fontSize: "25px" }}>Nickname</label>
                     </div>
 
-                    <Input id={'nick_name'} size={"large"} allowClear placeholder={'Nick Name'} value={this.state.nick_name} onChange={this.onNicknameEnter} style={{width: '55%'}} />
+                    <Input id={'nick_name'} size={"large"} allowClear placeholder={'Nick Name'} value={this.state.nick_name} onChange={this.onNicknameEnter} style={{ width: '55%' }} />
                     {/*<Input type="text" id="nname" name="nname" style={{width:"50%" }} value={nname}*/}
                     {/*  onChange={this.handleChange} ></Input>*/}
                     {/*<input type={'text'} id={'nick_name'} name={'nick_name'} value={this.state.nick_name} style={{width: '50%', height: 30}} onChange={this.onNicknameEnter}/>*/}
                     <br />
                     <br />
 
-                    <div align={'center'} style={{width: '90%'}}>
-
-                        <Button htmlType={"submit"} id={'signup-button'} type={"primary"} block size={"large"} style={{fontSize: 18, fontWeight: "bold", background: '#3399ff', borderRadius: 5}} >
+                    <div align={'center'} style={{ width: '90%' }}>
+                        <br />
+                        <Button htmlType={"submit"} id={'signup-button'} type={"primary"} size={"large"}
+                            style={{ fontSize: "large", display: "block", margin: "0% auto 5%", width: "100%" }} >
                             Sign up
                         </Button>
                         {/*<input align={'center'} id={'signup-button'} style={{background: "#3399ff", borderRadius: 5,*/}
@@ -130,7 +135,8 @@ class Body extends React.Component{
                         {/*    fontSize: 20, color: "white"}} type={'submit'} value={'Sign up'}/>*/}
                     </div>
                 </form>
-                <br/><br/>
+                <br />
+                <Button type="text" danger onClick={this.handleChange} style={{ marginBottom: "3%" }}>Already have an account? Log in</Button>
                 {/*<Link to={{pathname: '/users', state: this.state.nname}}>*/}
                 {/*<SubmitButton type="primary">Sign Up</SubmitButton>*/}
                 {/*</Link>*/}

@@ -1,13 +1,37 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import {HeaderWrapper,ImageWrapper,Seperator,LogoutWrapper} from './ResearcherHomePage.style';
+import {HeaderWrapper,ImageWrapper,Seperator,LogoutWrapper} from './PodCreate.style';
 import logo from '../../../img/logo.png';
 import { Avatar,Button } from 'antd';
 import {withRouter} from 'react-router-dom';
 import { UserOutlined } from '@ant-design/icons';
+import UserManager from '../../../FoundationLayer/UserModel/UserManager';
 
 
 class Header extends React.Component {
+	getImage = () => {
+		UserManager.getCurrentUser()
+			.then(response => {
+
+				if (response.photoURL) {
+					UserManager.getAvatar(response.photoURL)
+						.then(photo => {
+							this.props.setImage(photo);
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	constructor(props) {
+		super(props);
+		this.getImage();
+	}
     render(){
       return (
         <HeaderWrapper>
@@ -26,7 +50,8 @@ class Header extends React.Component {
           <br></br> <br></br> <br></br>
           <br></br> <br></br> <br></br>
           <br></br> 
-          <Seperator></Seperator>    
+          <Seperator></Seperator>
+          <br/> 
         </HeaderWrapper>
         
       );

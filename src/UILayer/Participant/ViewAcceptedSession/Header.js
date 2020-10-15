@@ -59,7 +59,7 @@ class Header extends React.Component {
                     <div>
                         <Avatar src={this.props.image} size={64} style={{ left: '70%' ,margin: '2% auto'}} icon={<UserOutlined />} />
 
-                        <Button danger style={{ left: '75%' ,margin: '2% auto'}} onClick={() => this.props.history.push('../HomePage')} >Logout</Button>
+                        <Button danger style={{ left: '75%' ,margin: '2% auto'}} onClick={() => this.props.history.push('../')} >Logout</Button>
                     </div>
                 </LogoutWrapper>
                 <br></br> <br></br> <br></br>

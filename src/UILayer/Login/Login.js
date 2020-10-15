@@ -8,7 +8,8 @@ import logo from '../../img/logo.png';
 import Body from './Body'
 import Footer from './Footer'
 
-const Login = props => {
+class Login extends React.Component {
+  render(){
   return (
     <div>
       <HeaderWrapper>
@@ -24,7 +25,8 @@ const Login = props => {
       <Footer>footer</Footer>
     </div>
   );
-};
+  }
+}
 
 Login.propTypes = {};
 

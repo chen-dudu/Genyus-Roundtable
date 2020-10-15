@@ -48,7 +48,7 @@ export const BodyWrapper = styled.div`
 `;
 
 export const FooterWrapper = styled.div`
-  height: 200px;
+  height: 100%;
   background: #141414;
   display: flex;
 `;
