@@ -22,6 +22,10 @@ export default {
     async createPod(pod, uid) {
         try {
             let toSend = converter(pod);
+            if (!toSend) {
+                console.error(`${CLASS_NAME} | createPod | failed to convert data to firebase compatible form`);
+                return Promise.reject(new Error("input object has wrong format"));
+            }
             // add user to pod's participant list
             toSend.participants.unshift(uid);
             // create a new pod on DB
@@ -68,7 +72,7 @@ export default {
         try {
             let pod = await podDocs.doc(pid).get();
             console.debug(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
-            return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants')));
+            return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('status'), pod.get('description'), pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants')));
         } catch (err) {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
             return Promise.reject(err.message);
@@ -88,11 +92,13 @@ export default {
             queryResult.docs.forEach(doc => {
                 let pid = doc.id;
                 let title = doc.get('title');
+                let status = doc.get('status');
+                let description = doc.get('description');
                 let calendlyLink = doc.get('calendlyLink');
                 let researcher = doc.get('researcher');
                 let participants = doc.get('participants');
                 // let sessions = doc.get('sessions');
-                let pod = new Pod(pid, title, calendlyLink, researcher, participants);
+                let pod = new Pod(pid, title, status, description, calendlyLink, researcher, participants);
                 pods.unshift(Promise.resolve(pod));
             });
             console.debug(`${CLASS_NAME} | getAllPods | finished pre-processing, data is ready to be returned`);
@@ -120,17 +126,16 @@ export default {
             let uid = user.uid;
             console.debug(`${CLASS_NAME} | signup | successfully get user doc from DB`);
             let participants = pDoc.get('participants');
-            // TODO rename var name sessions -> pods
-            let pods = user.get('sessions');
+            let pods = user.get('pods');
             if (!participants.includes(uid) && !pods.includes(pid)) {
+                // update pod and participant
                 participants.unshift(uid);
-                pods.unshift(uid);
+                pods.unshift(pid);
                 console.debug(`${CLASS_NAME} | signup | successfully update pod and user information, start updating DB`);
             }
             await pRef.update({participants: participants});
             console.debug(`${CLASS_NAME} | signup | successfully updated DB for pods`);
-            // TODO rename var name sessions -> pods
-            await db.collection('users').doc(uid).update({sessions: pods});
+            await db.collection('users').doc(uid).update({pods: pods});
             console.debug(`${CLASS_NAME} | signup | successfully updated DB for user`);
             return Promise.resolve(undefined);
         } catch (err) {
@@ -142,12 +147,19 @@ export default {
 
 // convert a Pod object to a form that can be processed by firebase
 function converter(pod) {
-    return {
-        title: pod.title,
-        calendlyLink: pod.calendlyLink,
-        researcher: pod.researcher,
-        participants: pod.participants,
-        notifications: pod.notifications
-        // sessions: pod.sessions
-    };
+    if (pod.title && pod.calendlyLink && pod.researcher && pod.participants && pod.notifications && pod.status && pod.description) {
+        return {
+            title: pod.title,
+            calendlyLink: pod.calendlyLink,
+            researcher: pod.researcher,
+            participants: pod.participants,
+            notifications: pod.notifications,
+            status: pod.status,
+            description: pod.description
+        };
+    }
+    else {
+        console.error(`${CLASS_NAME} | converter | input object has wrong format!`);
+        return null;
+    }
 }
