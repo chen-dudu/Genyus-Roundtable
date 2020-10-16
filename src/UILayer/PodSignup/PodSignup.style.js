@@ -154,7 +154,7 @@ export const Body1Wrapper = styled.div`
   width: 100%;
   height: revert;
   background-color: #FFF4CD;
-  margin-top: -30px;
+  margin-top: -10px;
 
   
   
@@ -174,13 +174,6 @@ export const Body1Wrapper = styled.div`
     text-align: center;
   }
   
-  >p {
-    margin:20px auto;
-    color: black;
-    font-size: 20px;
-    font-weight: normal;
-    text-align: center;
-  }
 
   
 `

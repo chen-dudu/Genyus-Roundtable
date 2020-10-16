@@ -7,7 +7,7 @@ import {
 	BodyRightWrapper,
 	Body2Wrapper,
 	BodyWrapper, ProfileWrapper
-} from './PodLandingPage.style';
+} from './PodSignup.style';
 import Img from '../../img/person.gif';
 import { withRouter } from "react-router-dom";
 import { InlineWidget } from "react-calendly"
@@ -15,9 +15,6 @@ import {List, Avatar, Button, Spin, message, Upload} from 'antd';
 import UserManager from "../../FoundationLayer/UserModel/UserManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
 import {ButtonWrapper} from "../Admin/ResearcherList/ResearcherHomePage.style";
-
-
-
 
 
 
@@ -34,14 +31,9 @@ class Body1 extends React.Component {
 		this.getPodDetail(this.state.pid);
 
 
-
-
-
 	}
 
 
-
-//https://auth.calendly.com/oauth/token?client_id=qJWDGzV1-0Jzw5QHusOPv8yGdPZ24RiBJJs_-qwWe_U&client_secret=-0nkGp3XFXEnvsDS8xVNKMXJdTO4xaIu16OlZh24LEw&code=68YfgP63JYS4nLs0uYAd58WDOtwBL5LoPBl8dhY0XEE&redirect_uri=https://genyus-roundtables.web.app/
 
 
 	getPodDetail = (pid) => {
@@ -60,14 +52,11 @@ class Body1 extends React.Component {
 			<BodyWrapper>
 			<Body1Wrapper>
 
-				<h1>More About Recovery</h1>
-				<h2>Pod Description</h2>
-				<p className="description">Meaningful Vacation: More About Recovery
-					<br/>10.26: 13:00-14:00
-					<br/>To Be Continue: More About Recovery
-					<br/>11.2: 10:00-11:00</p>
-				<h2>Login to view Available Sessions</h2>
-				<Button className="login" style={{marginLeft:"43%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Login',state:{pid:this.state.pid,}})}>Login</Button>
+
+					<div className="Calendly">
+						<InlineWidget url={this.state.calendlyLink} />
+					</div>
+				<Button className="backButton" style={{marginLeft:"43%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/ParticipantHomePage')}>Back</Button>
 				<br />
 				<br />
 

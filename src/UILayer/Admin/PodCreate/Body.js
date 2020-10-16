@@ -106,6 +106,25 @@ class Body extends React.Component {
 		};
 	}
 
+	componentDidMount(){
+
+		fetch("https://calendly.com/oauth/authorize?client_id=qJWDGzV1-0Jzw5QHusOPv8yGdPZ24RiBJJs_-qwWe_U&response_type=code&redirect_uri=https://genyus-roundtables.web.app/"
+			,{method:'GET',
+				headers:{
+					'Content-Type':'application/json;charset=UTF-8'
+				},
+				mode:'cors',
+				cache:'default'})
+			.then(res => res.json())
+			.then(data => {
+				console.log(data)
+
+			})
+
+
+
+	}
+
 
 	render() {
 		return (

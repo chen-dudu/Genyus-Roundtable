@@ -24,6 +24,8 @@ import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
 import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
 
 import PodCreate from './UILayer/Admin/PodCreate/PodCreate'
+import PodSignup from "./UILayer/PodSignup/PodSignup";
+import PodLandingPage from "./UILayer/PodLandingPage/PodLandingPage";
 
 
 
@@ -37,7 +39,7 @@ function App(){
         <Route exact path="/" component={HomePage}></Route>
 
         <Route path="/Signup" component={Signup}></Route>
-        <Route path="/Login" component={Login}></Route>
+        <Route path="/Login/" component={Login}></Route>
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
         <Route path="/ParticipantHomePage" component={ParticipantHomePage}></Route>
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
@@ -49,7 +51,8 @@ function App(){
         <Route path="/Admin/ResearcherList" component={ResearcherList}/>
         <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
         <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
-        <Route path="/PodLandingPage" component={PodLandingPage}/>
+        <Route path="/PodSignup/:podid" component={PodSignup}/>
+        <Route path="/PodLandingPage/:podid" component={PodLandingPage}/>
 
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
 
