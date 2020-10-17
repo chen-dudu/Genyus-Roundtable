@@ -15,10 +15,10 @@ class User {
      * @param type          the type of the user (admin, participant, researcher)
      * @param creationTime  the time when the account of the user was created
      * @param description   the description about the user
-     * @param sessions      a list of sessions, including old and new (items are not in any particular order)
+     * @param pods          a list of pods, including old and new (items are not in any particular order)
      * @param notifications a list of notifications, including read and not read (items are not in any particular order)
      */
-    constructor(uid, email, displayName, fullname, nickname, phoneNumber, photoURL, providerId, type, creationTime, description='', sessions, notifications) {
+    constructor(uid, email, displayName, fullname, nickname, phoneNumber, photoURL, providerId, type, creationTime, description='', pods, notifications) {
         this._uid = uid;
         this._email = email;
         this._displayName = displayName;
@@ -31,7 +31,7 @@ class User {
         this._creationTime = creationTime;
         this._description = description;
         // a list of sessions, including old and new
-        this._sessions = sessions;
+        this._pods = pods;
         // a list of notifications, including read and not read
         this._notifications = notifications;
     }
@@ -124,32 +124,23 @@ class User {
         return this._uid;
     }
 
-    get sessions() {
-        return this._sessions;
+    get pods() {
+        return this._pods;
     }
 
     get notifications() {
         return this._notifications;
     }
 
-    addSession(newSession) {
+    addPod(newPod) {
         // unshift method adds item to the front
-        this._sessions.unshift(newSession);
+        this._pods.unshift(newPod);
     }
-
-    // TODO TBD
-    // removeSession(session) {
-    //
-    // }
 
     addNotification(newNotification) {
         // unshift method adds item to the front
         this._notifications.unshift(newNotification);
     }
-    // TODO TBD
-    // removeNotification(notification) {
-    //
-    // }
 }
 
 export default User;
