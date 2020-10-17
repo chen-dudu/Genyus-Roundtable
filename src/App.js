@@ -20,6 +20,7 @@ import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 // import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
 import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
 import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
+import Detail from './UILayer/Detail/Detail'
 
 import PodCreate from './UILayer/Admin/PodCreate/PodCreate'
 
@@ -45,6 +46,7 @@ function App(){
         <Route path="/Admin/ResearcherList" component={ResearcherList}/>
         <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
         <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
+        <Route path="/Detail" component={Detail}/>
 
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
 
