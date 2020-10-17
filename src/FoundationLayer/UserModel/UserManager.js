@@ -28,12 +28,12 @@ export default {
                 let userDoc = await userDocs.doc(uid).get();
                 let fullname = userDoc.get('fullname');
                 let nickname = userDoc.get('nickname');
-                let sessions = userDoc.get('sessions');
+                let pods = userDoc.get('pods');
                 let notifications = userDoc.get('notifications');
                 let type = userDoc.get('type');
                 let description = userDoc.get('description');
                 let photoURL = userDoc.get('photoURL');
-                currentUser = new User(current.uid, current.email, current.displayName, fullname, nickname, current.phoneNumber, photoURL, current.providerId, type, creationTime, description, sessions, notifications);
+                currentUser = new User(current.uid, current.email, current.displayName, fullname, nickname, current.phoneNumber, photoURL, current.providerId, type, creationTime, description, pods, notifications);
                 // return current;
                 return Promise.resolve(currentUser);
             } catch (err) {
@@ -92,7 +92,7 @@ export default {
             let updateProfileFeedback = await signupFeedback.user.updateProfile({displayName: nickname});
             console.debug(`${CLASS_NAME} | signup | feedback from updating display name: ${updateProfileFeedback}`);
             let uid = signupFeedback.user.uid;
-            let storeFeedback = await userDocs.doc(uid).set({fullname: fullname, nickname: nickname, type: type, description: description, sessions: [], notifications: [], photoURL: signupFeedback.user.photoURL, email: email});
+            let storeFeedback = await userDocs.doc(uid).set({fullname: fullname, nickname: nickname, type: type, description: description, pods: [], notifications: [], photoURL: signupFeedback.user.photoURL, email: email});
             console.debug(`${CLASS_NAME} | signup | feedback from firestore: ${storeFeedback}`);
             await auth.currentUser.sendEmailVerification();
             console.debug(`${CLASS_NAME} | signup | verification email has been sent to user`);
@@ -200,7 +200,7 @@ export default {
                 fullname: doc.get('fullname'),
                 nickname: doc.get('nickname'),
                 notifications: doc.get('notifications'),
-                sessions: doc.get('sessions'),
+                pods: doc.get('pods'),
                 type: doc.get('type')
             };
             console.debug(`${CLASS_NAME} | getUser | finished pre-processing for uid ${uid}, data is ready to be returned`);
