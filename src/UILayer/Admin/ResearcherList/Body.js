@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper} from './ResearcherHomePage.style';
+import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper,Body2Wrapper} from './ResearcherList.style';
 import Img from '../../../img/Avatar.png';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
@@ -9,7 +9,7 @@ import {LoadingOutlined, PlusOutlined, UserOutlined} from '@ant-design/icons';
 import UserManager from "../../../FoundationLayer/UserModel/UserManager";
 import firebase from "firebase";
 import ImgCrop from "antd-img-crop";
-import {Body2Wrapper} from "../../Participant/ParticipantHomePage/ParticipantHomePage.style";
+
 
 
 
@@ -164,7 +164,7 @@ class Body extends React.Component {
 							<List.Item.Meta style={{marginLeft:20}}
 								avatar={<Avatar src={item.photoURL} icon={<UserOutlined />} size={120}/>}
 								title={<a style={{fontSize:25}}>{item.fullname}</a>}
-								description={<p style={{width:"70%", fontSize:20, wordBreak:"break-all"}}>{item.description}<br/>joined: {item.creationTime}</p>}
+								description={<p style={{width:"70%", fontSize:20, wordWrap:"break-word"}}>{item.description}<br/>joined: {item.creationTime}</p>}
 							/>
 
 							<div>

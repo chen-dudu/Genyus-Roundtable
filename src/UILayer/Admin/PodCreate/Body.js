@@ -108,18 +108,27 @@ class Body extends React.Component {
 
 	componentDidMount(){
 
-		fetch("https://calendly.com/oauth/authorize?client_id=qJWDGzV1-0Jzw5QHusOPv8yGdPZ24RiBJJs_-qwWe_U&response_type=code&redirect_uri=https://genyus-roundtables.web.app/"
-			,{method:'GET',
-				headers:{
-					'Content-Type':'application/json;charset=UTF-8'
-				},
-				mode:'cors',
-				cache:'default'})
-			.then(res => res.json())
-			.then(data => {
-				console.log(data)
 
+
+		fetch("https://calendly.com/api/v1/users/me/event_types?include=owner", {
+			"method": "GET",
+			"headers": {
+				"x-token": "LCFHBPAIAY67PWELIB7MVKXYWLCDHKN3"
+			}
 			})
+			.then(response => {
+				//console.log(response);
+				return response.json();
+			})
+			.then(data =>{
+			console.log(data);
+			})
+			.catch(err => {
+				console.error(err);
+			})
+			.catch(err => {
+				console.error(err);
+			});
 
 
 

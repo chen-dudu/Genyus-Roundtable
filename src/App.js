@@ -13,7 +13,7 @@ import Notification from './UILayer/Notification/Notification'
 import ViewAcceptedSession from "./UILayer/Participant/ViewAcceptedSession/ViewAcceptedSession";
 import ParticipantHomePage from './UILayer/Participant/ParticipantHomePage/ParticipantHomePage'
 
-import ResearcherList from './UILayer/Admin/ResearcherList/ResearcherHomePage'
+import ResearcherList from './UILayer/Admin/ResearcherList/ResearcherList'
 import ResearcherDetail from './UILayer/Admin/ResearcherDetail/ResearcherDetail'
 import ResearcherCreate from './UILayer/Admin/ResearcherCreate/ResearcherCreate'
 
@@ -21,12 +21,12 @@ import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 
 // import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
 import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
-import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
+import PodList from './UILayer/Admin/PodList/PodList'
 
 import PodCreate from './UILayer/Admin/PodCreate/PodCreate'
 import PodSignup from "./UILayer/PodSignup/PodSignup";
 import PodLandingPage from "./UILayer/PodLandingPage/PodLandingPage";
-
+import ResearcherHomePage from "./UILayer/Researcher/ResearcherHomePage/ResearcherHomePage"
 
 
 function App(){
@@ -51,6 +51,9 @@ function App(){
         <Route path="/Admin/ResearcherList" component={ResearcherList}/>
         <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
         <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
+        <Route path="/Admin/PodList" component={PodList}/>
+
+
         <Route path="/PodSignup/:podid" component={PodSignup}/>
         <Route path="/PodLandingPage/:podid" component={PodLandingPage}/>
 

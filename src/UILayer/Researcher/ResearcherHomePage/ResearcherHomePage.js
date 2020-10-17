@@ -21,4 +21,4 @@ const ResearcherHomePage = props => {
 }
 
 // ========================================
-export default ResearcherHomePage;
+export default withRouter(ResearcherHomePage);

@@ -13,7 +13,7 @@ class Body extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { email: '', password: '', pid: this.props.history.location.state.pid ,};
+        this.state = { email: '', password: '' ,};
         this.onEmailEnter = this.onEmailEnter.bind(this);
         this.onPasswordEnter = this.onPasswordEnter.bind(this);
         this.login = this.login.bind(this);
@@ -34,10 +34,10 @@ class Body extends React.Component {
                 // redirect to user home page
                 console.info(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
 
-                if (this.state.pid != null) {
-                    this.props.history.push("/PodSignup/"+this.state.pid);
-                }
-                else if (userType == "participant") {
+                // if (this.state.pid != null) {
+                //     this.props.history.push("/PodSignup/"+this.state.pid);
+                // }
+                if (userType == "participant") {
                     this.props.history.push("ParticipantHomePage");
                 }
                 else if (userType == "admin") {

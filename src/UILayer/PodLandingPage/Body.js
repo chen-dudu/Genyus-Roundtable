@@ -11,10 +11,11 @@ import {
 import Img from '../../img/person.gif';
 import { withRouter } from "react-router-dom";
 import { InlineWidget } from "react-calendly"
-import {List, Avatar, Button, Spin, message, Upload} from 'antd';
+import {List, Avatar, Button, Spin, message, Switch} from 'antd';
 import UserManager from "../../FoundationLayer/UserModel/UserManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
-import {ButtonWrapper} from "../Admin/ResearcherList/ResearcherHomePage.style";
+import {ButtonWrapper} from "../Admin/ResearcherList/ResearcherList.style";
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 
 
 
@@ -30,8 +31,14 @@ class Body1 extends React.Component {
 			researcherDescription : "",
 			researcherAvatar : "",
 			calendlyLink : "",
+			podTitle : "",
+			podDescription : "",
+			isCheck : true,
+
+			change : "change"
 		}
 		this.getPodDetail(this.state.pid);
+		this.onChange = this.onChange.bind(this);
 
 
 
@@ -47,20 +54,25 @@ class Body1 extends React.Component {
 	getPodDetail = (pid) => {
 		PodManager.getPod(pid)
 			.then(response =>{
-				this.setState({calendlyLink : response.calendlyLink});
+				this.setState({calendlyLink : response._calendlyLink, podTitle : response._title })
+
 			})
 			.catch(error =>{
 				console.log("pod "+error);
 			})
 	}
 
+
+
 	render(){
+
 
 		return(
 			<BodyWrapper>
 			<Body1Wrapper>
 
-				<h1>More About Recovery</h1>
+
+				<h1>{this.state.podTitle}</h1>
 				<h2>Pod Description</h2>
 				<p className="description">Meaningful Vacation: More About Recovery
 					<br/>10.26: 13:00-14:00

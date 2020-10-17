@@ -154,7 +154,7 @@ export const Body1Wrapper = styled.div`
   width: 100%;
   height: revert;
   background-color: #FFF4CD;
-  margin-top: -30px;
+  //margin-top: -30px;
 
   
   
@@ -215,7 +215,7 @@ export const Body2Wrapper = styled.div`
     font-size: 20px;
     font-weight: normal;
     text-align: center;
-    
+   
     
   }
   

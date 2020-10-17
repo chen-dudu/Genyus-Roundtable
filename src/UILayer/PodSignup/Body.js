@@ -14,7 +14,7 @@ import { InlineWidget } from "react-calendly"
 import {List, Avatar, Button, Spin, message, Upload} from 'antd';
 import UserManager from "../../FoundationLayer/UserModel/UserManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
-import {ButtonWrapper} from "../Admin/ResearcherList/ResearcherHomePage.style";
+import {ButtonWrapper} from "../Admin/ResearcherList/ResearcherList.style";
 
 
 
@@ -39,7 +39,7 @@ class Body1 extends React.Component {
 	getPodDetail = (pid) => {
 		PodManager.getPod(pid)
 			.then(response =>{
-				this.setState({calendlyLink : response.calendlyLink});
+				this.setState({calendlyLink : response._calendlyLink});
 			})
 			.catch(error =>{
 				console.log("pod "+error);
