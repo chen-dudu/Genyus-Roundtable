@@ -136,7 +136,7 @@ class Body extends React.Component {
 											width: "20%", height: 40, fontWeight: "bold",
 											boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
 											fontSize: 15, color: "white", marginLeft:'2%'}}
-												onClick={() => this.props.history.push({pathname: '/ViewAcceptedSession/'+item.nid, state:{item: item}})}>Go To Event Page</Button>
+												onClick={() => this.props.history.push({pathname: '/Detail/'+item.nid, state:{item: item}})}>Go To Event Page</Button>
 									</List.Item>
 									<br/><br/></div>
 							)}

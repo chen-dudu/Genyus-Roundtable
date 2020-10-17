@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { HeaderWrapper, ImageWrapper, Seperator, LogoutWrapper, LogoutButton } from './De.style';
-import logo from '../../../img/logo.png';
+import { HeaderWrapper, ImageWrapper, Seperator, LogoutWrapper, LogoutButton } from './Detail.style';
+import logo from '../../img/logo.png';
 import Footer from './Footer.js';
 import Body from './Body.js';
 import { Avatar, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
-import UserManager from "../../../FoundationLayer/UserModel/UserManager";
+import UserManager from "../../FoundationLayer/UserModel/UserManager";
 
 class Header extends React.Component {
 

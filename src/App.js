@@ -46,7 +46,7 @@ function App(){
         <Route path="/Admin/ResearcherList" component={ResearcherList}/>
         <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
         <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
-        <Route path="/Detail" component={Detail}/>
+        <Route path="/Detail/nid" component={Detail}/>
 
         {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
 

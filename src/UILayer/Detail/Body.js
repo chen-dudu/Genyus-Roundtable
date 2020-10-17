@@ -6,10 +6,10 @@ import {Button, Card, Tooltip, Avatar, Spin, List} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
 import {QuestionOutlined, UserOutlined} from '@ant-design/icons';
-import Img from "../../../img/person.gif";
-import UserManager from '../../../FoundationLayer/UserModel/UserManager';
-import NotificationManager from "../../../FoundationLayer/NotificationModel/NotificationManager";
-import SessionManager from "../../../FoundationLayer/SessionModel/SessionManager";
+import Img from "../../img/person.gif";
+import UserManager from '../../FoundationLayer/UserModel/UserManager';
+import NotificationManager from "../../FoundationLayer/NotificationModel/NotificationManager";
+import SessionManager from "../../FoundationLayer/SessionModel/SessionManager";
 
 const { Step } = Steps;
 const style = {background: 'white', padding: '8px 0'};
