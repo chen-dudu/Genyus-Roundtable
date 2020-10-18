@@ -164,188 +164,55 @@ class Body extends React.Component {
 	render() {
 		return (
 			<div style={{minWidth:500}}>
-				<BodyWrapper>
+				<Body3Wrapper>
 					<h1>Roundtable Confirmation</h1>
 					<h2 style={{fontStyle:"italic"}}>Meaningful Vocation: Stroke Recovery Stories</h2>
 
-					<Steps
-						type="navigation"
-						current={3}
-						onChange={this.onChange}
-						className="site-navigation-steps"
-					>
-						<Step status="finish" title="Learn About Roundtable" />
-						<Step status="finish" title="Login or Sign Up" />
-						<Step status="finish" title="Complete Questionnaire" />
-						<Step status="process" title="Registration Complete" />
-					</Steps>
+					{/*<Steps*/}
+					{/*	type="navigation"*/}
+					{/*	current={3}*/}
+					{/*	onChange={this.onChange}*/}
+					{/*	className="site-navigation-steps"*/}
+					{/*>*/}
+					{/*	<Step status="finish" title="Learn About Roundtable" />*/}
+					{/*	<Step status="finish" title="Login or Sign Up" />*/}
+					{/*	<Step status="finish" title="Complete Questionnaire" />*/}
+					{/*	<Step status="process" title="Registration Complete" />*/}
+					{/*</Steps>*/}
+
 					<br></br>
 					<br></br>
-					<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Your Confirmation</h1>
-					<br></br>
-				</BodyWrapper>
-				<Body2Wrapper style={{marginLeft:"auto", marginRight:"auto"}}>
-					<br />
-					<h1>Confirmation Details:</h1>
-					<br />
-					<Row
-						gutter={[5, 5]}
-						style={{marginLeft:"20px", marginRight:"40%"}}
-					>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
-								fontSize:"16px"}}>Your Status</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center",
-								fontSize:"16px"}}>Signed up, you're ready to go!</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
-								fontSize:"16px"}}>Date of Event</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
-								{this.state.time}</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
-								fontSize:"16px"}}>Video Chat Link</div>
-						</Col>
-						<Col className="gutter-row" span={12}>
-							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
-								{this.state.zoomLink}</div>
-						</Col>
-						<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
-							boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-							width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"82%",
-							fontSize: 15, color: "white"}}>Add to Calendar</Button>
-						<br />
-						<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
-							boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-							width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"70%",
-							fontSize: 15, color: "white"}}>Edit Status</Button>
-						<br />
-					</Row>
-					<br />
-					<hr style={{color: "white", height: 0}} />
-					<br />
-					<h1>Your Signup Responses:</h1>
-					<br />
-					<Row
-						gutter={[5, 5]}
-						style={{marginLeft:"20px", marginRight:"40%"}}
-					>
+					{/*<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Your Confirmation</h1>*/}
+					{/*<br></br>*/}
 
-						<ListWrapper>
-							<Spin spinning={this.state.loading}>
-								<List
-									bordered={false}
-									itemLayout="horizontal"
-									dataSource={Object.keys(this.state.sessionQues)}
-									renderItem={item => (
-										<div>
-											<List.Item style={{borderColor:'red', borderWidth:0,borderStyle:'solid',borderRadius:20}}>
-												<Col className="gutter-row" span={12}>
-													<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
-														fontSize:"16px", marginBottom:"-5%"}}>{item}</div>
-												</Col>
-												<Col className="gutter-row" span={12}>
-													<div style={{background: 'white', padding: '8px 0', textAlign:"center",
-														fontSize:"16px", marginBottom:"-5%"}}>{this.state.sessionQues[item]}</div>
-												</Col>
-											</List.Item>
-										</div>
-										)}
-									/>
-							</Spin>
-						</ListWrapper>
+					{/*<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Roundtable Details</h1>*/}
+					{/*<br/>*/}
 
-						{/*<Col className="gutter-row" span={12}>*/}
-						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
-						{/*		fontSize:"16px"}}>Are you willing for the data collected to be used for research*/}
-						{/*		purposes?</div>*/}
-						{/*</Col>*/}
-						{/*<Col className="gutter-row" span={12}>*/}
-						{/*	<div style={{background: 'white', padding: '20.5px 0', textAlign:"center",*/}
-						{/*		fontSize:"16px"}}>Yes</div>*/}
-						{/*</Col>*/}
+					{/*<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Session Information</h2>*/}
+					{/*<h3>Session name : {this.state.sessionTitle}</h3>*/}
+					{/*<h3>{this.state.sessionDes}</h3>*/}
 
-						{/*<Col className="gutter-row" span={12}>*/}
-						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
-						{/*		fontSize:"16px"}}>Have you suffered a stroke?</div>*/}
-						{/*</Col>*/}
-						{/*<Col className="gutter-row" span={12}>*/}
-						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>*/}
-						{/*		Yes</div>*/}
-						{/*</Col>*/}
+					{/*<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Available times</h2>*/}
+					{/*<h3>The session will be run at the following times:</h3>*/}
 
-						{/*<Col className="gutter-row" span={12}>*/}
-						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
-						{/*		fontSize:"16px"}}>What is your current employment status?</div>*/}
-						{/*</Col>*/}
-						{/*<Col className="gutter-row" span={12}>*/}
-						{/*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>*/}
-						{/*		Employed full time</div>*/}
-						{/*</Col>*/}
-
-						<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
-							boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-							width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"40%",
-							fontSize: 15, color: "white"}}>Edit Responses</Button>
-						<br />
-					</Row>
-					<br />
-					<hr style={{color: "white", height: 0}} />
-					<br />
-					<br />
-					<Button style={{background: "red", borderRadius: 5, borderWidth: "0",
-						marginLeft:"35%", marginRight:"35%",
-						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-						width: "30%", height: 40, fontWeight: "bold",
-						fontSize: 15, color: "white"}}>Download Researcher's Notes</Button>
-					<Tooltip>
-						<Button type="primary" shape="circle" icon={<QuestionOutlined />} size="large"
-								style={{position:"absolute", left: "92%", bottom:"82%", borderColor:"red", }}/>
-						<Button type="primary" shape="circle" icon={<QuestionOutlined />} size="large"
-								style={{position:"absolute", left: "61%", bottom:"68%", borderColor:"red", }}/>
-						<Button type="primary" shape="circle" icon={<QuestionOutlined />} size="large"
-								style={{position:"absolute", left: "70%", bottom:"10%", borderColor:"red", }}/>
-					</Tooltip>
-					<br />
-					<br />
-					<br />
-					<br />
-				</Body2Wrapper>
-				<Body3Wrapper>
-					<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Roundtable Details</h1>
-					<br/>
-
-					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Session Information</h2>
-					<h3>Session name : {this.state.sessionTitle}</h3>
-					<h3>{this.state.sessionDes}</h3>
-
-					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Available times</h2>
-					<h3>The session will be run at the following times:</h3>
-
-					<ListWrapper>
-						<Spin spinning={this.state.loading}>
-							<List
-								bordered={false}
-								itemLayout="vertical"
-								dataSource={this.state.timeslot}
-								renderItem={item => (
-									<div>
-										<List.Item style={{borderColor:'red', borderWidth:0,borderStyle:'solid',borderRadius:20}}>
-											<h3 style={{fontSize:"20px", marginLeft:"5%", color: "black", marginBottom:"-10%"}}>{this.formatDate(item)}</h3>
-										</List.Item>
-									</div>
-								)}
-							/>
-						</Spin>
-					</ListWrapper>
-					<br/>
-					<br/>
+					{/*<ListWrapper>*/}
+					{/*	<Spin spinning={this.state.loading}>*/}
+					{/*		<List*/}
+					{/*			bordered={false}*/}
+					{/*			itemLayout="vertical"*/}
+					{/*			dataSource={this.state.timeslot}*/}
+					{/*			renderItem={item => (*/}
+					{/*				<div>*/}
+					{/*					<List.Item style={{borderColor:'red', borderWidth:0,borderStyle:'solid',borderRadius:20}}>*/}
+					{/*						<h3 style={{fontSize:"20px", marginLeft:"5%", color: "black", marginBottom:"-10%"}}>{this.formatDate(item)}</h3>*/}
+					{/*					</List.Item>*/}
+					{/*				</div>*/}
+					{/*			)}*/}
+					{/*		/>*/}
+					{/*	</Spin>*/}
+					{/*</ListWrapper>*/}
+					{/*<br/>*/}
+					{/*<br/>*/}
 
 					{/*<h3 style={{marginBottom:"-10px"}}>4/5/2020 - 6pm-8pm</h3>*/}
 					{/*<h3 style={{marginBottom:"-10px"}}>6/5/2020 - 10am - 8am</h3>*/}
@@ -409,13 +276,167 @@ class Body extends React.Component {
 					<br></br> <br></br>
 
 					<div style={{position:"absolute", bottom:"50%", right:"5%"}}>
-						<h2>Learn more about the Session!!</h2>
 						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
 								mozallowfullscreen="" allowFullScreen=""
 								src={this.state.youtubeLink}></iframe>
 					</div>
 
 				</Body3Wrapper>
+
+				{/*<BodyWrapper>*/}
+				{/*	<h1>Roundtable Confirmation</h1>*/}
+				{/*	<h2 style={{fontStyle:"italic"}}>Meaningful Vocation: Stroke Recovery Stories</h2>*/}
+
+				{/*	<Steps*/}
+				{/*		type="navigation"*/}
+				{/*		current={3}*/}
+				{/*		onChange={this.onChange}*/}
+				{/*		className="site-navigation-steps"*/}
+				{/*	>*/}
+				{/*		<Step status="finish" title="Learn About Roundtable" />*/}
+				{/*		<Step status="finish" title="Login or Sign Up" />*/}
+				{/*		<Step status="finish" title="Complete Questionnaire" />*/}
+				{/*		<Step status="process" title="Registration Complete" />*/}
+				{/*	</Steps>*/}
+				{/*	<br></br>*/}
+				{/*	<br></br>*/}
+				{/*	<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Your Confirmation</h1>*/}
+				{/*	<br></br>*/}
+				{/*</BodyWrapper>*/}
+				{/*<Body2Wrapper style={{marginLeft:"auto", marginRight:"auto"}}>*/}
+				{/*	<br />*/}
+				{/*	<h1>Confirmation Details:</h1>*/}
+				{/*	<br />*/}
+				{/*	<Row*/}
+				{/*		gutter={[5, 5]}*/}
+				{/*		style={{marginLeft:"20px", marginRight:"40%"}}*/}
+				{/*	>*/}
+				{/*		<Col className="gutter-row" span={12}>*/}
+				{/*			<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
+				{/*				fontSize:"16px"}}>Your Status</div>*/}
+				{/*		</Col>*/}
+				{/*		<Col className="gutter-row" span={12}>*/}
+				{/*			<div style={{background: 'white', padding: '8px 0', textAlign:"center",*/}
+				{/*				fontSize:"16px"}}>Signed up, you're ready to go!</div>*/}
+				{/*		</Col>*/}
+				{/*		<Col className="gutter-row" span={12}>*/}
+				{/*			<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
+				{/*				fontSize:"16px"}}>Date of Event</div>*/}
+				{/*		</Col>*/}
+				{/*		<Col className="gutter-row" span={12}>*/}
+				{/*			<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>*/}
+				{/*				{this.state.time}</div>*/}
+				{/*		</Col>*/}
+				{/*		<Col className="gutter-row" span={12}>*/}
+				{/*			<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
+				{/*				fontSize:"16px"}}>Video Chat Link</div>*/}
+				{/*		</Col>*/}
+				{/*		<Col className="gutter-row" span={12}>*/}
+				{/*			<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>*/}
+				{/*				{this.state.zoomLink}</div>*/}
+				{/*		</Col>*/}
+				{/*		<Button style={{background: "red", borderRadius: 5, borderWidth: "0",*/}
+				{/*			boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",*/}
+				{/*			width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"82%",*/}
+				{/*			fontSize: 15, color: "white"}}>Add to Calendar</Button>*/}
+				{/*		<br />*/}
+				{/*		<Button style={{background: "red", borderRadius: 5, borderWidth: "0",*/}
+				{/*			boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",*/}
+				{/*			width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"70%",*/}
+				{/*			fontSize: 15, color: "white"}}>Edit Status</Button>*/}
+				{/*		<br />*/}
+				{/*	</Row>*/}
+				{/*	<br />*/}
+				{/*	<hr style={{color: "white", height: 0}} />*/}
+				{/*	<br />*/}
+				{/*	<h1>Your Signup Responses:</h1>*/}
+				{/*	<br />*/}
+				{/*	<Row*/}
+				{/*		gutter={[5, 5]}*/}
+				{/*		style={{marginLeft:"20px", marginRight:"40%"}}*/}
+				{/*	>*/}
+
+				{/*		<ListWrapper>*/}
+				{/*			<Spin spinning={this.state.loading}>*/}
+				{/*				<List*/}
+				{/*					bordered={false}*/}
+				{/*					itemLayout="horizontal"*/}
+				{/*					dataSource={Object.keys(this.state.sessionQues)}*/}
+				{/*					renderItem={item => (*/}
+				{/*						<div>*/}
+				{/*							<List.Item style={{borderColor:'red', borderWidth:0,borderStyle:'solid',borderRadius:20}}>*/}
+				{/*								<Col className="gutter-row" span={12}>*/}
+				{/*									<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*/}
+				{/*										fontSize:"16px", marginBottom:"-5%"}}>{item}</div>*/}
+				{/*								</Col>*/}
+				{/*								<Col className="gutter-row" span={12}>*/}
+				{/*									<div style={{background: 'white', padding: '8px 0', textAlign:"center",*/}
+				{/*										fontSize:"16px", marginBottom:"-5%"}}>{this.state.sessionQues[item]}</div>*/}
+				{/*								</Col>*/}
+				{/*							</List.Item>*/}
+				{/*						</div>*/}
+				{/*						)}*/}
+				{/*					/>*/}
+				{/*			</Spin>*/}
+				{/*		</ListWrapper>*/}
+
+				{/*		/!*<Col className="gutter-row" span={12}>*!/*/}
+				{/*		/!*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*!/*/}
+				{/*		/!*		fontSize:"16px"}}>Are you willing for the data collected to be used for research*!/*/}
+				{/*		/!*		purposes?</div>*!/*/}
+				{/*		/!*</Col>*!/*/}
+				{/*		/!*<Col className="gutter-row" span={12}>*!/*/}
+				{/*		/!*	<div style={{background: 'white', padding: '20.5px 0', textAlign:"center",*!/*/}
+				{/*		/!*		fontSize:"16px"}}>Yes</div>*!/*/}
+				{/*		/!*</Col>*!/*/}
+
+				{/*		/!*<Col className="gutter-row" span={12}>*!/*/}
+				{/*		/!*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*!/*/}
+				{/*		/!*		fontSize:"16px"}}>Have you suffered a stroke?</div>*!/*/}
+				{/*		/!*</Col>*!/*/}
+				{/*		/!*<Col className="gutter-row" span={12}>*!/*/}
+				{/*		/!*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>*!/*/}
+				{/*		/!*		Yes</div>*!/*/}
+				{/*		/!*</Col>*!/*/}
+
+				{/*		/!*<Col className="gutter-row" span={12}>*!/*/}
+				{/*		/!*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",*!/*/}
+				{/*		/!*		fontSize:"16px"}}>What is your current employment status?</div>*!/*/}
+				{/*		/!*</Col>*!/*/}
+				{/*		/!*<Col className="gutter-row" span={12}>*!/*/}
+				{/*		/!*	<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>*!/*/}
+				{/*		/!*		Employed full time</div>*!/*/}
+				{/*		/!*</Col>*!/*/}
+
+				{/*		<Button style={{background: "red", borderRadius: 5, borderWidth: "0",*/}
+				{/*			boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",*/}
+				{/*			width: "20%", height: 40, fontWeight: "bold", position:"absolute", left: "70%", bottom:"40%",*/}
+				{/*			fontSize: 15, color: "white"}}>Edit Responses</Button>*/}
+				{/*		<br />*/}
+				{/*	</Row>*/}
+				{/*	<br />*/}
+				{/*	<hr style={{color: "white", height: 0}} />*/}
+				{/*	<br />*/}
+				{/*	<br />*/}
+				{/*	<Button style={{background: "red", borderRadius: 5, borderWidth: "0",*/}
+				{/*		marginLeft:"35%", marginRight:"35%",*/}
+				{/*		boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",*/}
+				{/*		width: "30%", height: 40, fontWeight: "bold",*/}
+				{/*		fontSize: 15, color: "white"}}>Download Researcher's Notes</Button>*/}
+				{/*	<Tooltip>*/}
+				{/*		<Button type="primary" shape="circle" icon={<QuestionOutlined />} size="large"*/}
+				{/*				style={{position:"absolute", left: "92%", bottom:"82%", borderColor:"red", }}/>*/}
+				{/*		<Button type="primary" shape="circle" icon={<QuestionOutlined />} size="large"*/}
+				{/*				style={{position:"absolute", left: "61%", bottom:"68%", borderColor:"red", }}/>*/}
+				{/*		<Button type="primary" shape="circle" icon={<QuestionOutlined />} size="large"*/}
+				{/*				style={{position:"absolute", left: "70%", bottom:"10%", borderColor:"red", }}/>*/}
+				{/*	</Tooltip>*/}
+				{/*	<br />*/}
+				{/*	<br />*/}
+				{/*	<br />*/}
+				{/*	<br />*/}
+				{/*</Body2Wrapper>*/}
+
 			</div>
 
 		)
