@@ -1,4 +1,7 @@
-
+/**
+ * @file       this file contains a class that represents the application data model in the system
+ * @deprecated everything in this file has been deprecated from the final version of the system
+ */
 class Application {
 
     /**
