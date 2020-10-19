@@ -169,7 +169,7 @@ class Body1 extends React.Component {
 
 
 				{/* <NotificationButton>My Notification</NotificationButton> */}
-				<Button  type="primary" style={{ margin: '13% 58% 0', width: '12%', height: '10%', position: 'absolute' }}>My Pod Schedule</Button>
+				<Button  type="primary" style={{ margin: '13% 58% 0', width: '12%', height: '10%', position: 'absolute' }} onClick={() => this.props.history.push('/Participant/ParticipantPodList')}>My Pod Schedule</Button>
 				{/* <ScheduleButton>My Roundtable Schedule</ScheduleButton> */}
 				<ProfileWrapper>
 				<h2 style={{color:'red'}}>Hey there, {this.state.displayedName}</h2>

@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './ResearcherList.style'
+import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './PodSignup.style'
 import leftImg from "../../../img/footleft.png"
 import middleImg from "../../../img/footmid.png"
 import rightImg from "../../../img/footright.png"
