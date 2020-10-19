@@ -15,13 +15,15 @@ const CLASS_NAME = "Signup/Body";
 class Body extends React.Component {
     constructor(props) {
         super(props);
+        const query = this.props.location.search;
+        const pid = query.substr(5);
         this.onEmailEnter = this.onEmailEnter.bind(this);
         this.onPasswordEnter = this.onPasswordEnter.bind(this);
         this.onRePasswordEnter = this.onRePasswordEnter.bind(this);
         this.onFullnameEnter = this.onFullnameEnter.bind(this);
         this.onNicknameEnter = this.onNicknameEnter.bind(this);
         this.signup = this.signup.bind(this);
-        this.state = { email: '', password: '', re_password: '', full_name: '', nick_name: '' };
+        this.state = { email: '', password: '', re_password: '', full_name: '', nick_name: '', pid: pid};
     }
 
     signup(e) {
@@ -36,7 +38,12 @@ class Body extends React.Component {
 
         UserManager.signup(this.state.email, this.state.password, this.state.full_name, this.state.nick_name)
             .then(response => {
-                this.props.history.push("Login");
+                if(this.state.pid){
+                    this.props.history.push({pathname:'/Login', search:"?pid="+this.state.pid});
+                }
+                else {
+                    this.props.history.push("/Login");
+                }
             })
             .catch(err => {
                 console.error(`${CLASS_NAME}| signup | failed to sign up user with email ${this.state.email}`);
@@ -66,7 +73,12 @@ class Body extends React.Component {
     }
 
     handleChange = () => {
-        this.props.history.push("Login");
+        if(this.state.pid){
+            this.props.history.push({pathname:'/Login', search:"?pid="+this.state.pid});
+        }
+        else {
+            this.props.history.push("/Login");
+        }
     }
 
     render() {

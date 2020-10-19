@@ -11,20 +11,22 @@ const CLASS_NAME = "Login/Body";
 
 class Body extends React.Component {
 
+
     constructor(props) {
         super(props);
-        this.state = { email: '', password: '' ,};
+        const query = this.props.location.search;
+        const pid = query.substr(5);
+
+        this.state = { email: '', password: '', pid: pid };
+
+
+
         this.onEmailEnter = this.onEmailEnter.bind(this);
         this.onPasswordEnter = this.onPasswordEnter.bind(this);
         this.login = this.login.bind(this);
-        this.getPid();
+        this.handleChange = this.handleChange.bind(this);
     }
-    getPid = () =>{
 
-        console.log(this.state.pid);
-
-
-    }
 
     login(e) {
         e.preventDefault();
@@ -33,18 +35,19 @@ class Body extends React.Component {
             .then(userType => {
                 // redirect to user home page
                 console.info(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
+                console.log(this.state.pid);
 
-                // if (this.state.pid != null) {
-                //     this.props.history.push("/PodSignup/"+this.state.pid);
-                // }
-                if (userType == "participant") {
-                    this.props.history.push("ParticipantHomePage");
+                if (this.state.pid) {
+                    this.props.history.push({pathname:'/PodSignup', search:"?pid="+this.state.pid});
+                }
+                else if (userType == "participant") {
+                    this.props.history.push("/ParticipantHomePage");
                 }
                 else if (userType == "admin") {
-                    this.props.history.push("AdminHomePage");
+                    this.props.history.push("/AdminHomePage");
                 }
                 else {
-                    this.props.history.push("ResearcherHomePage");
+                    this.props.history.push("/ResearcherHomePage");
                 }
             })
             .catch(err => {
@@ -67,8 +70,15 @@ class Body extends React.Component {
         console.log('new state', this.state);
     }
 
-    handleChange = () => {
-        this.props.history.push("Signup");
+    handleChange(e) {
+        if(this.state.pid){
+            this.props.history.push({pathname:'/Signup', search:"?pid="+this.state.pid});
+        }
+        else {
+            this.props.history.push("/Signup");
+        }
+
+
     }
 
     render() {
@@ -112,7 +122,6 @@ class Body extends React.Component {
                         {/*       type={'submit'} value={'Log in'} />*/}
                     </div>
                 </form>
-
                 <br></br>
                 <Button type="text" danger onClick={this.handleChange}>Don't have an account? Sign up</Button>
 

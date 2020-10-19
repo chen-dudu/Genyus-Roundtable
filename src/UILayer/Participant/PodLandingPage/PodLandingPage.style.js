@@ -154,7 +154,7 @@ export const Body1Wrapper = styled.div`
   width: 100%;
   height: revert;
   background-color: #FFF4CD;
-  //margin-top: -30px;
+  margin-top: -30px;
 
   
   
@@ -175,11 +175,13 @@ export const Body1Wrapper = styled.div`
   }
   
   >p {
+    width: 50%;
     margin:20px auto;
     color: black;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: normal;
     text-align: center;
+    word-wrap: break-word;
   }
 
   

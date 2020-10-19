@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HeaderWrapper,ImageWrapper,Seperator} from './PodSignup.style';
-import logo from '../../img/logo.png';
+import {HeaderWrapper,ImageWrapper,Seperator} from './PodLandingPage.style';
+import logo from '../../../img/logo.png';
 import Footer from './Footer.js';
 import Body from './Body.js';
 import {withRouter} from "react-router-dom";
@@ -9,7 +9,7 @@ import Header from "./Header";
 
 
 
-class PodSignup extends React.Component {
+class PodLandingPage extends React.Component {
   render(){
     return(
       <container>
@@ -22,4 +22,4 @@ class PodSignup extends React.Component {
 }
 
 // ========================================
-export default withRouter(PodSignup);
+export default withRouter(PodLandingPage);

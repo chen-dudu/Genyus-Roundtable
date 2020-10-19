@@ -1,8 +1,8 @@
 import React from 'react';
-import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './PodLandingPage.style'
-import leftImg from "../../img/footleft.png"
-import middleImg from "../../img/footmid.png"
-import rightImg from "../../img/footright.png"
+import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './PodSignup.style'
+import leftImg from "../../../img/footleft.png"
+import middleImg from "../../../img/footmid.png"
+import rightImg from "../../../img/footright.png"
 
 class Footer extends React.Component {
 	render(){

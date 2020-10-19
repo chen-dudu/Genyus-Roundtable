@@ -21,12 +21,14 @@ import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 
 // import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
 import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
-import PodList from './UILayer/Admin/PodList/PodList'
+import AdminPodList from './UILayer/Admin/AdminPodList/AdminPodList'
 
 import PodCreate from './UILayer/Admin/PodCreate/PodCreate'
-import PodSignup from "./UILayer/PodSignup/PodSignup";
-import PodLandingPage from "./UILayer/PodLandingPage/PodLandingPage";
+import PodSignup from "./UILayer/Participant/PodSignup/PodSignup";
+import PodLandingPage from "./UILayer/Participant/PodLandingPage/PodLandingPage";
 import ResearcherHomePage from "./UILayer/Researcher/ResearcherHomePage/ResearcherHomePage"
+import ParticipantPodList from "./UILayer/Participant/ParticipantPodList/ParticipantPodList";
+import ResearcherPodList from "./UILayer/Researcher/ResearcherPodList/ResearcherPodList";
 
 
 function App(){
@@ -35,32 +37,34 @@ function App(){
     <Router>
 
       <switch>
-        {/* <Route path="/HomePage" component={HomePage}></Route> */}
+
         <Route exact path="/" component={HomePage}></Route>
 
         <Route path="/Signup" component={Signup}></Route>
-        <Route path="/Login/" component={Login}></Route>
+        <Route path="/Login" component={Login}></Route>
         <Route path="/ProfileSetting" component={ProfileSetting}></Route>
         <Route path="/ParticipantHomePage" component={ParticipantHomePage}></Route>
-        {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
-        <Route path="/AdminHomePage" component={AdminHomePage}></Route>
+        <Route path="/Participant/ParticipantPodList" component={ParticipantPodList}/>
+
+        <Route path="/Admin/AdminHomePage" component={AdminHomePage}></Route>
         <Route path="/ResearcherHomePage" component={ResearcherHomePage}></Route>
+        <Route path="/ResearcherPodList/ResearcherPodList" component={ResearcherPodList}/>
+
         <Route path="/Notification" component={Notification}></Route>
 
-        {/*<Route path="/StatusAndRewards" component={StatusAndRewards}></Route>*/}
+
         <Route path="/Admin/ResearcherList" component={ResearcherList}/>
         <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
         <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
-        <Route path="/Admin/PodList" component={PodList}/>
+        <Route path="/Admin/AdminPodList" component={AdminPodList}/>
 
 
-        <Route path="/PodSignup/:podid" component={PodSignup}/>
-        <Route path="/PodLandingPage/:podid" component={PodLandingPage}/>
 
-        {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
+        <Route path="/PodSignup" component={PodSignup}/>
+        <Route path="/PodLandingPage" component={PodLandingPage}/>
+
 
         <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
-        {/* <Route path="/StatusAndRewards" component={StatusAndRewards}></Route> */}
 
         <Route path="/Admin/PodCreate" component={PodCreate}></Route>
 

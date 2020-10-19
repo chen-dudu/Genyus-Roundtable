@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper} from './PodList.style';
+import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper} from './ParticipantPodList.style';
 import Img from '../../../img/Avatar.png';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
@@ -27,9 +27,26 @@ import PodManager from "../../../FoundationLayer/PodModel/PodManager";
 class Body extends React.Component {
 
 
-	getAdminImage = () => {
+	getData = () => {
 		UserManager.getCurrentUser()
 			.then(response => {
+				if (response.pods){
+					let list = [];
+					response.pods.forEach(function (item,index,array){
+						PodManager.getPod(item)
+							.then(result =>{
+								list.unshift(result);
+							})
+							.catch(err=>{
+								console.log(err);
+							})
+					});
+					this.setState({loading : false ,data : list});
+				}
+				else{
+					this.setState({loading : false});
+				}
+
 				if (response.photoURL) {
 
 					UserManager.getAvatar(response.photoURL)
@@ -47,30 +64,13 @@ class Body extends React.Component {
 			});
 	};
 
-	getPod = () => {
-		PodManager.getAllPods()
-			.then(result =>{
-				this.setState({loading : false ,all :result});
-				let list = [];
-				result.forEach(function (item,index,array){
 
-					if(item._title == "Test1"){
-						list.push(item);
-					}
-				});
-				this.setState({upcoming : list ,data : list});
-
-			})
-			.catch(err=>{
-				console.log(err);
-			})
-	}
 
 
 	constructor(props) {
     	super(props);
-		this.getPod();
-		this.getAdminImage();
+		this.getData();
+
 		this.state = {
 			loading : true,
 			data : [],
@@ -113,18 +113,18 @@ class Body extends React.Component {
 				<TitleWrapper>
 
 
-					<h1>Researcher list</h1>
-					<div>
+					<h1>Pod list</h1>
+					{/*<div>*/}
 
-					<p>show finished pod</p>
-					<Switch
-							checkedChildren={<CheckOutlined />}
-							unCheckedChildren={<CloseOutlined />}
-							checked={!this.state.isCheck}
-							onChange={this.onChange}
-							style={{position:"absolute" , left:"55%", top: 7}}
-					/>
-					</div>
+					{/*<p>show finished pod</p>*/}
+					{/*<Switch*/}
+					{/*		checkedChildren="hide finished pod"*/}
+					{/*		unCheckedChildren={<CloseOutlined />}*/}
+					{/*		checked={!this.state.isCheck}*/}
+					{/*		onChange={this.onChange}*/}
+					{/*		style={{position:"absolute" , left:"55%", top: 7}}*/}
+					{/*/>*/}
+					{/*</div>*/}
 
 
 
@@ -150,7 +150,7 @@ class Body extends React.Component {
 							<List.Item.Meta style={{marginLeft:20}}
 
 								title={<a style={{fontSize:25}}>{item._title}</a>}
-								description={<p style={{width:"70%", fontSize:20, wordWrap:"break-word"}}>{item._description}</p>}
+								description={<p style={{width:"70%", fontSize:20, wordWrap:"break-word"}}>{item._description}<br/>status:{item._status}</p>}
 							/>
 
 							<div>

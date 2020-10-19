@@ -106,33 +106,33 @@ class Body extends React.Component {
 		};
 	}
 
-	componentDidMount(){
-
-
-
-		fetch("https://calendly.com/api/v1/users/me/event_types?include=owner", {
-			"method": "GET",
-			"headers": {
-				"x-token": "LCFHBPAIAY67PWELIB7MVKXYWLCDHKN3"
-			}
-			})
-			.then(response => {
-				//console.log(response);
-				return response.json();
-			})
-			.then(data =>{
-			console.log(data);
-			})
-			.catch(err => {
-				console.error(err);
-			})
-			.catch(err => {
-				console.error(err);
-			});
-
-
-
-	}
+	// componentDidMount(){
+	//
+	//
+	//
+	// 	fetch("https://calendly.com/api/v1/users/me/event_types?include=owner", {
+	// 		"method": "GET",
+	// 		"headers": {
+	// 			"x-token": "LCFHBPAIAY67PWELIB7MVKXYWLCDHKN3"
+	// 		}
+	// 		})
+	// 		.then(response => {
+	// 			//console.log(response);
+	// 			return response.json();
+	// 		})
+	// 		.then(data =>{
+	// 		console.log(data);
+	// 		})
+	// 		.catch(err => {
+	// 			console.error(err);
+	// 		})
+	// 		.catch(err => {
+	// 			console.error(err);
+	// 		});
+	//
+	//
+	//
+	// }
 
 
 	render() {

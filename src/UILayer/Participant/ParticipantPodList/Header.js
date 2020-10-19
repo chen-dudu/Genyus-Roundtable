@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import logo from '../../../img/logo.png';
-import { HeaderWrapper, ImageWrapper, Seperator } from './PodList.style';
+import { HeaderWrapper, ImageWrapper, Seperator } from './ParticipantPodList.style';
 import { UserOutlined } from "@ant-design/icons";
 import UserManager from '../../../FoundationLayer/UserModel/UserManager';
 
