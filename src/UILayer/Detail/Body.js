@@ -18,12 +18,17 @@ class Body extends React.Component {
 
 	constructor(props) {
 		super(props);
+
+		const query = this.props.history.location.search;
+		const pid = query.substr(5);
+		console.log(pid);
+
 		this.state = {
-			nid: this.props.history.location.state.item.nid,
-			title: this.props.history.location.state.item.title,
-			description: this.props.history.location.state.item.description,
-			time: this.formatDate(this.props.history.location.state.item.timeReceived),
-			sid: this.props.history.location.state.item.sid,
+			nid: pid,
+			// title: this.props.history.location.state.item.title,
+			// description: this.props.history.location.state.item.description,
+			// time: this.formatDate(this.props.history.location.state.item.timeReceived),
+			// sid: this.props.history.location.state.item.sid,
 
 			loading: true,
 			sessionDes: null,

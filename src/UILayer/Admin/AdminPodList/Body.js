@@ -128,7 +128,7 @@ class Body extends React.Component {
 
 					<p>show finished pod</p>
 					<Switch
-							checkedChildren="hide finished pod"
+							checkedChildren={<CheckOutlined />}
 							unCheckedChildren={<CloseOutlined />}
 							checked={!this.state.isCheck}
 							onChange={this.onChange}
@@ -164,7 +164,7 @@ class Body extends React.Component {
 							/>
 
 							<div>
-								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/PodDetail/'+"?pid="+item._pid})}>View Pod Info</Button>
+								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Detail/',search: "?pid="+item.pid})}>View Pod Info</Button>
 							</div>
 
 

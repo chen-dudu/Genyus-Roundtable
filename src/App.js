@@ -21,7 +21,7 @@ import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 
 // import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
 import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
-import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
+// import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
 import Detail from './UILayer/Detail/Detail'
 import AdminPodList from './UILayer/Admin/AdminPodList/AdminPodList'
 
@@ -34,6 +34,8 @@ import ResearcherPodList from "./UILayer/Researcher/ResearcherPodList/Researcher
 
 
 function App(){
+
+
     // const [nickName, setNickName] = useState("");
     return (
     <Router>
@@ -48,7 +50,7 @@ function App(){
     <Route path="/ParticipantHomePage" component={ParticipantHomePage}></Route>
     <Route path="/Participant/ParticipantPodList" component={ParticipantPodList}/>
 
-    <Route path="/Admin/AdminHomePage" component={AdminHomePage}></Route>
+    <Route path="/AdminHomePage" component={AdminHomePage}></Route>
     <Route path="/ResearcherHomePage" component={ResearcherHomePage}></Route>
     <Route path="/ResearcherPodList/ResearcherPodList" component={ResearcherPodList}/>
 
@@ -58,8 +60,12 @@ function App(){
     <Route path="/Admin/ResearcherList" component={ResearcherList}/>
     <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
     <Route path="/Admin/ResearcherCreate" component={ResearcherCreate}/>
-    <Route path="/Detail/:nid" component={Detail}/>
+    <Route path="/Detail" component={Detail}/>
     <Route path="/Admin/AdminPodList" component={AdminPodList}/>
+
+    {/*<Route path="/Admin/AdminPodDetail" component={AdminPodDetail}/>*/}
+    {/*<Route path="/Researcher/ResearcherPodDetail" component={ResearcherPodDetail}/>*/}
+    {/*<Route path="/Participant/ParticipantPodDetail" component={ParticipantPodDetail}/>*/}
 
 
 

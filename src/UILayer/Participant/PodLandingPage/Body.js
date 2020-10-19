@@ -80,6 +80,7 @@ class Body1 extends React.Component {
 						this.setState({
 							researcherName : result.data.fullname,
 							researcherDescription : result.data.description,
+							loading : false,
 						});
 						console.log(this.state.researcherName);
 						console.log(this.state.researcherDescription);
@@ -88,7 +89,7 @@ class Body1 extends React.Component {
 								.then(result =>{
 									this.setState({
 										researcherAvatar : result,
-										loading : false,
+										// loading : false,
 									});
 									console.log(this.state.researcherAvatar);
 
@@ -98,7 +99,7 @@ class Body1 extends React.Component {
 								});
 						}else{
 							this.setState({
-								loading : false,
+								// loading : false,
 							});
 						}
 					})
@@ -142,6 +143,7 @@ class Body1 extends React.Component {
 
 
 			</Body1Wrapper>
+			</Spin>
 				<Body2Wrapper>
 					<br />
 					<ProfileWrapper>
@@ -155,7 +157,7 @@ class Body1 extends React.Component {
 					<br />
 					<br />
 				</Body2Wrapper>
-				</Spin>
+
 
 
 			</BodyWrapper>
