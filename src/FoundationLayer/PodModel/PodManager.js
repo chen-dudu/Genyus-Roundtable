@@ -152,9 +152,12 @@ function converter(pod) {
             title: pod.title,
             calendlyLink: pod.calendlyLink,
             researcher: pod.researcher,
-            participants: pod.participants,
-            notifications: pod.notifications,
-            status: pod.status,
+            // participants: pod.participants,
+            participants: [],
+            // notifications: pod.notifications,
+            notifications: [],
+            // status: pod.status,
+            status: "upcoming",
             description: pod.description
         };
     }
