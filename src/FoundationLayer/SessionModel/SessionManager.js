@@ -1,3 +1,7 @@
+/**
+ * @file       this file contains methods that communicate with firebase about all session-related issues
+ * @deprecated everything in this file has been deprecated from the final version of the system
+ */
 import firebase from "firebase";
 import Session from "./Session";
 

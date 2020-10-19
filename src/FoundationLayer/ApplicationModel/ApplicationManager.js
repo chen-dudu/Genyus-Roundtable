@@ -1,3 +1,7 @@
+/**
+ * @file       this file contains methods that communicate with firebase about all application-related issues
+ * @deprecated everything in this file has been deprecated from the final version of the system
+ */
 import firebase from "firebase";
 import Application from "./Application";
 import UserManager from "../UserModel/UserManager";
