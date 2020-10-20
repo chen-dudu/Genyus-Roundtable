@@ -166,6 +166,7 @@ export const Body1Wrapper = styled.div`
       width: 100%;
       position: relative;
       background-image: linear-gradient(white,white,#ffce33);
+      min-height: 800px;
       
       #editButton {
       position: absolute;

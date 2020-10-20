@@ -25,10 +25,10 @@ class Body extends React.Component {
 
 		this.state = {
 			nid: pid,
-			// title: this.props.history.location.state.item.title,
-			// description: this.props.history.location.state.item.description,
-			// time: this.formatDate(this.props.history.location.state.item.timeReceived),
-			// sid: this.props.history.location.state.item.sid,
+			title: null,
+			description: null,
+			time: null,
+			sid: null,
 
 			loading: true,
 			sessionDes: null,
@@ -170,63 +170,19 @@ class Body extends React.Component {
 		return (
 			<div style={{minWidth:500}}>
 				<Body3Wrapper>
-					<h1>Roundtable Confirmation</h1>
-					<h2 style={{fontStyle:"italic"}}>Meaningful Vocation: Stroke Recovery Stories</h2>
-
-					{/*<Steps*/}
-					{/*	type="navigation"*/}
-					{/*	current={3}*/}
-					{/*	onChange={this.onChange}*/}
-					{/*	className="site-navigation-steps"*/}
-					{/*>*/}
-					{/*	<Step status="finish" title="Learn About Roundtable" />*/}
-					{/*	<Step status="finish" title="Login or Sign Up" />*/}
-					{/*	<Step status="finish" title="Complete Questionnaire" />*/}
-					{/*	<Step status="process" title="Registration Complete" />*/}
-					{/*</Steps>*/}
+					<h1>Pod Details</h1>
+					<br></br>
+					<br></br>
+					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Pod Title</h2>
+					<h3>Pod Descriptions</h3>
 
 					<br></br>
 					<br></br>
-					{/*<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Your Confirmation</h1>*/}
-					{/*<br></br>*/}
-
-					{/*<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Roundtable Details</h1>*/}
-					{/*<br/>*/}
-
-					{/*<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Session Information</h2>*/}
-					{/*<h3>Session name : {this.state.sessionTitle}</h3>*/}
-					{/*<h3>{this.state.sessionDes}</h3>*/}
-
-					{/*<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Available times</h2>*/}
-					{/*<h3>The session will be run at the following times:</h3>*/}
-
-					{/*<ListWrapper>*/}
-					{/*	<Spin spinning={this.state.loading}>*/}
-					{/*		<List*/}
-					{/*			bordered={false}*/}
-					{/*			itemLayout="vertical"*/}
-					{/*			dataSource={this.state.timeslot}*/}
-					{/*			renderItem={item => (*/}
-					{/*				<div>*/}
-					{/*					<List.Item style={{borderColor:'red', borderWidth:0,borderStyle:'solid',borderRadius:20}}>*/}
-					{/*						<h3 style={{fontSize:"20px", marginLeft:"5%", color: "black", marginBottom:"-10%"}}>{this.formatDate(item)}</h3>*/}
-					{/*					</List.Item>*/}
-					{/*				</div>*/}
-					{/*			)}*/}
-					{/*		/>*/}
-					{/*	</Spin>*/}
-					{/*</ListWrapper>*/}
-					{/*<br/>*/}
-					{/*<br/>*/}
-
-					{/*<h3 style={{marginBottom:"-10px"}}>4/5/2020 - 6pm-8pm</h3>*/}
-					{/*<h3 style={{marginBottom:"-10px"}}>6/5/2020 - 10am - 8am</h3>*/}
-					{/*<h3>7/5/2020 6pm-8pm</h3>*/}
 
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>About the Researcher</h2>
 					<h3> Researcher Name: {this.state.researcherFullName}</h3>
 					<h3 style={{marginRight:"30%"}}>{this.state.researcherDes}</h3>
-					<Avatar src={this.state.researcherAvatar} size={96} style={{position:"absolute", left: '80%', bottom:"30%",
+					<Avatar src={this.state.researcherAvatar} size={96} style={{position:"absolute", left: '80%', bottom:"50%",
 						margin: '2% auto'}} icon={<UserOutlined />} />
 					<br/>
 					<br/>
@@ -285,6 +241,15 @@ class Body extends React.Component {
 								mozallowfullscreen="" allowFullScreen=""
 								src={this.state.youtubeLink}></iframe>
 					</div>
+
+					<Button style={{background: "#3399ff", borderRadius: 5,
+						width: "10%", height: 40, fontWeight: "bold",
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						fontSize: 15, color: "white", marginLeft:'45%', marginRight: '45%'}}
+					>Download Notes</Button>
+
+					<br></br> <br></br>
+					<br></br> <br></br>
 
 				</Body3Wrapper>
 
