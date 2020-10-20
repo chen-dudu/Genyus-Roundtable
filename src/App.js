@@ -26,6 +26,7 @@ import Detail from './UILayer/Detail/Detail'
 import AdminPodList from './UILayer/Admin/AdminPodList/AdminPodList'
 
 import PodCreate from './UILayer/Admin/PodCreate/PodCreate'
+import PodInvitation from './UILayer/Admin/PodInvitation/PodInvitation'
 import PodSignup from "./UILayer/Participant/PodSignup/PodSignup";
 import PodLandingPage from "./UILayer/Participant/PodLandingPage/PodLandingPage";
 import ResearcherHomePage from "./UILayer/Researcher/ResearcherHomePage/ResearcherHomePage"
@@ -76,6 +77,7 @@ function App(){
     <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
 
     <Route path="/Admin/PodCreate" component={PodCreate}></Route>
+    <Route path="/Admin/PodInvitation" component={PodInvitation}></Route>
 
     </switch>
     </Router>

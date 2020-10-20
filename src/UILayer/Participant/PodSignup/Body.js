@@ -98,13 +98,13 @@ class Body1 extends React.Component {
 	render(){
 
 		return(
-			<BodyWrapper>
+			<>
 				<Spin spinning={this.state.loading}>
 			<Body1Wrapper>
 
 
 					<div className="Calendly">
-						<InlineWidget scrolling={false} url={this.state.calendlyLink} />
+						<InlineWidget url={this.state.calendlyLink} />
 					</div>
 				<Button className="backButton" style={{marginLeft:"43%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/ParticipantHomePage')}>Back</Button>
 				<br />
@@ -130,7 +130,7 @@ class Body1 extends React.Component {
 				</Body2Wrapper>
 				</Spin>
 
-			</BodyWrapper>
+			</>
 
 
 		)

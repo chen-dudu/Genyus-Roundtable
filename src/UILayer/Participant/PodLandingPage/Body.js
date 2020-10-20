@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
 	Body1Wrapper,
-	SubmitButton,
-	BodyLeftWrapper,
-	BodyRightWrapper,
+
 	Body2Wrapper,
 	BodyWrapper, ProfileWrapper
 } from './PodLandingPage.style';

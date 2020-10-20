@@ -233,7 +233,8 @@ export const BodyWrapper = styled.div`
 
 export const ProfileWrapper = styled.div`
     
-
+    width: 10%;
+  
     position: relative;
     left: 45%;
    

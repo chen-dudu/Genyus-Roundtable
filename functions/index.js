@@ -94,7 +94,7 @@ exports.createUser = functions.https.onCall((user, context) => {
  */
 exports.getUser = functions.https.onCall((data, context) => {
     // only login admin can do operation
-    if (context.auth) {
+    // if (context.auth) {
         // first get some info from firebase auth
         return auth.getUser(data.uid)
             .then(userAuth => {
@@ -130,11 +130,11 @@ exports.getUser = functions.https.onCall((data, context) => {
                 console.error(`${CLASS_NAME} | getUser | failed to get data from firebase auth for user with uid ${data.uid}, error: ${err}`);
                 return Promise.reject(err);
             });
-    }
-    else {
-        console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
-        return Promise.reject(new Error('admin is not login!'));
-    }
+    // }
+    // else {
+    //     console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
+    //     return Promise.reject(new Error('admin is not login!'));
+    // }
 });
 
 /**
