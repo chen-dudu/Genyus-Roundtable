@@ -11,8 +11,9 @@ class Pod {
      * @param researcher    the researcher who is responsible for the pod
      * @param participants  the list of participants who sign up for the pod
      * @param notifications the list of notifications associated with the pod
+     * @param notes         the URL to the location where notes are store in DB
      */
-    constructor(pid, title, status, description, calendlyLink, researcher, participants, notifications) {
+    constructor(pid, title, status, description, calendlyLink, researcher, participants, notifications, notes) {
         this._pid = pid;
         this._title = title;
         this._status = status;
@@ -21,6 +22,7 @@ class Pod {
         this._researcher = researcher;
         this._participants = participants;
         this._notifications = notifications;
+        this._notes = notes
         // this._sessions = sessions
     }
 
@@ -56,6 +58,10 @@ class Pod {
         return this._notifications;
     }
 
+    get notes() {
+        return this._notes;
+    }
+
     set pid(newID) {
         this._pid = newID;
     }
@@ -78,6 +84,10 @@ class Pod {
 
     set researcher(newResearcher) {
         this._researcher = newResearcher;
+    }
+
+    set notes(newNotes) {
+        this._notes = newNotes;
     }
 
     addNotification(notification) {
