@@ -10,6 +10,7 @@ import Img from "../../img/person.gif";
 import UserManager from '../../FoundationLayer/UserModel/UserManager';
 import NotificationManager from "../../FoundationLayer/NotificationModel/NotificationManager";
 import SessionManager from "../../FoundationLayer/SessionModel/SessionManager";
+import PodManager from "../../FoundationLayer/PodModel/PodManager";
 
 const { Step } = Steps;
 const style = {background: 'white', padding: '8px 0'};
@@ -24,28 +25,77 @@ class Body extends React.Component {
 		console.log(pid);
 
 		this.state = {
-			nid: pid,
+			pid: this.pid,
 			title: null,
 			description: null,
-			time: null,
-			sid: null,
-
 			loading: true,
-			sessionDes: null,
-			sessionDur: null,
-			sessionQues: {},
 			researcher: null,
-			timeslot: [],
-			sessionTitle: null,
 			youtubeLink: null,
-			zoomLink: null,
 			researcherFullName: null,
 			researcherDes: null,
 			researcherAvatar: null,
+			participants: null,
 			notifications: []
 		}
 		console.log(this.state.nid);
-		this.getSession();
+		this.getPod();
+	}
+
+	getPod = () => {
+		console.log("check pid");
+		console.log(this.state.pid);
+		PodManager.getPod(this.state.pid)
+			.then(result => {
+				console.log('get Pod successful');
+				this.setState({
+					title: result.title,
+					description: result.description,
+					researcher: result.researcher,
+					participates: result.participants,
+					notifications: result.notifications
+				})
+
+				UserManager.getUser(this.state.researcher[0])
+					.then(res => {
+						console.log('get Researcher successful');
+						console.log(typeof(res));
+						console.log(Object.keys(res));
+						console.log(Object.values(res));
+						this.setState({
+							researcherFullName: Object.values(res)[3],
+							researcherDes: Object.values(res)[2],
+							researcherAvatar: Object.values(res)[1]
+						})
+					}).catch(error => {
+					console.log(error);
+				});
+
+				console.log("start to get notis");
+				console.log(typeof(result.notifications))
+				console.log(result.notifications)
+				let list2 = [];
+				result.notifications.forEach(function (item,index,array){
+					if(item){
+						list2.unshift(item);
+					}
+				});
+				console.log("check list");
+				console.log(list2);
+				NotificationManager.getNotifications(list2)
+					.then(notis => {
+						console.log('get notifications successful');
+						console.log(notis);
+
+						this.setState({
+							notifications: notis
+						})
+					}).catch(error => {
+					console.log(error);
+				});
+
+			}).catch(error => {
+			console.log(error);
+		});
 	}
 
 	getSession = () => {
