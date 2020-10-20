@@ -21,6 +21,15 @@ class Body extends React.Component {
 		}
 	}
 
+	returnHome = () => {
+		this.props.history.push("/AdminHomePage");
+	}
+
+	viewPods = () => {
+		this.props.history.push("/Admin/AdminPodList");
+	}
+
+
 	render() {
 		return (
 			<Body1Wrapper>
@@ -33,8 +42,17 @@ class Body extends React.Component {
 					<br /><br />
 					<h2 style={{ textAlign: "center", fontSize: '25px', color: "red" }}>Use this link to invite participants:</h2>
 					<h2 style={{ textAlign: "center", fontSize: '20px', color: "blue", textDecoration: "underline" }}>https://genyus-roundtables.web.app/PodLandingPage?pid={this.state.pid}</h2>
+					<div style={{marginTop:"5%"}}>
+					<Button type="primary" size={"large"} style={{ width: "30%", marginRight:"10%"}} onClick={this.returnHome}>
+						Return Home
+          			</Button>
+					
+					<Button type="primary" size={"large"} style={{ width: "30%", marginLeft:"10%"}} onClick={this.viewPods}>
+						View Pods
+          			</Button></div>
+
 				</BodyWrapper>
-			</Body1Wrapper>
+			</Body1Wrapper >
 		)
 	}
 }

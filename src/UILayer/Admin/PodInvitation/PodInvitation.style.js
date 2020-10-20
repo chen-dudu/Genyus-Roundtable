@@ -101,9 +101,14 @@ export const BodyWrapper = styled.div`
   border-radius: 5px;
   position: relative;
 
+
   // priority
   background-image: linear-gradient(white,white,#ffce33);
   /* background-image: linear-gradient(white, yellow); */
+  > div {
+    display: flex;
+    justify-content: center;
+  }
 
 `;
 
