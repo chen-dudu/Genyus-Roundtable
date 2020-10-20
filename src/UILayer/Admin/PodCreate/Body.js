@@ -54,13 +54,18 @@ class Body extends React.Component {
 			title: this.state.title,
 			calendlyLink: this.state.calendlyLink,
 			researcher: this.state.researcher,
-			participants: [],
+			participants: this.state.participants,
+			notifications: this.state.notifications,
+			status: this.state.status,
+			description: this.state.description,
 		}
 		console.log("print pod", pod);
-		PodManager.createPod(pod)
+		console.log("print researcherid", this.state.researcher);
+		PodManager.createPod(pod, this.state.researcher)
 			.then(response => {
 				console.log("create pod successful");
 				console.log("print id", response);
+				this.props.history.push({ pathname: "/Admin/PodInvitation", search: "?pid=" + response })
 
 			}
 			)
@@ -102,37 +107,12 @@ class Body extends React.Component {
 			title: "",
 			calendlyLink: "",
 			researcher: "",
+			notifications: [],
 			participants: [],
+			status: "upcoming",
+			description: "",
 		};
 	}
-
-	// componentDidMount(){
-	//
-	//
-	//
-	// 	fetch("https://calendly.com/api/v1/users/me/event_types?include=owner", {
-	// 		"method": "GET",
-	// 		"headers": {
-	// 			"x-token": "LCFHBPAIAY67PWELIB7MVKXYWLCDHKN3"
-	// 		}
-	// 		})
-	// 		.then(response => {
-	// 			//console.log(response);
-	// 			return response.json();
-	// 		})
-	// 		.then(data =>{
-	// 		console.log(data);
-	// 		})
-	// 		.catch(err => {
-	// 			console.error(err);
-	// 		})
-	// 		.catch(err => {
-	// 			console.error(err);
-	// 		});
-	//
-	//
-	//
-	// }
 
 
 	render() {
