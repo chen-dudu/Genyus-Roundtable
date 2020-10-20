@@ -11,6 +11,7 @@ import UserManager from '../../FoundationLayer/UserModel/UserManager';
 import NotificationManager from "../../FoundationLayer/NotificationModel/NotificationManager";
 import SessionManager from "../../FoundationLayer/SessionModel/SessionManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
+import {notification} from "antd/es";
 
 const { Step } = Steps;
 const style = {background: 'white', padding: '8px 0'};
@@ -25,7 +26,7 @@ class Body extends React.Component {
 		console.log(pid);
 
 		this.state = {
-			pid: this.pid,
+			pid: pid,
 			title: null,
 			description: null,
 			loading: true,
@@ -34,10 +35,11 @@ class Body extends React.Component {
 			researcherFullName: null,
 			researcherDes: null,
 			researcherAvatar: null,
-			participants: null,
+			participates: null,
 			notifications: []
 		}
-		console.log(this.state.nid);
+		console.log("state pid")
+		console.log(this.state.pid);
 		this.getPod();
 	}
 
@@ -47,102 +49,21 @@ class Body extends React.Component {
 		PodManager.getPod(this.state.pid)
 			.then(result => {
 				console.log('get Pod successful');
+				console.log('get Researcher ID');
+				console.log(result.researcher);
+				console.log('get Notification');
+				console.log(result.notifications)
 				this.setState({
 					title: result.title,
 					description: result.description,
 					researcher: result.researcher,
 					participates: result.participants,
-					notifications: result.notifications
-				})
-
-				UserManager.getUser(this.state.researcher[0])
-					.then(res => {
-						console.log('get Researcher successful');
-						console.log(typeof(res));
-						console.log(Object.keys(res));
-						console.log(Object.values(res));
-						this.setState({
-							researcherFullName: Object.values(res)[3],
-							researcherDes: Object.values(res)[2],
-							researcherAvatar: Object.values(res)[1]
-						})
-					}).catch(error => {
-					console.log(error);
-				});
-
-				console.log("start to get notis");
-				console.log(typeof(result.notifications))
-				console.log(result.notifications)
-				let list2 = [];
-				result.notifications.forEach(function (item,index,array){
-					if(item){
-						list2.unshift(item);
-					}
-				});
-				console.log("check list");
-				console.log(list2);
-				NotificationManager.getNotifications(list2)
-					.then(notis => {
-						console.log('get notifications successful');
-						console.log(notis);
-
-						this.setState({
-							notifications: notis
-						})
-					}).catch(error => {
-					console.log(error);
-				});
-
-			}).catch(error => {
-			console.log(error);
-		});
-	}
-
-	getSession = () => {
-		console.log("check sid");
-		console.log(this.state.sid);
-		SessionManager.getSession(this.state.sid)
-			.then(result => {
-				console.log('get Session successful');
-				console.log(typeof(result.duration));
-				console.log(typeof(result.questions));
-				console.log(result.timeSlots);
-				console.log(typeof(result.timeSlots));
-				Object.keys(result.questions).forEach(key => {
-					console.log("get questions key value");
-					console.log(typeof(key));
-					console.log(key);
-					console.log(result.questions[key]);
-				})
-				Object.values(result.timeSlots).forEach(value => {
-					console.log("get timeslot key value");
-					console.log(typeof(value));
-					console.log(value);
-				})
-				let list = []
-				result.timeSlots.forEach(function (item,index,array){
-					if(item){
-						list.unshift(item);
-					}
-				});
-				console.log("check list");
-				console.log(list);
-
-				this.setState({
-					sessionDes: result.description,
-					sessionDur: result.duration,
-					sessionQues: result.questions,
-					researcher: result.researchers,
-					timeslot: list,
-					sessionTitle: result.title,
-					youtubeLink: result.youtubeLink,
-					zoomLink: result.zoomLink,
+					notifications: result.notifications,
 					loading: false
 				})
-				console.log(this.state.timeslot);
-				console.log(this.state.researcher);
 
-				UserManager.getUser(this.state.researcher[0])
+				console.log(this.state.researcher)
+				UserManager.getUser(this.state.researcher)
 					.then(res => {
 						console.log('get Researcher successful');
 						console.log(typeof(res));
@@ -153,8 +74,24 @@ class Body extends React.Component {
 							researcherDes: Object.values(res)[2],
 							researcherAvatar: Object.values(res)[1]
 						})
+						console.log('get Researcher avatar');
+						console.log(this.state.researcherAvatar);
+						if (this.state.researcherAvatar) {
+							UserManager.getAvatar(this.state.researcherAvatar)
+								.then(photo => {
+									console.log('getAvatar successful');
+									console.log('setImage successful');
+									// this.setState({imageUrl: photo});
+									console.log('show photo');
+									console.log(photo);
+									this.props.setImage(photo);
+								})
+								.catch(error => {
+									console.log(error);
+								});
+						}
 					}).catch(error => {
-						console.log(error);
+					console.log(error);
 				});
 
 				console.log("start to get notis");
@@ -185,6 +122,93 @@ class Body extends React.Component {
 		});
 	}
 
+	// getSession = () => {
+	// 	console.log("check sid");
+	// 	console.log(this.state.sid);
+	// 	SessionManager.getSession(this.state.sid)
+	// 		.then(result => {
+	// 			console.log('get Session successful');
+	// 			console.log(typeof(result.duration));
+	// 			console.log(typeof(result.questions));
+	// 			console.log(result.timeSlots);
+	// 			console.log(typeof(result.timeSlots));
+	// 			Object.keys(result.questions).forEach(key => {
+	// 				console.log("get questions key value");
+	// 				console.log(typeof(key));
+	// 				console.log(key);
+	// 				console.log(result.questions[key]);
+	// 			})
+	// 			Object.values(result.timeSlots).forEach(value => {
+	// 				console.log("get timeslot key value");
+	// 				console.log(typeof(value));
+	// 				console.log(value);
+	// 			})
+	// 			let list = []
+	// 			result.timeSlots.forEach(function (item,index,array){
+	// 				if(item){
+	// 					list.unshift(item);
+	// 				}
+	// 			});
+	// 			console.log("check list");
+	// 			console.log(list);
+	//
+	// 			this.setState({
+	// 				sessionDes: result.description,
+	// 				sessionDur: result.duration,
+	// 				sessionQues: result.questions,
+	// 				researcher: result.researchers,
+	// 				timeslot: list,
+	// 				sessionTitle: result.title,
+	// 				youtubeLink: result.youtubeLink,
+	// 				zoomLink: result.zoomLink,
+	// 				loading: false
+	// 			})
+	// 			console.log(this.state.timeslot);
+	// 			console.log(this.state.researcher);
+	//
+	// 			UserManager.getUser(this.state.researcher[0])
+	// 				.then(res => {
+	// 					console.log('get Researcher successful');
+	// 					console.log(typeof(res));
+	// 					console.log(Object.keys(res));
+	// 					console.log(Object.values(res));
+	// 					this.setState({
+	// 						researcherFullName: Object.values(res)[3],
+	// 						researcherDes: Object.values(res)[2],
+	// 						researcherAvatar: Object.values(res)[1]
+	// 					})
+	// 				}).catch(error => {
+	// 					console.log(error);
+	// 			});
+	//
+	// 			console.log("start to get notis");
+	// 			console.log(typeof(result.notifications))
+	// 			console.log(result.notifications)
+	// 			let list2 = [];
+	// 			result.notifications.forEach(function (item,index,array){
+	// 				if(item){
+	// 					list2.unshift(item);
+	// 				}
+	// 			});
+	// 			console.log("check list");
+	// 			console.log(list2);
+	// 			NotificationManager.getNotifications(list2)
+	// 				.then(notis => {
+	// 					console.log('get notifications successful');
+	// 					console.log(notis);
+	//
+	// 					this.setState({
+	// 						notifications: notis
+	// 					})
+	// 				}).catch(error => {
+	// 				console.log(error);
+	// 			});
+	//
+	// 		}).catch(error => {
+	// 		console.log(error);
+	// 	});
+	// }
+	//
 	formatDate(date) {
 		let d = new Date(date);
 
@@ -207,14 +231,14 @@ class Body extends React.Component {
 
 		return res;
 	}
-
-	arrayToList(array) {
-		let list = null;
-		for (let i = array.length - 1; i >= 0; i--) {
-			list = { value: array[i], rest: list };
-		}
-		return list;
-	}
+	//
+	// arrayToList(array) {
+	// 	let list = null;
+	// 	for (let i = array.length - 1; i >= 0; i--) {
+	// 		list = { value: array[i], rest: list };
+	// 	}
+	// 	return list;
+	// }
 
 	render() {
 		return (
@@ -223,8 +247,8 @@ class Body extends React.Component {
 					<h1>Pod Details</h1>
 					<br></br>
 					<br></br>
-					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Pod Title</h2>
-					<h3>Pod Descriptions</h3>
+					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>{this.state.title}</h2>
+					<h3>{this.state.description}</h3>
 
 					<br></br>
 					<br></br>
@@ -232,8 +256,8 @@ class Body extends React.Component {
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>About the Researcher</h2>
 					<h3> Researcher Name: {this.state.researcherFullName}</h3>
 					<h3 style={{marginRight:"30%"}}>{this.state.researcherDes}</h3>
-					<Avatar src={this.state.researcherAvatar} size={96} style={{position:"absolute", left: '80%', bottom:"50%",
-						margin: '2% auto'}} icon={<UserOutlined />} />
+					<Avatar src={this.props.image} size={96} style={{position:"absolute", left: '80%', bottom:"50%",
+						margin: '2% auto'}} icon={<UserOutlined/>} />
 					<br/>
 					<br/>
 

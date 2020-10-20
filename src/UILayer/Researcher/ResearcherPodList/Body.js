@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper} from './ResearcherPodList.style';
+import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper,Body2Wrapper} from './ResearcherPodList.style';
 import Img from '../../../img/Avatar.png';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
@@ -9,7 +9,6 @@ import {CheckOutlined, CloseOutlined, LoadingOutlined, PlusOutlined, UserOutline
 import UserManager from "../../../FoundationLayer/UserModel/UserManager";
 import firebase from "firebase";
 import ImgCrop from "antd-img-crop";
-import {Body2Wrapper} from "../../Participant/ParticipantHomePage/ParticipantHomePage.style";
 import PodManager from "../../../FoundationLayer/PodModel/PodManager";
 
 
@@ -28,20 +27,31 @@ class Body extends React.Component {
 
 
 	getData = () => {
-		UserManager.getCurrentUser()
+		return UserManager.getCurrentUser()
 			.then(response => {
 				if (response.pods){
-					let list = [];
+					let upcoming = [];
+					let all = [];
+					let num = 0;
+
 					response.pods.forEach(function (item,index,array){
-						PodManager.getPod(item)
+						return PodManager.getPod(item)
 							.then(result =>{
-								list.unshift(result);
+								if(result.status == "upcoming"){
+									upcoming.push(result);
+									all.push(result);
+								}else{
+									all.splice(num,0,result);
+									num++;
+								}
 							})
 							.catch(err=>{
 								console.log(err);
 							})
 					});
-					this.setState({loading : false ,data : list});
+
+
+					this.setState({upcoming : upcoming ,data : upcoming, all : all, loading: false});
 				}
 				else{
 					this.setState({loading : false});
@@ -49,7 +59,7 @@ class Body extends React.Component {
 
 				if (response.photoURL) {
 
-					UserManager.getAvatar(response.photoURL)
+					return UserManager.getAvatar(response.photoURL)
 						.then(photo => {
 							this.setState({ AdminAvatar: photo });
 							this.props.setImage(photo);
@@ -68,12 +78,14 @@ class Body extends React.Component {
 
 
 	constructor(props) {
-    	super(props);
+		super(props);
 		this.getData();
+
 
 		this.state = {
 			loading : true,
 			data : [],
+
 			all : [],
 			upcoming : [],
 			AdminAvatar: <UserOutlined/>,
@@ -84,7 +96,8 @@ class Body extends React.Component {
 
 
 
-  }
+
+	}
 
 	onChange = checked => {
 		if(checked){
@@ -107,79 +120,79 @@ class Body extends React.Component {
 
 		return(
 			<container>
-			<Body1Wrapper setImage={this.props.setImage}>
+				<Body1Wrapper setImage={this.props.setImage}>
 
 
-				<TitleWrapper>
+					<TitleWrapper>
 
 
-					<h1>Pod list</h1>
-					{/*<div>*/}
-
-					{/*<p>show finished pod</p>*/}
-					{/*<Switch*/}
-					{/*		checkedChildren="hide finished pod"*/}
-					{/*		unCheckedChildren={<CloseOutlined />}*/}
-					{/*		checked={!this.state.isCheck}*/}
-					{/*		onChange={this.onChange}*/}
-					{/*		style={{position:"absolute" , left:"55%", top: 7}}*/}
-					{/*/>*/}
-					{/*</div>*/}
-
-
-
-
-
-				</TitleWrapper>
-
-
-				<ListWrapper>
-					<Spin spinning={this.state.loading}>
-				<List
-
-
-					bordered={false}
-
-
-					dataSource={this.state.data}
-
-					renderItem={item => (
+						<h1>Pod list</h1>
 						<div>
-						<List.Item style={{borderColor:'red', borderWidth:4,borderStyle:'solid',borderRadius:20}}>
 
-							<List.Item.Meta style={{marginLeft:20}}
-
-								title={<a style={{fontSize:25}}>{item._title}</a>}
-								description={<p style={{width:"70%", fontSize:20, wordWrap:"break-word"}}>{item._description}<br/>status:{item._status}</p>}
+							<p>show finished pod</p>
+							<Switch
+								checkedChildren={<CheckOutlined />}
+								unCheckedChildren={<CloseOutlined />}
+								checked={!this.state.isCheck}
+								onChange={this.onChange}
+								style={{position:"absolute" , left:"55%", top: 7}}
 							/>
-
-							<div>
-								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Detail/',search: "?pid="+item.pid})}>View Pod Info</Button>
-							</div>
+						</div>
 
 
-						</List.Item><br/><br/></div>
 
 
-						)}
-				/>
-					</Spin>
-				</ListWrapper>
-                <br/>
 
-                
+					</TitleWrapper>
 
-			</Body1Wrapper>
-			<Body2Wrapper>
-				<br />
-				<h1>Genyus Roundtable Is...</h1>
-				<p>·...An online peer-led focus group</p>
-				<p>·...Led by fellow survivors</p>
-				<p>·...About sharing what’s been most impactful and important to you in your experience</p>
-				<p>·...Aiming to pay it forward, and help others along their journeys!</p>
-				<br />
-				<br />
-			</Body2Wrapper>
+
+					<ListWrapper>
+						<Spin spinning={this.state.loading}>
+							<List
+
+
+								bordered={false}
+
+
+								dataSource={this.state.data}
+
+								renderItem={item => (
+									<div>
+										<List.Item style={{borderColor:'red', borderWidth:4,borderStyle:'solid',borderRadius:20}}>
+
+											<List.Item.Meta style={{marginLeft:20}}
+
+															title={<a style={{fontSize:25}}>{item._title}</a>}
+															description={<p style={{width:"70%", fontSize:20, wordWrap:"break-word"}}>{item._description}<br/>status:{item._status}</p>}
+											/>
+
+											<div>
+												<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Detail/',search: "?pid="+item.pid})}>View Pod Info</Button>
+											</div>
+
+
+										</List.Item><br/><br/></div>
+
+
+								)}
+							/>
+						</Spin>
+					</ListWrapper>
+					<br/>
+
+
+
+				</Body1Wrapper>
+				<Body2Wrapper>
+					<br />
+					<h1>Genyus Roundtable Is...</h1>
+					<p>·...An online peer-led focus group</p>
+					<p>·...Led by fellow survivors</p>
+					<p>·...About sharing what’s been most impactful and important to you in your experience</p>
+					<p>·...Aiming to pay it forward, and help others along their journeys!</p>
+					<br />
+					<br />
+				</Body2Wrapper>
 			</container>
 
 

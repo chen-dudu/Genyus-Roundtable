@@ -28,20 +28,31 @@ class Body extends React.Component {
 
 
 	getData = () => {
-		UserManager.getCurrentUser()
+		return UserManager.getCurrentUser()
 			.then(response => {
 				if (response.pods){
-					let list = [];
+					let upcoming = [];
+					let all = [];
+					let num = 0;
+
 					response.pods.forEach(function (item,index,array){
-						PodManager.getPod(item)
+						return PodManager.getPod(item)
 							.then(result =>{
-								list.unshift(result);
+								if(result.status == "upcoming"){
+									upcoming.push(result);
+									all.push(result);
+								}else{
+									all.splice(num,0,result);
+									num++;
+								}
 							})
 							.catch(err=>{
 								console.log(err);
 							})
 					});
-					this.setState({loading : false ,data : list});
+
+
+					this.setState({upcoming : upcoming ,data : upcoming, all : all, loading: false});
 				}
 				else{
 					this.setState({loading : false});
@@ -49,7 +60,7 @@ class Body extends React.Component {
 
 				if (response.photoURL) {
 
-					UserManager.getAvatar(response.photoURL)
+					return UserManager.getAvatar(response.photoURL)
 						.then(photo => {
 							this.setState({ AdminAvatar: photo });
 							this.props.setImage(photo);
@@ -114,17 +125,17 @@ class Body extends React.Component {
 
 
 					<h1>Pod list</h1>
-					{/*<div>*/}
+					<div>
 
-					{/*<p>show finished pod</p>*/}
-					{/*<Switch*/}
-					{/*		checkedChildren="hide finished pod"*/}
-					{/*		unCheckedChildren={<CloseOutlined />}*/}
-					{/*		checked={!this.state.isCheck}*/}
-					{/*		onChange={this.onChange}*/}
-					{/*		style={{position:"absolute" , left:"55%", top: 7}}*/}
-					{/*/>*/}
-					{/*</div>*/}
+					<p>show finished pod</p>
+					<Switch
+							checkedChildren={<CheckOutlined />}
+							unCheckedChildren={<CloseOutlined />}
+							checked={!this.state.isCheck}
+							onChange={this.onChange}
+							style={{position:"absolute" , left:"55%", top: 7}}
+					/>
+					</div>
 
 
 

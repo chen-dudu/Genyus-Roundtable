@@ -10,7 +10,7 @@ const Detail = props => {
         <div>
             <container>
                 <Header setImage={setImage} image={image}></Header>
-                <Body></Body>
+                <Body setImage={setImage} image={image}></Body>
                 <Footer></Footer>
             </container>
         </div>
