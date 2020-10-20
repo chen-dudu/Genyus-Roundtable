@@ -9,6 +9,7 @@ const USER_COLLECTION = 'users';
 const db = firebase.firestore();
 const podDocs = db.collection(POD_COLLECTION);
 const userDocs = db.collection(USER_COLLECTION)
+const storage = firebase.storage();
 
 export default {
 
@@ -142,6 +143,81 @@ export default {
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | signup | failed to process the pod sign up, error: ${err}`);
+            return Promise.reject(err);
+        }
+    },
+
+    /**
+     * a method used to upload a note to the firebase DB
+     * @param file the file to be uploaded
+     * @param pid  the id of the pod which the note is for
+     * @return {Promise<never>} upon successful uploading, a promise with resolve value of undefined is returned.
+     *                          upon failed uploading, a promise with reject value of received error message is returned.
+     */
+    async upload(file, pid) {
+        try {
+            let path = 'notes/' + pid + '/' + file.name;
+            let storageRef = storage.ref(path);
+            let uploadFeedback = await storageRef.put(file);
+            uploadFeedback.on('state_changed',
+                function progress(snapshot) {
+                    // this is used together with progress bar to show the current upload progress
+                },
+
+                function error(err) {
+                    console.error(`${CLASS_NAME} | upload.on | failed to upload notes to database, received error message ${err}`);
+                    return Promise.reject(err);
+                },
+
+                function complete() {
+                    console.debug(`${CLASS_NAME} | upload.complete | successfully upload notes to database, start updating pod attribute`);
+                    // update pod note url attribute
+                    return podDocs.doc(pid).update({notes: path})
+                        .then(feedback => {
+                            console.debug(`${CLASS_NAME} | upload.complete | successfully update pod attribute information`);
+                            return Promise.resolve(undefined);
+                        })
+                        .catch(err => {
+                            console.error(`${CLASS_NAME} | upload.complete | failed to update pod attribute information, received error message ${err}`);
+                            return Promise.reject(err);
+                        });
+                }
+            );
+
+        }
+        catch (err) {
+            console.error(`${CLASS_NAME} | upload | failed to upload file to DB, received error message ${err}`);
+            return Promise.reject(err);
+        }
+    },
+
+    /**
+     * a method used to download notes from firebase DB
+     * @param path the path of the file in the database
+     * @return {Promise<never>} upon successful retrieval, a promise with resolve value of undefined is returned.
+     *                          upon failed retrieval, a promise with reject value of received error message is returned.
+     */
+    async download(path) {
+        try {
+            let fileRef = storage.ref(path);
+            let url = await fileRef.getDownloadURL();
+            console.debug(`${CLASS_NAME} | download | successfully get the download URL of the notes file`);
+            // This can be downloaded directly:
+            let xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.onload = function(event) {
+                let blob = xhr.response;
+                console.debug(`${CLASS_NAME} | download.XHR | request finished successfully`)
+            };
+            xhr.open('GET', url);
+            xhr.send();
+            return Promise.resolve(undefined);
+            // Or inserted into an <img> element:
+            // var img = document.getElementById('myimg');
+            // img.src = url;
+        }
+        catch (err)  {
+            console.error(`${CLASS_NAME} | download | failed to download notes for pod, received error message ${err}`);
             return Promise.reject(err);
         }
     }
