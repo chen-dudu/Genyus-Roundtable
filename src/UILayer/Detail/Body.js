@@ -36,7 +36,8 @@ class Body extends React.Component {
 			researcherDes: null,
 			researcherAvatar: null,
 			participates: null,
-			notifications: []
+			notifications: [],
+			isParti: false
 		}
 		console.log("state pid")
 		console.log(this.state.pid);
@@ -74,6 +75,19 @@ class Body extends React.Component {
 							researcherDes: Object.values(res)[2],
 							researcherAvatar: Object.values(res)[1]
 						})
+
+						if (res[7] == 'participant') {
+							this.setState({
+								isPart: true
+							})
+						} else {
+							this.setState({
+								isPart: false
+							})
+						}
+						console.log('get isPart');
+						console.log(this.state.isPart);
+
 						console.log('get Researcher avatar');
 						console.log(this.state.researcherAvatar);
 						if (this.state.researcherAvatar) {
@@ -241,6 +255,7 @@ class Body extends React.Component {
 	// }
 
 	render() {
+
 		return (
 			<div style={{minWidth:500}}>
 				<Body3Wrapper>
@@ -250,6 +265,8 @@ class Body extends React.Component {
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>{this.state.title}</h2>
 					<h3>{this.state.description}</h3>
 
+					<br></br>
+					<br></br>
 					<br></br>
 					<br></br>
 
@@ -285,42 +302,34 @@ class Body extends React.Component {
 						</Spin>
 					</ListWrapper>
 
-					{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
-					{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
-					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
-					{/*		float:"left"}}>Event Update: "Coming up Soon!"</h1>*/}
-					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
-					{/*	<br></br>*/}
-					{/*	<br></br>*/}
-					{/*	<p style={{color: "black", fontSize: "20px"}}> Hi Genyuses! This session is coming up fast!*/}
-					{/*		We're excited to see you all there next week! Joan has finalised the questions that will be*/}
-					{/*		asked (see the event description!) and we're excited to see all your lovely faces!</p>*/}
-					{/*</Card>*/}
-					{/*<br></br> <br></br>*/}
-					{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
-					{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
-					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
-					{/*		float:"left"}}>Event Update: "Ready to go!"</h1>*/}
-					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
-					{/*	<br></br>*/}
-					{/*	<br></br>*/}
-					{/*	<p style={{color: "black", fontSize: "20px"}}> Hey everyone! The event description has been*/}
-					{/*		updated to include some of the questions that will be asked in the session! Have a*/}
-					{/*		looksee if you're interested ♥</p>*/}
-					{/*</Card>*/}
 					<br></br> <br></br>
 
-					<div style={{position:"absolute", bottom:"50%", right:"5%"}}>
+					<div style={{position:"absolute", bottom:"50%", right:"45%"}}>
 						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
 								mozallowfullscreen="" allowFullScreen=""
 								src={this.state.youtubeLink}></iframe>
 					</div>
 
+					<div style={{position:"absolute", bottom:"66%", right:"25%"}}>
+						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
+								mozallowfullscreen="" allowFullScreen=""
+								src="https://www.youtube.com/embed/Xm_F_UBjrq8"></iframe>
+					</div>
+
 					<Button style={{background: "#3399ff", borderRadius: 5,
 						width: "10%", height: 40, fontWeight: "bold",
 						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-						fontSize: 15, color: "white", marginLeft:'45%', marginRight: '45%'}}
+						fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"45%"}}
 					>Download Notes</Button>
+
+					{ this.state.isPart
+						? <Button className="manager" style={{background: "#3399ff", borderRadius: 5,
+							width: "10%", height: 40, fontWeight: "bold",
+							boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+							fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"75%"}}
+						>Upload Notes</Button>
+						: null
+					}
 
 					<br></br> <br></br>
 					<br></br> <br></br>
@@ -480,6 +489,29 @@ class Body extends React.Component {
 				{/*	<br />*/}
 				{/*	<br />*/}
 				{/*</Body2Wrapper>*/}
+				{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
+				{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
+				{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
+				{/*		float:"left"}}>Event Update: "Coming up Soon!"</h1>*/}
+				{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
+				{/*	<br></br>*/}
+				{/*	<br></br>*/}
+				{/*	<p style={{color: "black", fontSize: "20px"}}> Hi Genyuses! This session is coming up fast!*/}
+				{/*		We're excited to see you all there next week! Joan has finalised the questions that will be*/}
+				{/*		asked (see the event description!) and we're excited to see all your lovely faces!</p>*/}
+				{/*</Card>*/}
+				{/*<br></br> <br></br>*/}
+				{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
+				{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
+				{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
+				{/*		float:"left"}}>Event Update: "Ready to go!"</h1>*/}
+				{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
+				{/*	<br></br>*/}
+				{/*	<br></br>*/}
+				{/*	<p style={{color: "black", fontSize: "20px"}}> Hey everyone! The event description has been*/}
+				{/*		updated to include some of the questions that will be asked in the session! Have a*/}
+				{/*		looksee if you're interested ♥</p>*/}
+				{/*</Card>*/}
 
 			</div>
 
@@ -690,12 +722,6 @@ class Body extends React.Component {
 // 				</Card>
 // 				<br></br> <br></br>
 //
-// 				<div style={{position:"absolute", bottom:"65%", right:"5%"}}>
-// 					<h2>Learn more about the Session!!</h2>
-// 					<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
-// 							mozallowfullscreen="" allowFullScreen=""
-// 							src="https://www.youtube.com/embed/Xm_F_UBjrq8"></iframe>
-// 				</div>
 //
 // 			</Body3Wrapper>
 // 		)
