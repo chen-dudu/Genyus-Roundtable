@@ -72,7 +72,8 @@ export default {
         try {
             let pod = await podDocs.doc(pid).get();
             console.debug(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
-            return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('status'), pod.get('description'), pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants')));
+            return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('status'), pod.get('description'),
+                pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants'), pod.get('notes')));
         } catch (err) {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
             return Promise.reject(err.message);
@@ -97,8 +98,9 @@ export default {
                 let calendlyLink = doc.get('calendlyLink');
                 let researcher = doc.get('researcher');
                 let participants = doc.get('participants');
+                let notes = doc.get('notes');
                 // let sessions = doc.get('sessions');
-                let pod = new Pod(pid, title, status, description, calendlyLink, researcher, participants);
+                let pod = new Pod(pid, title, status, description, calendlyLink, researcher, participants, notes);
                 pods.unshift(Promise.resolve(pod));
             });
             console.debug(`${CLASS_NAME} | getAllPods | finished pre-processing, data is ready to be returned`);
@@ -158,7 +160,8 @@ function converter(pod) {
             notifications: [],
             // status: pod.status,
             status: "upcoming",
-            description: pod.description
+            description: pod.description,
+            notes: ""
         };
     }
     else {
