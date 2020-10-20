@@ -147,7 +147,7 @@ export default {
 
 // convert a Pod object to a form that can be processed by firebase
 function converter(pod) {
-    if (pod.title && pod.calendlyLink && pod.researcher && pod.participants && pod.notifications && pod.status && pod.description) {
+    if (pod.title && pod.calendlyLink && pod.researcher && pod.description) {
         return {
             title: pod.title,
             calendlyLink: pod.calendlyLink,
