@@ -33,6 +33,7 @@ export const ImageWrapper = styled.div`
     right:25px;
     top: 25px;
     
+    
   }
   
 `;
