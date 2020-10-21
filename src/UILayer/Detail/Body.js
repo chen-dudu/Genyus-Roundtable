@@ -37,7 +37,8 @@ class Body extends React.Component {
 			researcherAvatar: null,
 			participates: null,
 			notifications: [],
-			isParti: false
+			isParti: false,
+			note: null
 		}
 		console.log("state pid")
 		console.log(this.state.pid);
@@ -61,10 +62,12 @@ class Body extends React.Component {
 					researcher: result.researcher,
 					participates: result.participants,
 					notifications: result.notifications,
+					note: result.notes,
 					loading: false
 				})
-
-				console.log(this.state.researcher)
+				console.log("get pod note");
+				console.log(this.state.note);
+				console.log(this.state.researcher);
 				UserManager.getUser(this.state.researcher)
 					.then(res => {
 						console.log('get Researcher successful');
