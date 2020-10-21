@@ -208,7 +208,26 @@ export default {
             xhr.onload = function(event) {
                 let blob = xhr.response;
                 console.debug(blob);
-                console.debug(`${CLASS_NAME} | download.XHR | request finished successfully`)
+                console.debug(`${CLASS_NAME} | download.XHR | request finished successfully`);
+                // get the file type
+                let start;
+                for (start = 0; start < blob.type.length; start++) {
+                    if (blob.type[start] === '/') {
+                        start++;
+                        break;
+                    }
+                }
+                let type = blob.type.substring(start);
+                // download file when button is clicked
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'note.' + type;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                alert('your file has downloaded!');
             };
             xhr.open('GET', url);
             xhr.send();
