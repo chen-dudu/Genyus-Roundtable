@@ -141,9 +141,14 @@ class Body1 extends React.Component {
 			});
 	};
 
+
+
+
+
 	constructor(props) {
 		super(props);
 		this.getImage();
+
 		this.state = {
 			displayedName: null
 		}

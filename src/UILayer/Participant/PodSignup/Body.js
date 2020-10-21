@@ -10,7 +10,7 @@ import {
 } from './PodSignup.style';
 import Img from '../../../img/person.gif';
 import { withRouter } from "react-router-dom";
-import { InlineWidget } from "react-calendly"
+import {InlineWidget, PopupText, PopupWidget, CalendlyEventListener} from "react-calendly"
 import {List, Avatar, Button, Spin, message, Upload} from 'antd';
 import UserManager from "../../../FoundationLayer/UserModel/UserManager";
 import PodManager from "../../../FoundationLayer/PodModel/PodManager";
@@ -24,6 +24,7 @@ import firebase from 'firebase';
 const getUser = firebase.functions().httpsCallable('getUser');
 
 class Body1 extends React.Component {
+
 	constructor(props) {
 		super(props);
 		const query = this.props.location.search;
@@ -44,7 +45,17 @@ class Body1 extends React.Component {
 
 	}
 
-
+    podSignup = () => {
+		console.log("page: "+this.state.pid);
+		PodManager.signup(this.state.pid)
+			.then(result => {
+				window.alert("" +
+					"")
+			})
+			.catch(err => {
+				console.log(err);
+			})
+	}
 
 
 	getPodDetail = (pid) => {
@@ -56,6 +67,8 @@ class Body1 extends React.Component {
 					podDescription : response._description,
 
 				});
+
+
 				return getUser( {uid: response.researcher})
 					.then(result => {
 						this.setState({
@@ -92,18 +105,84 @@ class Body1 extends React.Component {
 			});
 	}
 
+	renderCalendly = () => {
+		if(this.state.loading === false)
+
+
+		return <>
+
+			<CalendlyEventListener
+				// onEventScheduled={()=>{this.podSignup()}}
+			>
+				<div
+					style={{
+						height: '700px',
+						minWidth: '320px',
+					}}
+				>
+					<iframe
+						frameBorder="0"
+						height="100%"
+						src={this.state.calendlyLink+"?embed_domain=localhost:3000&embed_type=Inline"}
+						width="100%"
+					/>
+				</div>
+			</CalendlyEventListener>
+		</>
+
+	}
+
+
+
 
 	render(){
+
 		return(
 			<>
 				<Spin spinning={this.state.loading}>
 			<Body1Wrapper>
 
 
-					<div className="Calendly">
-						<InlineWidget url={this.state.calendlyLink} />
+					<div id="Calendly">
+
+						{this.renderCalendly()}
+						<Button className="backButton" style={{marginLeft:"43%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary"
+								onClick={()=>{
+							// this.props.history.push("ParticipantHomepage")
+									this.podSignup();
+								}}>Back</Button>
+
+						{/*/!*<InlineWidget*!/*/}
+						{/*			// pageSettings={{*/}
+						{/*			// backgroundColor: 'fffff0',*/}
+						{/*			// hideEventTypeDetails: false,*/}
+						{/*			// hideLandingPageDetails: false,*/}
+						{/*			// primaryColor: '00a2ff',*/}
+						{/*			// textColor: '4d5055'*/}
+						{/*			// }}*/}
+
+
+						{/*			styles={{*/}
+						{/*				height: '700px'*/}
+						{/*			}}*/}
+						{/*			url={link}*/}
+
+
+						{/*/>*/}
+
+						{/*<PopupWidget style= url={this.state.calendlyLink}>Schedule</PopupWidget>*/}
+						{/*<div className="calendly-inline-widget"*/}
+						{/*	 data-url="https://calendly.com/genyus-roundtable/meaningful-vocation-stroke-recovery"*/}
+						{/*	 style={{minWidth: 320, height:630}}></div>*/}
+						{/*<script type="text/javascript"*/}
+						{/*		src="https://assets.calendly.com/assets/external/widget.js"></script>*/}
+
+
+
+
+
 					</div>
-				<Button className="backButton" style={{marginLeft:"43%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/ParticipantHomePage')}>Back</Button>
+
 				<br />
 				<br />
 

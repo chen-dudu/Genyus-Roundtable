@@ -120,13 +120,13 @@ export default {
             let pRef = podDocs.doc(pid);
             console.debug(`${CLASS_NAME} | signup | successfully get ref to pod doc`);
             let pDoc = await pRef.get();
-            let pid = pDoc.id;
             console.debug(`${CLASS_NAME} | signup | successfully get pod doc from DB`);
             let user = await UserManager.getCurrentUser();
             let uid = user.uid;
+            let userDoc = await userDocs.doc(uid).get();
             console.debug(`${CLASS_NAME} | signup | successfully get user doc from DB`);
             let participants = pDoc.get('participants');
-            let pods = user.get('pods');
+            let pods = userDoc.get('pods');
             if (!participants.includes(uid) && !pods.includes(pid)) {
                 // update pod and participant
                 participants.unshift(uid);

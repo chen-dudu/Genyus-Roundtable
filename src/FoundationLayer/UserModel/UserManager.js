@@ -45,6 +45,7 @@ export default {
         return Promise.reject('current user is null');
     },
 
+
     getUserRef(uid) {
         try {
             return userDocs.doc(uid);
