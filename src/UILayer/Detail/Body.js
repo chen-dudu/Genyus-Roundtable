@@ -38,7 +38,8 @@ class Body extends React.Component {
 			participates: null,
 			notifications: [],
 			isParti: false,
-			note: null
+			note: null,
+			// noteUrl: null
 		}
 		console.log("state pid")
 		console.log(this.state.pid);
@@ -68,6 +69,14 @@ class Body extends React.Component {
 				console.log("get pod note");
 				console.log(this.state.note);
 				console.log(this.state.researcher);
+				// PodManager.download(this.state.notes)
+				// 	.then(url => {
+				// 		this.setState({
+				// 			noteUrl: url
+				// 		})
+				// 	}).catch(error => {
+				// 	console.log(error);
+				// });
 				UserManager.getUser(this.state.researcher)
 					.then(res => {
 						console.log('get Researcher successful');
@@ -256,6 +265,7 @@ class Body extends React.Component {
 						width: "10%", height: 40, fontWeight: "bold",
 						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
 						fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"45%"}}
+							onClick={() => PodManager.download(this.state.note)}
 					>Download Notes</Button>
 
 					{ this.state.isPart

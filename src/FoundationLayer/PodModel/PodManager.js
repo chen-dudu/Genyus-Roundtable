@@ -207,6 +207,7 @@ export default {
             xhr.responseType = 'blob';
             xhr.onload = function(event) {
                 let blob = xhr.response;
+                console.debug(blob);
                 console.debug(`${CLASS_NAME} | download.XHR | request finished successfully`)
             };
             xhr.open('GET', url);
