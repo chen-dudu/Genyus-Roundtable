@@ -15,32 +15,6 @@ import {notification} from "antd/es";
 
 // const { Step } = Steps;
 // const style = {background: 'white', padding: '8px 0'};
-const props = {
-	name: 'file',
-	action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-	headers: {
-		authorization: 'authorization-text',
-	},
-	onChange(info) {
-		if (info.file.status !== 'uploading') {
-			console.log(info.file, info.fileList);
-		}
-		if (info.file.status === 'done') {
-			message.success(`${info.file.name} file uploaded successfully`);
-			console.log("Get file successful");
-			console.log(info.file.originFileObj);
-			PodManager.upload(info.file.originFileObj)
-				.then(response => {
-					console.log('update successful');
-				})
-				.catch(error => {
-					console.log(error);
-				});
-		} else if (info.file.status === 'error') {
-			message.error(`${info.file.name} file upload failed.`);
-		}
-	},
-};
 
 class Body extends React.Component {
 
@@ -68,6 +42,7 @@ class Body extends React.Component {
 		console.log("state pid")
 		console.log(this.state.pid);
 		this.getPod();
+		this.upload.onChange = this.upload.onChange.bind(this);
 	}
 
 	getPod = () => {
@@ -185,6 +160,33 @@ class Body extends React.Component {
 		return res;
 	}
 
+	upload = {
+		name: 'file',
+		action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+		headers: {
+			authorization: 'authorization-text',
+		},
+		onChange(info) {
+			if (info.file.status !== 'uploading') {
+				console.log(info.file, info.fileList);
+			}
+			if (info.file.status === 'done') {
+				message.success(`${info.file.name} file uploaded successfully`);
+				console.log("Get file successful");
+				console.log(info.file.originFileObj);
+				PodManager.upload(info.file.originFileObj, this.state.pid)
+					.then(response => {
+						console.log('update successful');
+					})
+					.catch(error => {
+						console.log(error);
+					});
+			} else if (info.file.status === 'error') {
+				message.error(`${info.file.name} file upload failed.`);
+			}
+		},
+	};
+
 	render() {
 
 		return (
@@ -255,7 +257,7 @@ class Body extends React.Component {
 
 					{ this.state.isPart
 						? null
-						: <Upload {...props} progress={{ strokeWidth: 2, }}>
+						: <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
 							<Button className="manager" style={{background: "#3399ff", borderRadius: 5,
 								width: "10%", height: 40, fontWeight: "bold",
 								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
