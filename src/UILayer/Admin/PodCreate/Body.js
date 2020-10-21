@@ -24,6 +24,8 @@ const tailLayout = {
 
 const getResearchers = firebase.functions().httpsCallable('getResearchers');
 
+const { TextArea } = Input;
+
 class Body extends React.Component {
 	formRef = React.createRef();
 	onFinish = (values) => {
@@ -94,6 +96,11 @@ class Body extends React.Component {
 		this.setState({ calendlyLink: e.target.value });
 	}
 
+	onDescriptionEnter = (e) => {
+		console.log("Description: ", e.target.value);
+		this.setState({ description: e.target.value });
+	}
+
 	constructor(props) {
 		super(props);
 		this.onTitleEnter = this.onTitleEnter.bind(this);
@@ -123,7 +130,6 @@ class Body extends React.Component {
 				</TitleWrapper>
 				<BodyWrapper>
 					<br />
-					<br />
 					<Form {...layout} ref={this.formRef} name="control-ref" onFinish={this.createPod}>
 						<br />
 						<Form.Item name="title" label="Pod Title" rules={[{ required: true }]}>
@@ -145,11 +151,15 @@ class Body extends React.Component {
 						<Form.Item name="calendlyLink" label="CalendlyLink" rules={[{ required: true }]}>
 							<Input style={{ width: "60%" }} onChange={this.onCalendlyLinkEnter} />
 						</Form.Item>
+						<Form.Item name="description" label="Description" rules={[{ required: false }]}>
+							<TextArea style={{ width: "60%" }} rows={4} onChange={this.onDescriptionEnter} />
+						</Form.Item>
 						<br />
 						<Form.Item {...tailLayout}>
-							<Button type="primary" htmlType="submit" style={{ width: "50%" }}>
+							<Button type="primary" htmlType="submit" style={{ width: "60%" }}>
 								Confirm Session
-          				</Button></Form.Item>
+          					</Button>
+						</Form.Item>
 					</Form>
 				</BodyWrapper>
 			</Body1Wrapper>
