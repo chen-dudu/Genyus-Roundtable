@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom'
 import {Body2Wrapper, BodyWrapper, Body3Wrapper, ListWrapper} from './Detail.style';
-import {Button, Card, Tooltip, Avatar, Spin, List} from 'antd';
+import {Button, Card, Tooltip, Avatar, Spin, List, Upload, message} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
 import {QuestionOutlined, UserOutlined} from '@ant-design/icons';
@@ -13,8 +13,8 @@ import SessionManager from "../../FoundationLayer/SessionModel/SessionManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
 import {notification} from "antd/es";
 
-const { Step } = Steps;
-const style = {background: 'white', padding: '8px 0'};
+// const { Step } = Steps;
+// const style = {background: 'white', padding: '8px 0'};
 
 class Body extends React.Component {
 
@@ -36,11 +36,13 @@ class Body extends React.Component {
 			researcherDes: null,
 			researcherAvatar: null,
 			participates: null,
-			notifications: []
+			notifications: [],
+			isParti: false
 		}
 		console.log("state pid")
 		console.log(this.state.pid);
 		this.getPod();
+		this.upload.onChange = this.upload.onChange.bind(this);
 	}
 
 	getPod = () => {
@@ -74,6 +76,19 @@ class Body extends React.Component {
 							researcherDes: Object.values(res)[2],
 							researcherAvatar: Object.values(res)[1]
 						})
+
+						if (res[7] == 'participant') {
+							this.setState({
+								isPart: true
+							})
+						} else {
+							this.setState({
+								isPart: false
+							})
+						}
+						console.log('get isPart');
+						console.log(this.state.isPart);
+
 						console.log('get Researcher avatar');
 						console.log(this.state.researcherAvatar);
 						if (this.state.researcherAvatar) {
@@ -122,93 +137,6 @@ class Body extends React.Component {
 		});
 	}
 
-	// getSession = () => {
-	// 	console.log("check sid");
-	// 	console.log(this.state.sid);
-	// 	SessionManager.getSession(this.state.sid)
-	// 		.then(result => {
-	// 			console.log('get Session successful');
-	// 			console.log(typeof(result.duration));
-	// 			console.log(typeof(result.questions));
-	// 			console.log(result.timeSlots);
-	// 			console.log(typeof(result.timeSlots));
-	// 			Object.keys(result.questions).forEach(key => {
-	// 				console.log("get questions key value");
-	// 				console.log(typeof(key));
-	// 				console.log(key);
-	// 				console.log(result.questions[key]);
-	// 			})
-	// 			Object.values(result.timeSlots).forEach(value => {
-	// 				console.log("get timeslot key value");
-	// 				console.log(typeof(value));
-	// 				console.log(value);
-	// 			})
-	// 			let list = []
-	// 			result.timeSlots.forEach(function (item,index,array){
-	// 				if(item){
-	// 					list.unshift(item);
-	// 				}
-	// 			});
-	// 			console.log("check list");
-	// 			console.log(list);
-	//
-	// 			this.setState({
-	// 				sessionDes: result.description,
-	// 				sessionDur: result.duration,
-	// 				sessionQues: result.questions,
-	// 				researcher: result.researchers,
-	// 				timeslot: list,
-	// 				sessionTitle: result.title,
-	// 				youtubeLink: result.youtubeLink,
-	// 				zoomLink: result.zoomLink,
-	// 				loading: false
-	// 			})
-	// 			console.log(this.state.timeslot);
-	// 			console.log(this.state.researcher);
-	//
-	// 			UserManager.getUser(this.state.researcher[0])
-	// 				.then(res => {
-	// 					console.log('get Researcher successful');
-	// 					console.log(typeof(res));
-	// 					console.log(Object.keys(res));
-	// 					console.log(Object.values(res));
-	// 					this.setState({
-	// 						researcherFullName: Object.values(res)[3],
-	// 						researcherDes: Object.values(res)[2],
-	// 						researcherAvatar: Object.values(res)[1]
-	// 					})
-	// 				}).catch(error => {
-	// 					console.log(error);
-	// 			});
-	//
-	// 			console.log("start to get notis");
-	// 			console.log(typeof(result.notifications))
-	// 			console.log(result.notifications)
-	// 			let list2 = [];
-	// 			result.notifications.forEach(function (item,index,array){
-	// 				if(item){
-	// 					list2.unshift(item);
-	// 				}
-	// 			});
-	// 			console.log("check list");
-	// 			console.log(list2);
-	// 			NotificationManager.getNotifications(list2)
-	// 				.then(notis => {
-	// 					console.log('get notifications successful');
-	// 					console.log(notis);
-	//
-	// 					this.setState({
-	// 						notifications: notis
-	// 					})
-	// 				}).catch(error => {
-	// 				console.log(error);
-	// 			});
-	//
-	// 		}).catch(error => {
-	// 		console.log(error);
-	// 	});
-	// }
-	//
 	formatDate(date) {
 		let d = new Date(date);
 
@@ -231,16 +159,36 @@ class Body extends React.Component {
 
 		return res;
 	}
-	//
-	// arrayToList(array) {
-	// 	let list = null;
-	// 	for (let i = array.length - 1; i >= 0; i--) {
-	// 		list = { value: array[i], rest: list };
-	// 	}
-	// 	return list;
-	// }
+
+	upload = {
+		name: 'file',
+		action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+		headers: {
+			authorization: 'authorization-text',
+		},
+		onChange(info) {
+			if (info.file.status !== 'uploading') {
+				console.log(info.file, info.fileList);
+			}
+			if (info.file.status === 'done') {
+				message.success(`${info.file.name} file uploaded successfully`);
+				console.log("Get file successful");
+				console.log(info.file.originFileObj);
+				PodManager.upload(info.file.originFileObj, this.state.pid)
+					.then(response => {
+						console.log('update successful');
+					})
+					.catch(error => {
+						console.log(error);
+					});
+			} else if (info.file.status === 'error') {
+				message.error(`${info.file.name} file upload failed.`);
+			}
+		},
+	};
 
 	render() {
+
 		return (
 			<div style={{minWidth:500}}>
 				<Body3Wrapper>
@@ -250,6 +198,8 @@ class Body extends React.Component {
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>{this.state.title}</h2>
 					<h3>{this.state.description}</h3>
 
+					<br></br>
+					<br></br>
 					<br></br>
 					<br></br>
 
@@ -285,47 +235,48 @@ class Body extends React.Component {
 						</Spin>
 					</ListWrapper>
 
-					{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
-					{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
-					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
-					{/*		float:"left"}}>Event Update: "Coming up Soon!"</h1>*/}
-					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
-					{/*	<br></br>*/}
-					{/*	<br></br>*/}
-					{/*	<p style={{color: "black", fontSize: "20px"}}> Hi Genyuses! This session is coming up fast!*/}
-					{/*		We're excited to see you all there next week! Joan has finalised the questions that will be*/}
-					{/*		asked (see the event description!) and we're excited to see all your lovely faces!</p>*/}
-					{/*</Card>*/}
-					{/*<br></br> <br></br>*/}
-					{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
-					{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
-					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
-					{/*		float:"left"}}>Event Update: "Ready to go!"</h1>*/}
-					{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
-					{/*	<br></br>*/}
-					{/*	<br></br>*/}
-					{/*	<p style={{color: "black", fontSize: "20px"}}> Hey everyone! The event description has been*/}
-					{/*		updated to include some of the questions that will be asked in the session! Have a*/}
-					{/*		looksee if you're interested ♥</p>*/}
-					{/*</Card>*/}
 					<br></br> <br></br>
 
-					<div style={{position:"absolute", bottom:"50%", right:"5%"}}>
+					<div style={{position:"absolute", bottom:"50%", right:"45%"}}>
 						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
 								mozallowfullscreen="" allowFullScreen=""
 								src={this.state.youtubeLink}></iframe>
 					</div>
 
+					<div style={{position:"absolute", bottom:"66%", right:"25%"}}>
+						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
+								mozallowfullscreen="" allowFullScreen=""
+								src="https://www.youtube.com/embed/Xm_F_UBjrq8"></iframe>
+					</div>
+
 					<Button style={{background: "#3399ff", borderRadius: 5,
 						width: "10%", height: 40, fontWeight: "bold",
 						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-						fontSize: 15, color: "white", marginLeft:'45%', marginRight: '45%'}}
+						fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"45%"}}
 					>Download Notes</Button>
+
+					{ this.state.isPart
+						? null
+						: <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
+							<Button className="manager" style={{background: "#3399ff", borderRadius: 5,
+								width: "10%", height: 40, fontWeight: "bold",
+								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+								fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"75%"}}
+							>Upload Notes</Button>
+						</Upload>
+					}
 
 					<br></br> <br></br>
 					<br></br> <br></br>
 
 				</Body3Wrapper>
+			</div>
+
+		)
+	}
+}
+
+export default withRouter(Body);
 
 				{/*<BodyWrapper>*/}
 				{/*	<h1>Roundtable Confirmation</h1>*/}
@@ -480,12 +431,29 @@ class Body extends React.Component {
 				{/*	<br />*/}
 				{/*	<br />*/}
 				{/*</Body2Wrapper>*/}
-
-			</div>
-
-		)
-	}
-}
+				{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
+				{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
+				{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
+				{/*		float:"left"}}>Event Update: "Coming up Soon!"</h1>*/}
+				{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
+				{/*	<br></br>*/}
+				{/*	<br></br>*/}
+				{/*	<p style={{color: "black", fontSize: "20px"}}> Hi Genyuses! This session is coming up fast!*/}
+				{/*		We're excited to see you all there next week! Joan has finalised the questions that will be*/}
+				{/*		asked (see the event description!) and we're excited to see all your lovely faces!</p>*/}
+				{/*</Card>*/}
+				{/*<br></br> <br></br>*/}
+				{/*<Card style={{width: 1000, borderColor:"red", background: "transparent",*/}
+				{/*	borderWidth: 4, borderRadius: 20, marginLeft: "15%", marginRight: "15%", textAlign:'left'}}>*/}
+				{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"left",*/}
+				{/*		float:"left"}}>Event Update: "Ready to go!"</h1>*/}
+				{/*	<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right"}}>Yesterday, 6.00 pm</h1>*/}
+				{/*	<br></br>*/}
+				{/*	<br></br>*/}
+				{/*	<p style={{color: "black", fontSize: "20px"}}> Hey everyone! The event description has been*/}
+				{/*		updated to include some of the questions that will be asked in the session! Have a*/}
+				{/*		looksee if you're interested ♥</p>*/}
+				{/*</Card>*/}
 
 // class Body1 extends React.Component {
 //
@@ -690,16 +658,105 @@ class Body extends React.Component {
 // 				</Card>
 // 				<br></br> <br></br>
 //
-// 				<div style={{position:"absolute", bottom:"65%", right:"5%"}}>
-// 					<h2>Learn more about the Session!!</h2>
-// 					<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
-// 							mozallowfullscreen="" allowFullScreen=""
-// 							src="https://www.youtube.com/embed/Xm_F_UBjrq8"></iframe>
-// 				</div>
 //
 // 			</Body3Wrapper>
 // 		)
 // 	}
 // }
 
-export default withRouter(Body);
+// getSession = () => {
+// 	console.log("check sid");
+// 	console.log(this.state.sid);
+// 	SessionManager.getSession(this.state.sid)
+// 		.then(result => {
+// 			console.log('get Session successful');
+// 			console.log(typeof(result.duration));
+// 			console.log(typeof(result.questions));
+// 			console.log(result.timeSlots);
+// 			console.log(typeof(result.timeSlots));
+// 			Object.keys(result.questions).forEach(key => {
+// 				console.log("get questions key value");
+// 				console.log(typeof(key));
+// 				console.log(key);
+// 				console.log(result.questions[key]);
+// 			})
+// 			Object.values(result.timeSlots).forEach(value => {
+// 				console.log("get timeslot key value");
+// 				console.log(typeof(value));
+// 				console.log(value);
+// 			})
+// 			let list = []
+// 			result.timeSlots.forEach(function (item,index,array){
+// 				if(item){
+// 					list.unshift(item);
+// 				}
+// 			});
+// 			console.log("check list");
+// 			console.log(list);
+//
+// 			this.setState({
+// 				sessionDes: result.description,
+// 				sessionDur: result.duration,
+// 				sessionQues: result.questions,
+// 				researcher: result.researchers,
+// 				timeslot: list,
+// 				sessionTitle: result.title,
+// 				youtubeLink: result.youtubeLink,
+// 				zoomLink: result.zoomLink,
+// 				loading: false
+// 			})
+// 			console.log(this.state.timeslot);
+// 			console.log(this.state.researcher);
+//
+// 			UserManager.getUser(this.state.researcher[0])
+// 				.then(res => {
+// 					console.log('get Researcher successful');
+// 					console.log(typeof(res));
+// 					console.log(Object.keys(res));
+// 					console.log(Object.values(res));
+// 					this.setState({
+// 						researcherFullName: Object.values(res)[3],
+// 						researcherDes: Object.values(res)[2],
+// 						researcherAvatar: Object.values(res)[1]
+// 					})
+// 				}).catch(error => {
+// 					console.log(error);
+// 			});
+//
+// 			console.log("start to get notis");
+// 			console.log(typeof(result.notifications))
+// 			console.log(result.notifications)
+// 			let list2 = [];
+// 			result.notifications.forEach(function (item,index,array){
+// 				if(item){
+// 					list2.unshift(item);
+// 				}
+// 			});
+// 			console.log("check list");
+// 			console.log(list2);
+// 			NotificationManager.getNotifications(list2)
+// 				.then(notis => {
+// 					console.log('get notifications successful');
+// 					console.log(notis);
+//
+// 					this.setState({
+// 						notifications: notis
+// 					})
+// 				}).catch(error => {
+// 				console.log(error);
+// 			});
+//
+// 		}).catch(error => {
+// 		console.log(error);
+// 	});
+// }
+//
+
+//
+// arrayToList(array) {
+// 	let list = null;
+// 	for (let i = array.length - 1; i >= 0; i--) {
+// 		list = { value: array[i], rest: list };
+// 	}
+// 	return list;
+// }

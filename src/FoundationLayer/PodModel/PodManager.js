@@ -158,7 +158,7 @@ export default {
         try {
             let path = 'notes/' + pid + '/' + file.name;
             let storageRef = storage.ref(path);
-            let uploadFeedback = await storageRef.put(file);
+            let uploadFeedback = storageRef.put(file);
             uploadFeedback.on('state_changed',
                 function progress(snapshot) {
                     // this is used together with progress bar to show the current upload progress
