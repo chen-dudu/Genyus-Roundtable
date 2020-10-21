@@ -74,7 +74,7 @@ export default {
             let pod = await podDocs.doc(pid).get();
             console.debug(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
             return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('status'), pod.get('description'),
-                pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants'), pod.get('notes')));
+                pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants'), pod.get('notifications'), pod.get('notes')));
         } catch (err) {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
             return Promise.reject(err.message);
