@@ -46,11 +46,9 @@ class Body1 extends React.Component {
 	}
 
     podSignup = () => {
-		console.log("page: "+this.state.pid);
 		PodManager.signup(this.state.pid)
 			.then(result => {
-				window.alert("" +
-					"")
+				window.alert("")
 			})
 			.catch(err => {
 				console.log(err);
@@ -112,7 +110,7 @@ class Body1 extends React.Component {
 		return <>
 
 			<CalendlyEventListener
-				// onEventScheduled={()=>{this.podSignup()}}
+				onEventScheduled={()=>{this.podSignup()}}
 			>
 				<div
 					style={{
@@ -148,8 +146,8 @@ class Body1 extends React.Component {
 						{this.renderCalendly()}
 						<Button className="backButton" style={{marginLeft:"43%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary"
 								onClick={()=>{
-							// this.props.history.push("ParticipantHomepage")
-									this.podSignup();
+							this.props.history.push("ParticipantHomepage")
+
 								}}>Back</Button>
 
 						{/*/!*<InlineWidget*!/*/}
