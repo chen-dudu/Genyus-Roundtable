@@ -170,8 +170,8 @@ export const Body3Wrapper = styled.div`
   }
   
   > div > iframe {
-    height:350px;
-    width:600px;
+    height:220px;
+    width:400px;
   }
   
   > div > h2 {
