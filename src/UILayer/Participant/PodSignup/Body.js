@@ -86,8 +86,6 @@ class Body1 extends React.Component {
 					.catch(error => {
 						console.error(error);
 					});
-
-
 			})
 			.catch(error =>{
 				console.log(error);
@@ -96,7 +94,6 @@ class Body1 extends React.Component {
 
 
 	render(){
-
 		return(
 			<>
 				<Spin spinning={this.state.loading}>

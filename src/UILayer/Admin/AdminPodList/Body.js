@@ -51,7 +51,7 @@ class Body extends React.Component {
 	getPod = () => {
 		PodManager.getAllPods()
 			.then(result =>{
-				this.setState({loading : false ,all :result});
+				this.setState({loading : false });
 				let all = [];
 				let upcoming = [];
 				result.forEach(function (item,index,array){
