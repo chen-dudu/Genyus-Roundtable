@@ -13,8 +13,8 @@ const AdminPodList = props => {
 
     return(
       <container>
-          <Header image={image}></Header>
-          <Body setImage={setImage}></Body>
+          <Header setImage={setImage} image={image}></Header>
+          <Body/>
           <Footer/>
       </container>
     )

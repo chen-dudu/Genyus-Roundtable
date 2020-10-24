@@ -215,7 +215,7 @@ class Body extends React.Component {
 
 
 						<div>
-							<Button className="cancelButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Cancel</Button>
+							<Button className="cancelButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Back</Button>
 							<Button className="confirmButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={this.showModal}>Confirm</Button>
 							<Modal
 								title="Confirm to create a new researcher?"

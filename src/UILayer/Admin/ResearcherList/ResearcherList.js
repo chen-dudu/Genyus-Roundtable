@@ -13,8 +13,8 @@ const ResearcherList = props => {
 
     return(
       <container>
-          <Header image={image}></Header>
-          <Body setImage={setImage}></Body>
+          <Header setImage={setImage} image={image}/>
+          <Body></Body>
           <Footer/>
       </container>
     )

@@ -26,25 +26,25 @@ const getResearchers = firebase.functions().httpsCallable('getResearchers');
 class Body extends React.Component {
 
 
-	getAdminImage = () => {
-		UserManager.getCurrentUser()
-			.then(response => {
-				if (response.photoURL) {
-
-					UserManager.getAvatar(response.photoURL)
-						.then(photo => {
-							this.setState({ AdminAvatar: photo });
-							this.props.setImage(photo);
-						})
-						.catch(error => {
-							console.log(error);
-						});
-				}
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	};
+	// getAdminImage = () => {
+	// 	UserManager.getCurrentUser()
+	// 		.then(response => {
+	// 			if (response.photoURL) {
+	//
+	// 				UserManager.getAvatar(response.photoURL)
+	// 					.then(photo => {
+	// 						this.setState({ AdminAvatar: photo });
+	// 						this.props.setImage(photo);
+	// 					})
+	// 					.catch(error => {
+	// 						console.log(error);
+	// 					});
+	// 			}
+	// 		})
+	// 		.catch(error => {
+	// 			console.log(error);
+	// 		});
+	// };
 
 	getImage = () => {
 		this.getResearchers1()
@@ -111,11 +111,11 @@ class Body extends React.Component {
 	constructor(props) {
     	super(props);
 		this.getImage();
-		this.getAdminImage();
+		// this.getAdminImage();
 		this.state = {
 			loading : true,
 			data : [],
-			AdminAvatar: <UserOutlined/>,
+			// AdminAvatar: <UserOutlined/>,
 
 		};
 
@@ -143,7 +143,7 @@ class Body extends React.Component {
 					<br/>
 
 				<h1>Researcher list</h1>
-				<Button style={{width:241, height:53,fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherCreate',query:{AdminAvatar:this.state.AdminAvatar}})}>Create a new account</Button>
+				<Button style={{width:241, height:53,fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherCreate'})}>Create a new account</Button>
 				</TitleWrapper>
 
 
@@ -168,7 +168,7 @@ class Body extends React.Component {
 							/>
 
 							<div>
-								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherDetail/'+item.fullname,state:{AdminAvatar:this.state.AdminAvatar,item:item}})}>Edit</Button>
+								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherDetail/'+item.fullname, state:{item:item}})}>Edit</Button>
 							</div>
 
 

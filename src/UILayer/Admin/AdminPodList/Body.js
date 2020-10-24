@@ -27,26 +27,26 @@ import PodManager from "../../../FoundationLayer/PodModel/PodManager";
 class Body extends React.Component {
 
 
-	getAdminImage = () => {
-		console.log("here");
-		UserManager.getCurrentUser()
-			.then(response => {
-				if (response.photoURL) {
-
-					UserManager.getAvatar(response.photoURL)
-						.then(photo => {
-							this.setState({ AdminAvatar: photo });
-							this.props.setImage(photo);
-						})
-						.catch(error => {
-							console.log(error);
-						});
-				}
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	};
+	// getAdminImage = () => {
+	// 	console.log("here");
+	// 	UserManager.getCurrentUser()
+	// 		.then(response => {
+	// 			if (response.photoURL) {
+	//
+	// 				UserManager.getAvatar(response.photoURL)
+	// 					.then(photo => {
+	// 						this.setState({ AdminAvatar: photo });
+	// 						this.props.setImage(photo);
+	// 					})
+	// 					.catch(error => {
+	// 						console.log(error);
+	// 					});
+	// 			}
+	// 		})
+	// 		.catch(error => {
+	// 			console.log(error);
+	// 		});
+	// };
 
 	getPod = () => {
 		PodManager.getAllPods()
@@ -80,13 +80,13 @@ class Body extends React.Component {
 	constructor(props) {
     	super(props);
 		this.getPod();
-		this.getAdminImage();
+		// this.getAdminImage();
 		this.state = {
 			loading : true,
 			data : [],
 			all : [],
 			upcoming : [],
-			AdminAvatar: <UserOutlined/>,
+			// AdminAvatar: <UserOutlined/>,
 			isCheck : true
 
 		};
