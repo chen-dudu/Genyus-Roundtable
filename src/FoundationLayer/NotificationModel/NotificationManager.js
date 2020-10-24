@@ -101,9 +101,10 @@ export default {
                 }
 
                 let userDoc = await useRef.get();
-                let newList = userDoc.get('notifications').unshift(noID);
+                let noList = userDoc.get('notifications');
+                noList.unshift(noID);
                 // and then update the database
-                await useRef.update({notifications: newList});
+                await useRef.update({notifications: noList});
                 console.debug(`${CLASS_NAME} | sendNotification | successfully send notification to user with id ${id}`);
             }
             console.debug(`${CLASS_NAME} | sendNotification | notification has been sent to all signed up participants`);
