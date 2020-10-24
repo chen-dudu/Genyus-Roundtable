@@ -123,6 +123,11 @@ export const BodyWrapper = styled.div`
     top: 10px;
   }
  
+   > iframe {
+    height: 315px;
+    width: 560px;
+  }
+ 
 `
 
 export const Body2Wrapper = styled.div`
@@ -175,11 +180,6 @@ export const Body3Wrapper = styled.div`
     margin-left:5%;
     margin-right:50%;
     top: 10px;
-  }
-  
-  > div > iframe {
-    height:220px;
-    width:400px;
   }
   
   > div > h2 {
