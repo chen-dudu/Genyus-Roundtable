@@ -13,9 +13,10 @@ class Pod {
      * @param notifications the list of notifications associated with the pod
      * @param notes         the URL to the location where notes are store in DB
      * @param youtubeLink   the link of the session recording on youtube
-     * @param shareLink      then link of the landing page which will be shared to participants for signup
+     * @param shareLink     then link of the landing page which will be shared to participants for signup
+     * @param video         the youtube link for the overview video
      */
-    constructor(pid, title, status, description, calendlyLink, researcher, participants, notifications, notes, youtubeLink, shareLink) {
+    constructor(pid, title, status, description, calendlyLink, researcher, participants, notifications, notes, youtubeLink, shareLink, video) {
         this._pid = pid;
         this._title = title;
         this._status = status;
@@ -27,6 +28,7 @@ class Pod {
         this._notes = notes;
         this._youtubeLink = youtubeLink;
         this._shareLink = shareLink;
+        this._video = video;
         // this._sessions = sessions
     }
 
@@ -74,6 +76,10 @@ class Pod {
         return this._shareLink;
     }
 
+    get video() {
+        return this._video;
+    }
+
     set pid(newID) {
         this._pid = newID;
     }
@@ -108,6 +114,10 @@ class Pod {
 
     set shareLink(newLink) {
         this._shareLink = newLink;
+    }
+
+    set video(newVideo) {
+        this._video = newVideo;
     }
 
     addNotification(notification) {
