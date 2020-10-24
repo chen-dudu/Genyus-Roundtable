@@ -111,7 +111,10 @@ class Body extends React.Component {
 									// this.setState({imageUrl: photo});
 									console.log('show photo');
 									console.log(photo);
-									this.props.setImage(photo);
+									this.setState({
+										researcherAvatar: photo
+									})
+
 								})
 								.catch(error => {
 									console.log(error);
@@ -218,7 +221,7 @@ class Body extends React.Component {
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>About the Researcher</h2>
 					<h3> Researcher Name: {this.state.researcherFullName}</h3>
 					<h3 style={{marginRight:"30%"}}>{this.state.researcherDes}</h3>
-					<Avatar src={this.props.image} size={96} style={{position:"absolute", left: '80%', bottom:"50%",
+					<Avatar src={this.state.researcherAvatar} size={96} style={{position:"absolute", left: '80%', bottom:"50%",
 						margin: '2% auto'}} icon={<UserOutlined/>} />
 					<br/>
 					<br/>
