@@ -41,7 +41,7 @@ class Body extends React.Component {
 			researcherAvatar: null,
 			participates: null,
 			notifications: [],
-			isParti: false,
+			isParti: true,
 			note: null,
 			// noteUrl: null
 			visible: false,
@@ -91,6 +91,25 @@ class Body extends React.Component {
 				// 	}).catch(error => {
 				// 	console.log(error);
 				// });
+				UserManager.getCurrentUser()
+					.then(res => {
+						console.log('get Current User successful');
+						console.log(typeof(res));
+						console.log(Object.keys(res));
+						console.log(Object.values(res));
+						if (res.type === 'participant') {
+							this.setState({
+								isPart: true
+							})
+						} else {
+							this.setState({
+								isPart: false
+							})
+						}
+						console.log('get isPart');
+						console.log(this.state.isPart);
+					})
+
 				UserManager.getUser(this.state.researcher)
 					.then(res => {
 						console.log('get Researcher successful');
@@ -102,18 +121,6 @@ class Body extends React.Component {
 							researcherDes: Object.values(res)[2],
 							researcherAvatar: Object.values(res)[1]
 						})
-
-						if (res[7] == 'participant') {
-							this.setState({
-								isPart: true
-							})
-						} else {
-							this.setState({
-								isPart: false
-							})
-						}
-						console.log('get isPart');
-						console.log(this.state.isPart);
 
 						console.log('get Researcher avatar');
 						console.log(this.state.researcherAvatar);
@@ -416,13 +423,16 @@ class Body extends React.Component {
 					<br />
 					<br />
 					<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal", display:"inline"}}>Event Updates:</h1>
-					<Button type="primary" onClick={this.showNotiModal}
-							style={{background: "#D9021B", borderRadius: 8,
-								width: "auto", height: 40, fontWeight: "bold", borderWidth: 0,
-								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-								fontSize: 18, color: "white", marginLeft:"65%"}}>
-						Send a notification
-					</Button>
+					{ this.state.isPart
+						? null
+						: <Button type="primary" onClick={this.showNotiModal}
+								  style={{background: "#D9021B", borderRadius: 8,
+									  width: "auto", height: 40, fontWeight: "bold", borderWidth: 0,
+									  boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+									  fontSize: 18, color: "white", marginLeft:"65%"}}>
+							Send a notification
+						</Button>
+					}
 					<Modal
 						title="New notification"
 						visible={this.state.notiVisible}

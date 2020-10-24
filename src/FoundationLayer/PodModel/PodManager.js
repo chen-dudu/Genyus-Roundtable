@@ -143,7 +143,7 @@ export default {
             await pRef.update({participants: participants});
             console.debug(`${CLASS_NAME} | signup | successfully updated DB for pods`);
             let notifications = pDoc.get('notifications');
-            await userDoc.doc(uid).update({notifications: notifications});
+            await userDocs.doc(uid).update({notifications: notifications});
             console.debug(`${CLASS_NAME} | signup | successfully added pod notifications to user`);
             await db.collection('users').doc(uid).update({pods: pods});
             console.debug(`${CLASS_NAME} | signup | successfully updated DB for user`);

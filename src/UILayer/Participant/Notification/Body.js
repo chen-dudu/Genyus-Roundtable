@@ -19,6 +19,7 @@ class Body extends React.Component {
 		this.getNotification();
 		this.state = {
 			nid: null,
+			pid: null,
 			title: null,
 			time: null,
 			des: null};
@@ -41,8 +42,8 @@ class Body extends React.Component {
 							notifications = result;
 							this.setState({data: notifications});
 							this.setState({loading: false});
+							this.setState({pid: result})
 							console.log("get notifications");
-							console.log(this.state.data)
 						}).catch(err => {
 						console.log("something wrong: ", err);
 					})
@@ -136,7 +137,7 @@ class Body extends React.Component {
 											width: "20%", height: 40, fontWeight: "bold",
 											boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
 											fontSize: 15, color: "white", marginLeft:'2%'}}
-												onClick={() => this.props.history.push({pathname: '/Detail/'+item.nid, state:{item: item}})}>Go To Event Page</Button>
+												onClick={() => this.props.history.push({pathname:'/Detail/',search: "?pid="+item.pid})}>Go To Event Page</Button>
 									</List.Item>
 									<br/><br/></div>
 							)}
