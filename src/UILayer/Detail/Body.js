@@ -319,6 +319,10 @@ class Body extends React.Component {
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>{this.state.title}</h2>
 					<h3>{this.state.description}</h3>
 
+					<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
+					mozallowfullscreen="" allowFullScreen=""
+					src={this.state.video} style={{position:"absolute", left: '57%', bottom:"45%"}}/>
+
 					<br></br>
 					<br></br>
 					<br></br>
@@ -327,7 +331,7 @@ class Body extends React.Component {
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>About the Researcher</h2>
 					<h3> Researcher Name: {this.state.researcherFullName}</h3>
 					<h3 style={{marginRight:"30%"}}>{this.state.researcherDes}</h3>
-					<Avatar src={this.state.researcherAvatar} size={96} style={{position:"absolute", left: '80%', bottom:"10%",
+					<Avatar src={this.state.researcherAvatar} size={156} style={{position:"absolute", left: '80%', bottom:"5%",
 						margin: '2% auto'}} icon={<UserOutlined/>} />
 					<br/>
 					<br/>
@@ -340,7 +344,7 @@ class Body extends React.Component {
 					>
 						<Col className="gutter-row" span={4}>
 							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
-								fontSize:"16px"}}>Youtube Link</div>
+								fontSize:"16px"}}>Recording Link</div>
 						</Col>
 						<Col className="gutter-row" span={20}>
 							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
