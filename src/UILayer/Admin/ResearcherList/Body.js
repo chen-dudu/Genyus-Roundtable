@@ -53,7 +53,6 @@ class Body extends React.Component {
 				// this.setState({ data : this.state.data.concat(result)});
 				let list=[];
 				result.forEach(function (item,index,array){
-
 					if(item){
 						list.unshift(item);
 					}

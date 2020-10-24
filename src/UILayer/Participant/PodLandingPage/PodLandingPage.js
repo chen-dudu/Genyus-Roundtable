@@ -13,9 +13,13 @@ class PodLandingPage extends React.Component {
   render(){
     return(
       <container>
+
         <Header></Header>
-        <Body></Body>  
+
+        <Body></Body>
+
         <Footer></Footer>
+
       </container>
     )
   }

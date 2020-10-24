@@ -144,7 +144,7 @@ class Body1 extends React.Component {
 					<div id="Calendly">
 
 						{this.renderCalendly()}
-						<Button className="backButton" style={{marginLeft:"43%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary"
+						<Button className="backButton" style={{marginLeft:"43.4%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary"
 								onClick={()=>{
 							this.props.history.push("ParticipantHomepage")
 

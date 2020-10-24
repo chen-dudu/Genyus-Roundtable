@@ -12,7 +12,10 @@ class Header extends React.Component {
 
     render(){
         return (
+
+
             <HeaderWrapper>
+
                 <ImageWrapper>
                     <img src={logo}></img>
                 </ImageWrapper>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {HeaderWrapper,ImageWrapper,Seperator} from './PodSignup.style';
 import logo from '../../../img/logo.png';
@@ -9,16 +9,16 @@ import Header from "./Header";
 
 
 
-class PodSignup extends React.Component {
-  render(){
+const PodSignup = props => {
+    const [image, setImage] = useState();
+
     return(
-      <container>
-        <Header></Header>
-        <Body></Body>  
-        <Footer></Footer>
-      </container>
+        <container>
+            <Header setImage={setImage} image={image}/>
+            <Body></Body>
+            <Footer/>
+        </container>
     )
-  }
 }
 
 // ========================================

@@ -56,7 +56,7 @@ class Header extends React.Component {
                 console.log(error);
             });
 
-        this.props.history.push('../');
+        this.props.history.push('/');
     }
 
     render() {

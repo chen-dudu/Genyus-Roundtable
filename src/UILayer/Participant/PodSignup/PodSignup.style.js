@@ -3,10 +3,6 @@ import styled from 'styled-components';
 export const HeaderWrapper = styled.div`
   height: 150px;
   left:0px;
-  bottom: 0px;
-  
-  
-
 `;
 
 export const FooterWrapper = styled.div`
@@ -20,16 +16,12 @@ export const FooterWrapper = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  margin-left: 0;
-  > img {
-    height: 130px;
-  }
-  > p {
-    font-size: 40px;
-    font-weight: bold;
-    color:#4682B4;
-    margin-left:20px;
-  }
+  width:50%;
+  height: 80%;
+  float:left;
+
+  >div>img {
+    height:130px;
 `;
 
 export const Seperator = styled.div`
@@ -155,7 +147,7 @@ export const Body1Wrapper = styled.div`
   width: 100%;
   height: revert;
   background-image: linear-gradient(white,white,#ffce33);
-  margin-top: -10px;
+ 
 
   
   
@@ -218,12 +210,25 @@ export const Body2Wrapper = styled.div`
 `
 
 
+export const LogoutWrapper = styled.div` 
+  width:50%;
+  height: 80%;
+  float:left;
+  // >div>img {
+  //   margin-left: 30%;
+  //   margin-top:2%;
+  //   height:80px;
+`;
+
+
+
+
 
 export const ProfileWrapper = styled.div`
     
     width: 10%;
     position: relative;
-    left: 45%;
+    left: 45.75%;
    
     
 
