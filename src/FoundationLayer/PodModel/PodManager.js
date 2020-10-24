@@ -260,12 +260,31 @@ export default {
             console.error(`${CLASS_NAME} | updateYoutubeLink | failed to update the youtube link for pod with id ${pid}. received error message ${err}`);
             return Promise.reject(err);
         }
+    },
+
+    /**
+     * a method used to update a pod's share link
+     * @param pid  the id of the pod whose attribute is going to be changed
+     * @param link the new link
+     * @return {Promise<unknown>} upon successful update, a promise with resolve value of undefined is returned.
+     *                            upon failed update, a promise with reject value of received error message is returned.
+     */
+    async updateShareLink(pid, link) {
+        try {
+            await podDocs.doc(pid).update({shareLink: link});
+            console.debug(`${CLASS_NAME} | updateShareLink | successfully update the share link on DB`);
+            return Promise.resolve(undefined);
+        }
+        catch (err) {
+            console.error(`${CLASS_NAME} | updateShareLink | failed to update the share link for pod with id ${pid}, received error message ${err}`);
+            return Promise.reject(err);
+        }
     }
 }
 
 // convert a Pod object to a form that can be processed by firebase
 function converter(pod) {
-    if (pod.title !== null && pod.calendlyLink !== null && pod.researcher !== null && pod.description !== null && pod.shareLink !== null) {
+    if (pod.title !== null && pod.calendlyLink !== null && pod.researcher !== null && pod.description !== null) {
         return {
             title: pod.title,
             calendlyLink: pod.calendlyLink,
@@ -279,7 +298,7 @@ function converter(pod) {
             description: pod.description,
             notes: "",
             youtubeLink: "N/A",
-            shareLink: pod.shareLink
+            shareLink: ""
         };
     }
     else {
