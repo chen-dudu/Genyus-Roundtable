@@ -4,8 +4,8 @@ import {Button, List, Spin} from 'antd';
 import 'antd/dist/antd.css';
 import {Card} from 'antd';
 import {withRouter} from "react-router-dom";
-import UserManager from '../../FoundationLayer/UserModel/UserManager';
-import NotificationManager from "../../FoundationLayer/NotificationModel/NotificationManager";
+import UserManager from '../../../FoundationLayer/UserModel/UserManager';
+import NotificationManager from "../../../FoundationLayer/NotificationModel/NotificationManager";
 
 class Body extends React.Component {
 

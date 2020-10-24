@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { HeaderWrapper, ImageWrapper, Seperator, LogoutWrapper, LogoutButton } from './Notification.style';
-import logo from '../../img/logo.png';
+import logo from '../../../img/logo.png';
 import Footer from './Footer.js';
 import Body from './Body.js';
 import { Avatar, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
-import UserManager from "../../FoundationLayer/UserModel/UserManager";
+import UserManager from "../../../FoundationLayer/UserModel/UserManager";
 
 class Header extends React.Component {
 
@@ -69,7 +69,7 @@ class Header extends React.Component {
                 </ImageWrapper>
                 <LogoutWrapper>
                     <div>
-                        <Avatar src={this.props.image} size={64} style={{ left: '70%', margin: '2% auto' }} icon={<UserOutlined />} />
+                        <Avatar onClick={()=>{this.props.history.push("/ParticipantHomePage")}} src={this.props.image} size={64} style={{ left: '70%', margin: '2% auto' }} icon={<UserOutlined />} />
 
                         <Button danger style={{ left: '75%', margin: '2% auto' }} onClick={this.handleClick} >Logout</Button>
                     </div>

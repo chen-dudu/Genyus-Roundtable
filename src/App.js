@@ -9,7 +9,7 @@ import {
 import HomePage from './UILayer/HomePage/HomePage';
 import Signup from './UILayer/Signup/Signup'
 import Login from './UILayer/Login/Login'
-import Notification from './UILayer/Notification/Notification'
+import Notification from './UILayer/Participant/Notification/Notification'
 import ViewAcceptedSession from "./UILayer/Participant/ViewAcceptedSession/ViewAcceptedSession";
 import ParticipantHomePage from './UILayer/Participant/ParticipantHomePage/ParticipantHomePage'
 
