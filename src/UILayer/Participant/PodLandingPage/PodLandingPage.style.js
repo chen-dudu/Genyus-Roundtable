@@ -236,7 +236,7 @@ export const ProfileWrapper = styled.div`
     width: 10%;
   
     position: relative;
-    left: 45%;
+    left: 45.5%;
    
     
 

@@ -37,6 +37,7 @@ class Header extends React.Component {
                 console.log("PrintFullname!!!!!!!!!!!!!", user.fullname);
                 console.log("PrintNickname!!!!!!!!!!!!!", user.nickname);
 
+
                 if (user.photoURL) {
                     UserManager.getAvatar(user.photoURL)
                         .then(photo => {
