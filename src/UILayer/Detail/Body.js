@@ -254,9 +254,29 @@ class Body extends React.Component {
 					</Row>
 					<br />
 					<hr style={{color: "white", height: 0}} />
+					<br /> <br />
+					<br /> <br />
+
+					<Button style={{background: "#D9021B", borderRadius: 8,
+						width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"70%"}}
+							onClick={() => PodManager.download(this.state.note)}
+					>Download Notes</Button>
+
+					{ this.state.isPart
+						? null
+						: <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
+							<Button className="manager" style={{background: "#D9021B", borderRadius: 8,
+								width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+								fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"85%"}}
+							>Upload Notes</Button>
+						</Upload>
+					}
 					<br />
-					<br /> <br/>
-					<br /> <br/>
+					<br />
+					<br />
 				</Body2Wrapper>
 				<Body3Wrapper>
 					<br />
@@ -284,26 +304,6 @@ class Body extends React.Component {
 							/>
 						</Spin>
 					</ListWrapper>
-
-					<br></br> <br></br>
-
-					<Button style={{background: "#3399ff", borderRadius: 5,
-						width: "10%", height: 40, fontWeight: "bold",
-						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-						fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"45%"}}
-							onClick={() => PodManager.download(this.state.note)}
-					>Download Notes</Button>
-
-					{ this.state.isPart
-						? null
-						: <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
-							<Button className="manager" style={{background: "#3399ff", borderRadius: 5,
-								width: "10%", height: 40, fontWeight: "bold",
-								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-								fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"75%"}}
-							>Upload Notes</Button>
-						</Upload>
-					}
 
 					<br></br> <br></br>
 					<br></br> <br></br>
