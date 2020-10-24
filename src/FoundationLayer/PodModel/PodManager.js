@@ -74,7 +74,8 @@ export default {
             let pod = await podDocs.doc(pid).get();
             console.debug(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
             return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('status'), pod.get('description'),
-                pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants'), pod.get('notifications'), pod.get('notes')));
+                pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants'), pod.get('notifications'), pod.get('notes'),
+                pod.get('youtubeLink'), pod.get('shareLink')));
         } catch (err) {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
             return Promise.reject(err.message);
@@ -240,12 +241,31 @@ export default {
             console.error(`${CLASS_NAME} | download | failed to download notes for pod, received error message ${err}`);
             return Promise.reject(err);
         }
+    },
+
+    /**
+     * a method used to update a pod's youtube link
+     * @param pid  the id of the pod whose attribute is going to be changed
+     * @param link the new link
+     * @return {Promise<unknown>} upon successful update, a promise with resolve value of undefined is returned.
+     *                            upon failed update, a promise with reject value of received error message is returned.
+     */
+    async updateYoutubeLink(pid, link) {
+        try {
+            await podDocs.doc(pid).update({youtubeLink: link});
+            console.debug(`${CLASS_NAME} | updateYoutubeLink | successfully update the youtube link on DB`);
+            return Promise.resolve(undefined);
+        }
+        catch (err) {
+            console.error(`${CLASS_NAME} | updateYoutubeLink | failed to update the youtube link for pod with id ${pid}. received error message ${err}`);
+            return Promise.reject(err);
+        }
     }
 }
 
 // convert a Pod object to a form that can be processed by firebase
 function converter(pod) {
-    if (pod.title !== null && pod.calendlyLink !== null && pod.researcher !== null && pod.description !== null) {
+    if (pod.title !== null && pod.calendlyLink !== null && pod.researcher !== null && pod.description !== null && pod.shareLink !== null) {
         return {
             title: pod.title,
             calendlyLink: pod.calendlyLink,
@@ -257,7 +277,9 @@ function converter(pod) {
             // status: pod.status,
             status: "upcoming",
             description: pod.description,
-            notes: ""
+            notes: "",
+            youtubeLink: "",
+            shareLink: pod.shareLink
         };
     }
     else {
