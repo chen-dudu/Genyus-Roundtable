@@ -50,7 +50,8 @@ class Body extends React.Component {
 			notiVisible: false,
 			notiTitle: "",
 			notiContent: "",
-			notiConfirmLoading: false
+			notiConfirmLoading: false,
+			video: ""
 		}
 		console.log("state pid")
 		console.log(this.state.pid);
@@ -76,7 +77,8 @@ class Body extends React.Component {
 					notifications: result.notifications,
 					note: result.notes,
 					loading: false,
-					shareLink: result.shareLink
+					shareLink: result.shareLink,
+					video: result.video
 				})
 				console.log("get pod note");
 				console.log(this.state.note);
@@ -229,7 +231,7 @@ class Body extends React.Component {
 						console.log(this.state.notifications);
 						this.state.notifications.unshift(noti);
 						this.setState({
-							notitiVisible: false,
+							notiVisible: false,
 							notiConfirmLoading: false
 						})
 					}).catch(error => {
@@ -409,31 +411,12 @@ class Body extends React.Component {
 				<Body3Wrapper>
 					<br />
 					<br />
-					<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Event Updates:</h1>
-					<br></br> <br></br>
-
-					<ListWrapper style={{width: '70%', margin: 'auto'}}>
-						<Spin spinning={this.state.loading}>
-							<List
-								bordered={false}
-								itemLayout="vertical"
-								dataSource={this.state.notifications}
-								renderItem={item => (
-									<div>
-										<List.Item style={{borderColor:'red', borderWidth:4,borderStyle:'solid',borderRadius:20}}>
-											<h1 style={{color: "red", fontSize: "20px", textAlign:"left", float:"left", marginLeft:'2%'}}>{item.title}</h1>
-											<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right", marginRight:'2%'}}>{this.formatDate(item.timeReceived)}</h1>
-											<br></br>
-											<br></br>
-											<p style={{color: "black", fontSize: "20px", marginLeft:'2%'}}>{item.description}</p>
-										</List.Item>
-										<br/><br/></div>
-								)}
-							/>
-						</Spin>
-					</ListWrapper>
-
-					<Button type="primary" onClick={this.showNotiModal}>
+					<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal", display:"inline"}}>Event Updates:</h1>
+					<Button type="primary" onClick={this.showNotiModal}
+							style={{background: "#D9021B", borderRadius: 8,
+								width: "auto", height: 40, fontWeight: "bold", borderWidth: 0,
+								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+								fontSize: 18, color: "white", marginLeft:"65%"}}>
 						Send a notification
 					</Button>
 					<Modal
@@ -465,14 +448,38 @@ class Body extends React.Component {
 									  allowClear
 									  showCount
 									  onChange={
-										  (e) => {
-											  this.setState({notiContent: e.target.value});
-										  }
+									  	(e) => {
+									  		this.setState({notiContent: e.target.value});
+									  	}
 									  }
 									  value = {this.state.notiContent}
 							/>
 						</div>
 					</Modal>
+
+					<br></br> <br></br>
+					<br></br>
+
+					<ListWrapper style={{width: '70%', margin: 'auto'}}>
+						<Spin spinning={this.state.loading}>
+							<List
+								bordered={false}
+								itemLayout="vertical"
+								dataSource={this.state.notifications}
+								renderItem={item => (
+									<div>
+										<List.Item style={{borderColor:'red', borderWidth:4,borderStyle:'solid',borderRadius:20}}>
+											<h1 style={{color: "red", fontSize: "20px", textAlign:"left", float:"left", marginLeft:'2%'}}>{item.title}</h1>
+											<h1 style={{color: "red", fontSize: "20px", textAlign:"right", float:"right", marginRight:'2%'}}>{this.formatDate(item.timeReceived)}</h1>
+											<br></br>
+											<br></br>
+											<p style={{color: "black", fontSize: "20px", marginLeft:'2%'}}>{item.description}</p>
+										</List.Item>
+										<br/><br/></div>
+								)}
+							/>
+						</Spin>
+					</ListWrapper>
 
 					<br></br> <br></br>
 					<br></br> <br></br>
