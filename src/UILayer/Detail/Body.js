@@ -13,9 +13,11 @@ import SessionManager from "../../FoundationLayer/SessionModel/SessionManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
 import {notification} from "antd/es";
 import 'antd/dist/antd.css';
+import Notification from '../../FoundationLayer/NotificationModel/Notification';
 
 // const { Step } = Steps;
 // const style = {background: 'white', padding: '8px 0'};
+const {TextArea} = Input
 
 class Body extends React.Component {
 
@@ -44,7 +46,11 @@ class Body extends React.Component {
 			// noteUrl: null
 			visible: false,
 			confirmLoading: false,
-			link: ""
+			link: "",
+			notiVisible: false,
+			notiTitle: "",
+			notiContent: "",
+			notiConfirmLoading: false
 		}
 		console.log("state pid")
 		console.log(this.state.pid);
@@ -191,6 +197,67 @@ class Body extends React.Component {
 			visible: false,
 		});
 	};
+
+	showNotiModal = () => {
+		this.setState({
+			notiVisible: true,
+			notiTitle: "",
+			notiContent: ""
+		});
+	};
+
+	notiOk = e => {
+		this.setState({
+			notiConfirmLoading: true
+		});
+		NotificationManager.sendNotification(
+			{title: this.state.notiTitle,
+			description: this.state.notiContent,
+			timeReceived: new Date(),
+			isRead: false,
+			pid: this.state.pid})
+			.then(noid => {
+				// this.setState({
+				// 	visible: false,
+				// 	confirmLoading: false
+				// });
+				return NotificationManager.getNotification(noid)
+					.then(noti => {
+						console.log("New Notification");
+						console.log(noti);
+						console.log("Old Notification");
+						console.log(this.state.notifications);
+						let updateNoti = this.state.notifications.unshift(noti);
+						console.log("New Notifications");
+						console.log(updateNoti);
+						this.setState({
+							notifications: updateNoti,
+							nitiVisible: false,
+							notiConfirmLoading: false
+						})
+					}).catch(error => {
+						this.setState({
+							notiConfirmLoading: false
+						})
+						alert("add notification fail");
+					})
+			}).catch(error => {
+			this.setState({
+				notiConfirmLoading: false
+			})
+			alert("add notification fail")
+		})
+	}
+
+	notiCancel = e => {
+		console.log(e);
+		this.setState({
+			notiVisible: false,
+			notiTitle: "",
+			notiContent: ""
+		});
+	};
+
 
 	formatDate(date) {
 		let d = new Date(date);
@@ -368,6 +435,47 @@ class Body extends React.Component {
 							/>
 						</Spin>
 					</ListWrapper>
+
+					<Button type="primary" onClick={this.showNotiModal}>
+						Send a notification
+					</Button>
+					<Modal
+						title="New notification"
+						visible={this.state.notiVisible}
+						comfirmLoading={this.state.notiConfirmLoading}
+						onOk={this.notiOk}
+						onCancel={this.notiCancel}
+					>
+						<div style={{marginBottom: 20}}>
+							Title
+							<Input
+								placeholder="Message Title"
+								style={{marginTop: 15}}
+								allowClear
+								onChange={
+									(e) => {
+										this.setState({notiTitle: e.target.value});
+									}
+								}
+								value = {this.state.notiTitle}
+							/>
+						</div>
+						<div>
+							Content
+							<TextArea placeholder="Write a message here that will be sent to all participants who have expressed interest in this event"
+									  style={{marginTop: 10}}
+									  autoSize={{minRows: 3}}
+									  allowClear
+									  showCount
+									  onChange={
+										  (e) => {
+											  this.setState({notiContent: e.target.value});
+										  }
+									  }
+									  value = {this.state.notiContent}
+							/>
+						</div>
+					</Modal>
 
 					<br></br> <br></br>
 					<br></br> <br></br>

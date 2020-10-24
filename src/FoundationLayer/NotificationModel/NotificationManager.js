@@ -110,7 +110,7 @@ export default {
                 console.debug(`${CLASS_NAME} | sendNotification | successfully send notification to user with id ${id}`);
             }
             console.debug(`${CLASS_NAME} | sendNotification | notification has been sent to all signed up participants`);
-            return Promise.resolve(undefined);
+            return Promise.resolve(noID);
         } catch (err) {
             console.error(`${CLASS_NAME} | sendNotification | failed to send notification, received error message: ${err.message}`);
             return Promise.reject(err.message);
