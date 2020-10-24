@@ -31,7 +31,8 @@ class Body extends React.Component {
 			description: null,
 			loading: true,
 			researcher: null,
-			youtubeLink: null,
+			youtubeLink: "N/A",
+			shareLink: "http://localhost:3000/",
 			researcherFullName: null,
 			researcherDes: null,
 			researcherAvatar: null,
@@ -64,7 +65,8 @@ class Body extends React.Component {
 					participates: result.participants,
 					notifications: result.notifications,
 					note: result.notes,
-					loading: false
+					loading: false,
+					shareLink: result.shareLink
 				})
 				console.log("get pod note");
 				console.log(this.state.note);
@@ -111,7 +113,10 @@ class Body extends React.Component {
 									// this.setState({imageUrl: photo});
 									console.log('show photo');
 									console.log(photo);
-									this.props.setImage(photo);
+									this.setState({
+										researcherAvatar: photo
+									})
+
 								})
 								.catch(error => {
 									console.log(error);
@@ -203,7 +208,7 @@ class Body extends React.Component {
 
 		return (
 			<div style={{minWidth:500}}>
-				<Body3Wrapper>
+				<BodyWrapper>
 					<h1>Pod Details</h1>
 					<br></br>
 					<br></br>
@@ -218,11 +223,44 @@ class Body extends React.Component {
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>About the Researcher</h2>
 					<h3> Researcher Name: {this.state.researcherFullName}</h3>
 					<h3 style={{marginRight:"30%"}}>{this.state.researcherDes}</h3>
-					<Avatar src={this.props.image} size={96} style={{position:"absolute", left: '80%', bottom:"50%",
+					<Avatar src={this.state.researcherAvatar} size={96} style={{position:"absolute", left: '80%', bottom:"10%",
 						margin: '2% auto'}} icon={<UserOutlined/>} />
 					<br/>
 					<br/>
+				</BodyWrapper>
+				<Body2Wrapper>
+					<br/> <br/>
+					<Row
+						gutter={[5, 5]}
+						style={{marginLeft:"80px", marginRight:"30%"}}
+					>
+						<Col className="gutter-row" span={4}>
+							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+								fontSize:"16px"}}>Youtube Link</div>
+						</Col>
+						<Col className="gutter-row" span={20}>
+							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
+								{this.state.youtubeLink}</div>
+						</Col>
+						<Col className="gutter-row" span={4}>
+							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+								fontSize:"16px"}}>Share Link</div>
+						</Col>
+						<Col className="gutter-row" span={20}>
+							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
+								{this.state.shareLink}</div>
+						</Col>
 
+					</Row>
+					<br />
+					<hr style={{color: "white", height: 0}} />
+					<br />
+					<br /> <br/>
+					<br /> <br/>
+				</Body2Wrapper>
+				<Body3Wrapper>
+					<br />
+					<br />
 					<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Event Updates:</h1>
 					<br></br> <br></br>
 
@@ -248,18 +286,6 @@ class Body extends React.Component {
 					</ListWrapper>
 
 					<br></br> <br></br>
-
-					<div style={{position:"absolute", bottom:"50%", right:"45%"}}>
-						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
-								mozallowfullscreen="" allowFullScreen=""
-								src={this.state.youtubeLink}></iframe>
-					</div>
-
-					<div style={{position:"absolute", bottom:"66%", right:"25%"}}>
-						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
-								mozallowfullscreen="" allowFullScreen=""
-								src="https://www.youtube.com/embed/Xm_F_UBjrq8"></iframe>
-					</div>
 
 					<Button style={{background: "#3399ff", borderRadius: 5,
 						width: "10%", height: 40, fontWeight: "bold",

@@ -114,6 +114,14 @@ export const BodyWrapper = styled.div`
     margin-left:20px;
     top: 10px;
   }
+  
+   > h3 {
+    font-size: 20px;
+    color:black;
+    margin-left:5%;
+    margin-right:50%;
+    top: 10px;
+  }
  
 `
 
