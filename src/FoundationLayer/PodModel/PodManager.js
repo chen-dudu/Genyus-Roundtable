@@ -40,6 +40,12 @@ export default {
             pod_list.unshift(pid);
             await userDocs.doc(uid).update({pods: pod_list});
             console.debug(`${CLASS_NAME} | signup | successfully added new pod to user's pod list`);
+            let admin = await UserManager.getCurrentUser();
+            let admin_id = admin.uid;
+            let pods = admin.pods;
+            pods.unshift(pid);
+            await userDocs.doc(admin_id).update({pods: pods});
+            console.debug(`${CLASS_NAME} | signup | successfully added new pod to admin's pod list`);
             return Promise.resolve(pid);
         } catch (err) {
             console.error(`${CLASS_NAME} | createPod | failed to create new pod on DB, received error message ${err.message}`);
