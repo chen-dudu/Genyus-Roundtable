@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom'
 import {Body2Wrapper, BodyWrapper, Body3Wrapper, ListWrapper} from './Detail.style';
-import Modal, {Button, Card, Tooltip, Avatar, Spin, List, Upload, message} from 'antd';
+import {Modal, Button, Card, Tooltip, Avatar, Spin, List, Upload, message, Input} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
 import {QuestionOutlined, UserOutlined} from '@ant-design/icons';
@@ -12,7 +12,6 @@ import NotificationManager from "../../FoundationLayer/NotificationModel/Notific
 import SessionManager from "../../FoundationLayer/SessionModel/SessionManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
 import {notification} from "antd/es";
-import Input from "antd";
 import 'antd/dist/antd.css';
 
 // const { Step } = Steps;
@@ -169,6 +168,21 @@ class Body extends React.Component {
 		this.setState({
 			confirmLoading: true,
 		});
+		PodManager.updateYoutubeLink(this.state.pid, this.state.link)
+			.then(response => {
+				this.setState({
+					visible: false,
+					confirmLoading: false,
+					youtubeLink: this.state.link,
+					link: ""
+				})
+				console.log("change youtube link success")
+			}).catch(error => {
+				this.setState({
+					confirmLoading: false
+				})
+				alert("change youtube link fail")
+		})
 	};
 
 	handleCancel = () => {
@@ -289,9 +303,9 @@ class Body extends React.Component {
 
 					<Modal
 						title="Update link"
-						visible={visible}
+						visible={this.state.visible}
 						onOk={this.handleOk}
-						confirmLoading={confirmLoading}
+						confirmLoading={this.state.confirmLoading}
 						onCancel={this.handleCancel}
 					>
 						<Input
