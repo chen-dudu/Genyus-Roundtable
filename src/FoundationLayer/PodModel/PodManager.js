@@ -89,6 +89,29 @@ export default {
     },
 
     /**
+     * a method used to get a list of pods from DB
+     * @param pids a list of pod ids
+     * @return {Promise<unknown[]>} upon successful retrieval, a promise with resolve value of a list of needed pods is returned
+     *                              upon failed retrieval, a promise with reject value of received error message is returned
+     */
+    async getPods(pids) {
+        try {
+            let pods = [];
+            for (let i = 0; i < pids.length; i++) {
+                let pod = await this.getPod(pids[i]);
+                // add to end
+                pods.push(Promise.resolve(pod));
+            }
+            console.debug(`${CLASS_NAME} | getPods | finished pre-processing, data is ready to be returned`);
+            return Promise.all(pods);
+        }
+        catch (err) {
+            console.error(`${CLASS_NAME} | getPods | failed to get pods from DB, received error message ${err}`);
+            return Promise.reject(err);
+        }
+    },
+
+    /**
      * a method used to retrieve all pod records from DB
      * @return {Promise<Pod[]>} upon successful retrieval, a promise with resolve value of an array of pods is returned
      *                          upon failed retrieval, a promise with the received error message is returned
