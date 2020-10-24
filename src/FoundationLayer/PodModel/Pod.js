@@ -12,8 +12,9 @@ class Pod {
      * @param participants  the list of participants who sign up for the pod
      * @param notifications the list of notifications associated with the pod
      * @param notes         the URL to the location where notes are store in DB
+     * @param youtubeLink   the link of the session recording on youtube
      */
-    constructor(pid, title, status, description, calendlyLink, researcher, participants, notifications, notes) {
+    constructor(pid, title, status, description, calendlyLink, researcher, participants, notifications, notes, youtubeLink) {
         this._pid = pid;
         this._title = title;
         this._status = status;
@@ -22,7 +23,8 @@ class Pod {
         this._researcher = researcher;
         this._participants = participants;
         this._notifications = notifications;
-        this._notes = notes
+        this._notes = notes;
+        this._youtubeLink = youtubeLink;
         // this._sessions = sessions
     }
 
@@ -62,6 +64,10 @@ class Pod {
         return this._notes;
     }
 
+    get youtubeLink() {
+        return this._youtubeLink;
+    }
+
     set pid(newID) {
         this._pid = newID;
     }
@@ -88,6 +94,10 @@ class Pod {
 
     set notes(newNotes) {
         this._notes = newNotes;
+    }
+
+    set youtubeLink(newLink) {
+        this._youtubeLink = newLink;
     }
 
     addNotification(notification) {
