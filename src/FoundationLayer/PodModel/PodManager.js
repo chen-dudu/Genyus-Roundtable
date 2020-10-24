@@ -75,7 +75,7 @@ export default {
             console.debug(`${CLASS_NAME} | getPod | successfully retrieved the needed pod from DB`);
             return Promise.resolve(new Pod(pod.id, pod.get('title'), pod.get('status'), pod.get('description'),
                 pod.get('calendlyLink'), pod.get('researcher'), pod.get('participants'), pod.get('notifications'), pod.get('notes'),
-                pod.get('youtubeLink'), pod.get('shareLink')));
+                pod.get('youtubeLink'), pod.get('shareLink'), pod.get('video')));
         } catch (err) {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
             return Promise.reject(err.message);
@@ -101,8 +101,11 @@ export default {
                 let researcher = doc.get('researcher');
                 let participants = doc.get('participants');
                 let notes = doc.get('notes');
+                let youtubeLink = doc.get('youtubeLink');
+                let shareLink = doc.get('shareLink');
+                let video = doc.get('video');
                 // let sessions = doc.get('sessions');
-                let pod = new Pod(pid, title, status, description, calendlyLink, researcher, participants, notes);
+                let pod = new Pod(pid, title, status, description, calendlyLink, researcher, participants, notes, youtubeLink, shareLink, video);
                 pods.unshift(Promise.resolve(pod));
             });
             console.debug(`${CLASS_NAME} | getAllPods | finished pre-processing, data is ready to be returned`);
@@ -284,7 +287,7 @@ export default {
 
 // convert a Pod object to a form that can be processed by firebase
 function converter(pod) {
-    if (pod.title !== null && pod.calendlyLink !== null && pod.researcher !== null && pod.description !== null) {
+    if (pod.title !== null && pod.calendlyLink !== null && pod.researcher !== null && pod.description !== null && pod.video !== null) {
         return {
             title: pod.title,
             calendlyLink: pod.calendlyLink,
@@ -298,7 +301,8 @@ function converter(pod) {
             description: pod.description,
             notes: "",
             youtubeLink: "N/A",
-            shareLink: ""
+            shareLink: "",
+            video: pod.video
         };
     }
     else {

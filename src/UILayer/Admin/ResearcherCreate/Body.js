@@ -112,7 +112,8 @@ class Body extends React.Component {
 				this.setState({Modalvisible: false, confirmLoading: false,});
 			}).catch(err => {
 				console.log("something wrong: ", err);
-				this.setState({confirmLoading: false,});
+				window.alert("Failed to create a new researcher, error: "+err);
+				this.setState({confirmLoading: false,Modalvisible: false});
 		});
 
 	};

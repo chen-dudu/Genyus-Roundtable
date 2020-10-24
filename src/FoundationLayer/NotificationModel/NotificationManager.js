@@ -80,10 +80,7 @@ export default {
             let podDoc = await podRef.get();
             let notifications = podDoc.get('notifications');
 
-            let index = notifications.indexOf(noID);
-            if (index !== -1) {
-                notifications.splice(index, 1);
-            }
+            notifications.unshift(noID);
 
             let podUpdateFeedback = await podRef.update({notifications: notifications});
             console.debug(`${CLASS_NAME} | sendNotification | successfully update pod's notification list`);
@@ -104,13 +101,14 @@ export default {
                 }
 
                 let userDoc = await useRef.get();
-                let newList = userDoc.get('notifications').unshift(noID);
+                let noList = userDoc.get('notifications');
+                noList.unshift(noID);
                 // and then update the database
-                await useRef.update({notifications: newList});
+                await useRef.update({notifications: noList});
                 console.debug(`${CLASS_NAME} | sendNotification | successfully send notification to user with id ${id}`);
             }
             console.debug(`${CLASS_NAME} | sendNotification | notification has been sent to all signed up participants`);
-            return Promise.resolve(undefined);
+            return Promise.resolve(noID);
         } catch (err) {
             console.error(`${CLASS_NAME} | sendNotification | failed to send notification, received error message: ${err.message}`);
             return Promise.reject(err.message);

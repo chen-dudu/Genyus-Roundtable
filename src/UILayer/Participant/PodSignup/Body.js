@@ -48,7 +48,7 @@ class Body1 extends React.Component {
     podSignup = () => {
 		PodManager.signup(this.state.pid)
 			.then(result => {
-				window.alert("")
+				window.alert("You have successfully scheduled! Click Back Button to view your homepage.")
 			})
 			.catch(err => {
 				console.log(err);

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom'
 import {Body2Wrapper, BodyWrapper, Body3Wrapper, ListWrapper} from './Detail.style';
-import {Button, Card, Tooltip, Avatar, Spin, List, Upload, message} from 'antd';
+import {Modal, Button, Card, Tooltip, Avatar, Spin, List, Upload, message, Input} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
 import {QuestionOutlined, UserOutlined} from '@ant-design/icons';
@@ -12,9 +12,12 @@ import NotificationManager from "../../FoundationLayer/NotificationModel/Notific
 import SessionManager from "../../FoundationLayer/SessionModel/SessionManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
 import {notification} from "antd/es";
+import 'antd/dist/antd.css';
+import Notification from '../../FoundationLayer/NotificationModel/Notification';
 
 // const { Step } = Steps;
 // const style = {background: 'white', padding: '8px 0'};
+const {TextArea} = Input
 
 class Body extends React.Component {
 
@@ -41,6 +44,13 @@ class Body extends React.Component {
 			isParti: false,
 			note: null,
 			// noteUrl: null
+			visible: false,
+			confirmLoading: false,
+			link: "",
+			notiVisible: false,
+			notiTitle: "",
+			notiContent: "",
+			notiConfirmLoading: false
 		}
 		console.log("state pid")
 		console.log(this.state.pid);
@@ -154,6 +164,98 @@ class Body extends React.Component {
 		});
 	}
 
+	showModal = () => {
+		this.setState({
+			visible: true,
+		});
+	};
+
+	handleOk = () => {
+		this.setState({
+			confirmLoading: true,
+		});
+		PodManager.updateYoutubeLink(this.state.pid, this.state.link)
+			.then(response => {
+				this.setState({
+					visible: false,
+					confirmLoading: false,
+					youtubeLink: this.state.link,
+					link: ""
+				})
+				console.log("change youtube link success")
+			}).catch(error => {
+				this.setState({
+					confirmLoading: false
+				})
+				alert("change youtube link fail")
+		})
+	};
+
+	handleCancel = () => {
+		console.log('Clicked cancel button');
+		this.setState({
+			visible: false,
+		});
+	};
+
+	showNotiModal = () => {
+		this.setState({
+			notiVisible: true,
+			notiTitle: "",
+			notiContent: ""
+		});
+	};
+
+	notiOk = e => {
+		this.setState({
+			notiConfirmLoading: true
+		});
+		NotificationManager.sendNotification(
+			{title: this.state.notiTitle,
+			description: this.state.notiContent,
+			timeReceived: new Date(),
+			isRead: false,
+			pid: this.state.pid})
+			.then(noid => {
+				// this.setState({
+				// 	visible: false,
+				// 	confirmLoading: false
+				// });
+				return NotificationManager.getNotification(noid)
+					.then(noti => {
+						console.log("New Notification");
+						console.log(noti);
+						console.log("Old Notification");
+						console.log(this.state.notifications);
+						this.state.notifications.unshift(noti);
+						this.setState({
+							notitiVisible: false,
+							notiConfirmLoading: false
+						})
+					}).catch(error => {
+						this.setState({
+							notiConfirmLoading: false
+						})
+						alert("add notification fail");
+					})
+			}).catch(error => {
+			this.setState({
+				notiConfirmLoading: false
+			})
+			alert("add notification fail")
+		})
+	}
+
+	notiCancel = e => {
+		console.log(e);
+		this.setState({
+			notiVisible: false,
+			notiTitle: "",
+			notiContent: ""
+		});
+	};
+
+
 	formatDate(date) {
 		let d = new Date(date);
 
@@ -252,11 +354,57 @@ class Body extends React.Component {
 						</Col>
 
 					</Row>
+
+					{ this.state.isPart
+						? null
+						: <Button style={{background: "#D9021B", borderRadius: 8,
+							width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+							boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+							fontSize: 15, color: "white", position:"absolute", bottom:"76%", right:"15%"}}
+								  onClick={this.showModal}
+						>Edit</Button>
+					}
+
+					<Modal
+						title="Update link"
+						visible={this.state.visible}
+						onOk={this.handleOk}
+						confirmLoading={this.state.confirmLoading}
+						onCancel={this.handleCancel}
+					>
+						<Input
+							placeholder = "Youtube Link for session recording"
+							onChange = {(e) => {this.setState({link: e.target.value});}}
+							allowClear
+							value = {this.state.link}
+						/>
+					</Modal>
+
 					<br />
 					<hr style={{color: "white", height: 0}} />
+					<br /> <br />
+					<br /> <br />
+
+					<Button style={{background: "#D9021B", borderRadius: 8,
+						width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"85%"}}
+							onClick={() => PodManager.download(this.state.note)}
+					>Download Notes</Button>
+
+					{ this.state.isPart
+						? null
+						: <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
+							<Button className="manager" style={{background: "#D9021B", borderRadius: 8,
+								width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+								fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"70%"}}
+							>Upload Notes</Button>
+						</Upload>
+					}
 					<br />
-					<br /> <br/>
-					<br /> <br/>
+					<br />
+					<br />
 				</Body2Wrapper>
 				<Body3Wrapper>
 					<br />
@@ -285,25 +433,46 @@ class Body extends React.Component {
 						</Spin>
 					</ListWrapper>
 
-					<br></br> <br></br>
-
-					<Button style={{background: "#3399ff", borderRadius: 5,
-						width: "10%", height: 40, fontWeight: "bold",
-						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-						fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"45%"}}
-							onClick={() => PodManager.download(this.state.note)}
-					>Download Notes</Button>
-
-					{ this.state.isPart
-						? null
-						: <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
-							<Button className="manager" style={{background: "#3399ff", borderRadius: 5,
-								width: "10%", height: 40, fontWeight: "bold",
-								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-								fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"75%"}}
-							>Upload Notes</Button>
-						</Upload>
-					}
+					<Button type="primary" onClick={this.showNotiModal}>
+						Send a notification
+					</Button>
+					<Modal
+						title="New notification"
+						visible={this.state.notiVisible}
+						comfirmLoading={this.state.notiConfirmLoading}
+						onOk={this.notiOk}
+						onCancel={this.notiCancel}
+					>
+						<div style={{marginBottom: 20}}>
+							Title
+							<Input
+								placeholder="Message Title"
+								style={{marginTop: 15}}
+								allowClear
+								onChange={
+									(e) => {
+										this.setState({notiTitle: e.target.value});
+									}
+								}
+								value = {this.state.notiTitle}
+							/>
+						</div>
+						<div>
+							Content
+							<TextArea placeholder="Write a message here that will be sent to all participants who have expressed interest in this event"
+									  style={{marginTop: 10}}
+									  autoSize={{minRows: 3}}
+									  allowClear
+									  showCount
+									  onChange={
+										  (e) => {
+											  this.setState({notiContent: e.target.value});
+										  }
+									  }
+									  value = {this.state.notiContent}
+							/>
+						</div>
+					</Modal>
 
 					<br></br> <br></br>
 					<br></br> <br></br>
