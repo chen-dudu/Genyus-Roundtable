@@ -7,6 +7,10 @@ import firebase from 'firebase';
 import PodManager from '../../../FoundationLayer/PodModel/PodManager';
 
 const { Option } = Select;
+const domainName = "https://localhost:3000";
+const pathName = "/Admin/PodInvitation";
+const searchName = "?pid=";
+let shareLinkSuffix = domainName.concat("/podLandingPage?pid=");
 const layout = {
 	labelCol: {
 		span: 8,
@@ -61,13 +65,27 @@ class Body extends React.Component {
 			status: this.state.status,
 			description: this.state.description,
 		}
+
 		console.log("print pod", pod);
 		console.log("print researcherid", this.state.researcher);
 		PodManager.createPod(pod, this.state.researcher)
 			.then(response => {
+				let theLink = shareLinkSuffix.concat(response);
+				this.setState({shareLink: theLink})
 				console.log("create pod successful");
 				console.log("print id", response);
-				this.props.history.push({ pathname: "/Admin/PodInvitation", search: "?pid=" + response })
+				this.setState({ pid: response });
+				// this.setState({ shareLink: domainName.concat(pathName,searchName,response)})
+				this.props.history.push({ pathname: pathName, search: searchName + response })
+				console.log("the shared link is", this.state.shareLink);
+				PodManager.updateShareLink(this.state.pid, this.state.shareLink)
+					.then(returnValue => {
+						console.log("upadateShareLink successfully");
+					})
+					.catch(err => {
+						alert(err);
+						console.log("error when updateShareLink");
+					});
 
 			}
 			)
@@ -111,6 +129,7 @@ class Body extends React.Component {
 		this.state = {
 			loading: true,
 			data: [],
+			pid: "",
 			title: "",
 			calendlyLink: "",
 			researcher: "",
@@ -118,6 +137,7 @@ class Body extends React.Component {
 			participants: [],
 			status: "upcoming",
 			description: "",
+			shareLink: "",
 		};
 	}
 
