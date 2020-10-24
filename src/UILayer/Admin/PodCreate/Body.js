@@ -7,7 +7,7 @@ import firebase from 'firebase';
 import PodManager from '../../../FoundationLayer/PodModel/PodManager';
 
 const { Option } = Select;
-const domainName = "https://localhost:3000";
+const domainName = "http://localhost:3000";
 const pathName = "/Admin/PodInvitation";
 const searchName = "?pid=";
 let shareLinkSuffix = domainName.concat("/podLandingPage?pid=");
