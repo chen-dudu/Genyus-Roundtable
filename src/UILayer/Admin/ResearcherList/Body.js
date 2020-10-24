@@ -69,6 +69,29 @@ class Body extends React.Component {
 			});
 	}
 
+	formatDate(date) {
+		let d = new Date(date);
+
+		let month = '' + (d.getMonth() + 1);
+		let day = '' + d.getDate();
+		let year = d.getFullYear();
+		let hour = d.getHours();
+		let min = ('0'+d.getMinutes()).slice(-2);
+
+		if (month.length < 2)
+			month = '0' + month;
+		if (day.length < 2)
+			day = '0' + day;
+
+		let res = [year, month, day].join('-');
+		res = res.concat(' ');
+		res = res.concat(hour.toString());
+		res = res.concat(':');
+		res = res.concat(min.toString());
+
+		return res;
+	}
+
 
 	getResearchers1 = () => {
 
@@ -111,6 +134,7 @@ class Body extends React.Component {
 	constructor(props) {
     	super(props);
 		this.getImage();
+		this.formatDate = this.formatDate.bind(this);
 		// this.getAdminImage();
 		this.state = {
 			loading : true,
@@ -164,7 +188,7 @@ class Body extends React.Component {
 							<List.Item.Meta style={{marginLeft:20}}
 								avatar={<Avatar src={item.photoURL} icon={<UserOutlined />} size={120}/>}
 								title={<a style={{fontSize:25}}>{item.fullname}</a>}
-								description={<p style={{width:"70%", fontSize:20, wordWrap:"break-word"}}>{item.description}<br/>joined: {item.creationTime}</p>}
+								description={<p style={{width:"70%", fontSize:20, wordWrap:"break-word"}}>{item.description}<br/>joined: {this.formatDate(item.creationTime)}</p>}
 							/>
 
 							<div>
