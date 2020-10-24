@@ -6,11 +6,10 @@ import { Form, Input, Button, Select } from 'antd';
 import firebase from 'firebase';
 import PodManager from '../../../FoundationLayer/PodModel/PodManager';
 
-
+const domainName = "http://localhost:3000/";
 class Body extends React.Component {
 	constructor(props) {
 		super(props)
-
 
 		const query = this.props.history.location.search;
 		const pid = query.substr(5);
@@ -41,7 +40,7 @@ class Body extends React.Component {
 					<h2 style={{ textAlign: "center", fontSize: '35px', color: "red" }}>Pod Confirmed!</h2>
 					<br /><br />
 					<h2 style={{ textAlign: "center", fontSize: '25px', color: "red" }}>Use this link to invite participants:</h2>
-					<h2 style={{ textAlign: "center", fontSize: '20px', color: "blue", textDecoration: "underline" }}>https://genyus-roundtables.web.app/PodLandingPage?pid={this.state.pid}</h2>
+					<h2 style={{ textAlign: "center", fontSize: '20px', color: "blue", textDecoration: "underline" }}>{domainName}podLandingPage?pid={this.state.pid}</h2>
 					<div style={{marginTop:"5%"}}>
 					<Button type="primary" size={"large"} style={{ width: "30%", marginRight:"10%"}} onClick={this.returnHome}>
 						Return Home
