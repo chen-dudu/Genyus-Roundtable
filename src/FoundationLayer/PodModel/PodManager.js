@@ -278,7 +278,7 @@ function converter(pod) {
             status: "upcoming",
             description: pod.description,
             notes: "",
-            youtubeLink: "",
+            youtubeLink: "N/A",
             shareLink: pod.shareLink
         };
     }
