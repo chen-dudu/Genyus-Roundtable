@@ -227,12 +227,9 @@ class Body extends React.Component {
 						console.log(noti);
 						console.log("Old Notification");
 						console.log(this.state.notifications);
-						let updateNoti = this.state.notifications.unshift(noti);
-						console.log("New Notifications");
-						console.log(updateNoti);
+						this.state.notifications.unshift(noti);
 						this.setState({
-							notifications: updateNoti,
-							nitiVisible: false,
+							notitiVisible: false,
 							notiConfirmLoading: false
 						})
 					}).catch(error => {
