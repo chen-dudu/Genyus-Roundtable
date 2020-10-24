@@ -64,6 +64,7 @@ class Body extends React.Component {
 			notifications: this.state.notifications,
 			status: this.state.status,
 			description: this.state.description,
+			video: this.state.video,
 		}
 
 		console.log("print pod", pod);
@@ -78,6 +79,7 @@ class Body extends React.Component {
 				// this.setState({ shareLink: domainName.concat(pathName,searchName,response)})
 				this.props.history.push({ pathname: pathName, search: searchName + response })
 				console.log("the shared link is", this.state.shareLink);
+				console.log("the introduction video link is: ", this.state.video);
 				PodManager.updateShareLink(this.state.pid, this.state.shareLink)
 					.then(returnValue => {
 						console.log("upadateShareLink successfully");
@@ -119,11 +121,17 @@ class Body extends React.Component {
 		this.setState({ description: e.target.value });
 	}
 
+	onVideoEnter = (e) => {
+		console.log("Video: ", e.target.value);
+		this.setState({ video: e.target.value });
+	}
+
 	constructor(props) {
 		super(props);
 		this.onTitleEnter = this.onTitleEnter.bind(this);
 		this.onResearcherEnter = this.onResearcherEnter.bind(this);
 		this.onCalendlyLinkEnter = this.onCalendlyLinkEnter.bind(this);
+		this.onVideoEnter = this.onVideoEnter.bind(this);
 
 		this.getResearcherName();
 		this.state = {
@@ -138,6 +146,7 @@ class Body extends React.Component {
 			status: "upcoming",
 			description: "",
 			shareLink: "",
+			video: "",
 		};
 	}
 
@@ -170,6 +179,9 @@ class Body extends React.Component {
 						</Form.Item>
 						<Form.Item name="calendlyLink" label="CalendlyLink" rules={[{ required: true }]}>
 							<Input style={{ width: "60%" }} onChange={this.onCalendlyLinkEnter} />
+						</Form.Item>
+						<Form.Item name="video" label="Video" rules={[{ required: true }]}>
+							<Input style={{ width: "60%" }} onChange={this.onVideoEnter} />
 						</Form.Item>
 						<Form.Item name="description" label="Description" rules={[{ required: false }]}>
 							<TextArea style={{ width: "60%" }} rows={4} onChange={this.onDescriptionEnter} />
