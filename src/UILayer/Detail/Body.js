@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom'
 import {Body2Wrapper, BodyWrapper, Body3Wrapper, ListWrapper} from './Detail.style';
-import {Button, Card, Tooltip, Avatar, Spin, List, Upload, message} from 'antd';
+import Modal, {Button, Card, Tooltip, Avatar, Spin, List, Upload, message} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
 import {QuestionOutlined, UserOutlined} from '@ant-design/icons';
@@ -12,6 +12,8 @@ import NotificationManager from "../../FoundationLayer/NotificationModel/Notific
 import SessionManager from "../../FoundationLayer/SessionModel/SessionManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
 import {notification} from "antd/es";
+import Input from "antd";
+import 'antd/dist/antd.css';
 
 // const { Step } = Steps;
 // const style = {background: 'white', padding: '8px 0'};
@@ -41,6 +43,9 @@ class Body extends React.Component {
 			isParti: false,
 			note: null,
 			// noteUrl: null
+			visible: false,
+			confirmLoading: false,
+			link: ""
 		}
 		console.log("state pid")
 		console.log(this.state.pid);
@@ -154,6 +159,25 @@ class Body extends React.Component {
 		});
 	}
 
+	showModal = () => {
+		this.setState({
+			visible: true,
+		});
+	};
+
+	handleOk = () => {
+		this.setState({
+			confirmLoading: true,
+		});
+	};
+
+	handleCancel = () => {
+		console.log('Clicked cancel button');
+		this.setState({
+			visible: false,
+		});
+	};
+
 	formatDate(date) {
 		let d = new Date(date);
 
@@ -252,6 +276,32 @@ class Body extends React.Component {
 						</Col>
 
 					</Row>
+
+					{ this.state.isPart
+						? null
+						: <Button style={{background: "#D9021B", borderRadius: 8,
+							width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+							boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+							fontSize: 15, color: "white", position:"absolute", bottom:"76%", right:"15%"}}
+								  onClick={this.showModal}
+						>Edit</Button>
+					}
+
+					<Modal
+						title="Update link"
+						visible={visible}
+						onOk={this.handleOk}
+						confirmLoading={confirmLoading}
+						onCancel={this.handleCancel}
+					>
+						<Input
+							placeholder = "Youtube Link for session recording"
+							onChange = {(e) => {this.setState({link: e.target.value});}}
+							allowClear
+							value = {this.state.link}
+						/>
+					</Modal>
+
 					<br />
 					<hr style={{color: "white", height: 0}} />
 					<br /> <br />
@@ -260,7 +310,7 @@ class Body extends React.Component {
 					<Button style={{background: "#D9021B", borderRadius: 8,
 						width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
 						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-						fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"70%"}}
+						fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"85%"}}
 							onClick={() => PodManager.download(this.state.note)}
 					>Download Notes</Button>
 
@@ -270,7 +320,7 @@ class Body extends React.Component {
 							<Button className="manager" style={{background: "#D9021B", borderRadius: 8,
 								width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
 								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-								fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"85%"}}
+								fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"70%"}}
 							>Upload Notes</Button>
 						</Upload>
 					}
