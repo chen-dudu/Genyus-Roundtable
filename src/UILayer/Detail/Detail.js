@@ -9,9 +9,9 @@ const Detail = props => {
     return(
         <div>
             <container>
-                <Header setImage={setImage} image={image}></Header>
-                <Body setImage={setImage} image={image}></Body>
-                <Footer></Footer>
+                <Header setImage={setImage} image={image}/>
+                <Body/>
+                <Footer/>
             </container>
         </div>
     )

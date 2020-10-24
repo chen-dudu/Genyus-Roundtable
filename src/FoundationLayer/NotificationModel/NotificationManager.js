@@ -80,12 +80,9 @@ export default {
             let podDoc = await podRef.get();
             let notifications = podDoc.get('notifications');
 
-            let index = notifications.indexOf(noID);
-            if (index !== -1) {
-                notifications.splice(index, 1);
-            }
+            let updateNo = notifications.unshift(noID);
 
-            let podUpdateFeedback = await podRef.update({notifications: notifications});
+            let podUpdateFeedback = await podRef.update({notifications: updateNo});
             console.debug(`${CLASS_NAME} | sendNotification | successfully update pod's notification list`);
 
             // then add this new notification to all signed up participants

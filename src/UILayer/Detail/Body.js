@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom'
 import {Body2Wrapper, BodyWrapper, Body3Wrapper, ListWrapper} from './Detail.style';
-import {Button, Card, Tooltip, Avatar, Spin, List, Upload, message} from 'antd';
+import {Modal, Button, Card, Tooltip, Avatar, Spin, List, Upload, message, Input} from 'antd';
 import 'antd/dist/antd.css';
 import {Steps, Row, Col} from 'antd';
 import {QuestionOutlined, UserOutlined} from '@ant-design/icons';
@@ -12,6 +12,7 @@ import NotificationManager from "../../FoundationLayer/NotificationModel/Notific
 import SessionManager from "../../FoundationLayer/SessionModel/SessionManager";
 import PodManager from "../../FoundationLayer/PodModel/PodManager";
 import {notification} from "antd/es";
+import 'antd/dist/antd.css';
 
 // const { Step } = Steps;
 // const style = {background: 'white', padding: '8px 0'};
@@ -31,7 +32,8 @@ class Body extends React.Component {
 			description: null,
 			loading: true,
 			researcher: null,
-			youtubeLink: null,
+			youtubeLink: "N/A",
+			shareLink: "http://localhost:3000/",
 			researcherFullName: null,
 			researcherDes: null,
 			researcherAvatar: null,
@@ -40,6 +42,9 @@ class Body extends React.Component {
 			isParti: false,
 			note: null,
 			// noteUrl: null
+			visible: false,
+			confirmLoading: false,
+			link: ""
 		}
 		console.log("state pid")
 		console.log(this.state.pid);
@@ -64,7 +69,8 @@ class Body extends React.Component {
 					participates: result.participants,
 					notifications: result.notifications,
 					note: result.notes,
-					loading: false
+					loading: false,
+					shareLink: result.shareLink
 				})
 				console.log("get pod note");
 				console.log(this.state.note);
@@ -111,7 +117,10 @@ class Body extends React.Component {
 									// this.setState({imageUrl: photo});
 									console.log('show photo');
 									console.log(photo);
-									this.props.setImage(photo);
+									this.setState({
+										researcherAvatar: photo
+									})
+
 								})
 								.catch(error => {
 									console.log(error);
@@ -148,6 +157,40 @@ class Body extends React.Component {
 			console.log(error);
 		});
 	}
+
+	showModal = () => {
+		this.setState({
+			visible: true,
+		});
+	};
+
+	handleOk = () => {
+		this.setState({
+			confirmLoading: true,
+		});
+		PodManager.updateYoutubeLink(this.state.pid, this.state.link)
+			.then(response => {
+				this.setState({
+					visible: false,
+					confirmLoading: false,
+					youtubeLink: this.state.link,
+					link: ""
+				})
+				console.log("change youtube link success")
+			}).catch(error => {
+				this.setState({
+					confirmLoading: false
+				})
+				alert("change youtube link fail")
+		})
+	};
+
+	handleCancel = () => {
+		console.log('Clicked cancel button');
+		this.setState({
+			visible: false,
+		});
+	};
 
 	formatDate(date) {
 		let d = new Date(date);
@@ -203,7 +246,7 @@ class Body extends React.Component {
 
 		return (
 			<div style={{minWidth:500}}>
-				<Body3Wrapper>
+				<BodyWrapper>
 					<h1>Pod Details</h1>
 					<br></br>
 					<br></br>
@@ -218,11 +261,90 @@ class Body extends React.Component {
 					<h2 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>About the Researcher</h2>
 					<h3> Researcher Name: {this.state.researcherFullName}</h3>
 					<h3 style={{marginRight:"30%"}}>{this.state.researcherDes}</h3>
-					<Avatar src={this.props.image} size={96} style={{position:"absolute", left: '80%', bottom:"50%",
+					<Avatar src={this.state.researcherAvatar} size={96} style={{position:"absolute", left: '80%', bottom:"10%",
 						margin: '2% auto'}} icon={<UserOutlined/>} />
 					<br/>
 					<br/>
+				</BodyWrapper>
+				<Body2Wrapper>
+					<br/> <br/>
+					<Row
+						gutter={[5, 5]}
+						style={{marginLeft:"80px", marginRight:"30%"}}
+					>
+						<Col className="gutter-row" span={4}>
+							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+								fontSize:"16px"}}>Youtube Link</div>
+						</Col>
+						<Col className="gutter-row" span={20}>
+							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
+								{this.state.youtubeLink}</div>
+						</Col>
+						<Col className="gutter-row" span={4}>
+							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontWeight:"bold",
+								fontSize:"16px"}}>Share Link</div>
+						</Col>
+						<Col className="gutter-row" span={20}>
+							<div style={{background: 'white', padding: '8px 0', textAlign:"center", fontSize:"16px"}}>
+								{this.state.shareLink}</div>
+						</Col>
 
+					</Row>
+
+					{ this.state.isPart
+						? null
+						: <Button style={{background: "#D9021B", borderRadius: 8,
+							width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+							boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+							fontSize: 15, color: "white", position:"absolute", bottom:"76%", right:"15%"}}
+								  onClick={this.showModal}
+						>Edit</Button>
+					}
+
+					<Modal
+						title="Update link"
+						visible={this.state.visible}
+						onOk={this.handleOk}
+						confirmLoading={this.state.confirmLoading}
+						onCancel={this.handleCancel}
+					>
+						<Input
+							placeholder = "Youtube Link for session recording"
+							onChange = {(e) => {this.setState({link: e.target.value});}}
+							allowClear
+							value = {this.state.link}
+						/>
+					</Modal>
+
+					<br />
+					<hr style={{color: "white", height: 0}} />
+					<br /> <br />
+					<br /> <br />
+
+					<Button style={{background: "#D9021B", borderRadius: 8,
+						width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"85%"}}
+							onClick={() => PodManager.download(this.state.note)}
+					>Download Notes</Button>
+
+					{ this.state.isPart
+						? null
+						: <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
+							<Button className="manager" style={{background: "#D9021B", borderRadius: 8,
+								width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+								fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"70%"}}
+							>Upload Notes</Button>
+						</Upload>
+					}
+					<br />
+					<br />
+					<br />
+				</Body2Wrapper>
+				<Body3Wrapper>
+					<br />
+					<br />
 					<h1 style={{fontSize:"30px", marginLeft:"5%", fontWeight:"normal"}}>Event Updates:</h1>
 					<br></br> <br></br>
 
@@ -246,38 +368,6 @@ class Body extends React.Component {
 							/>
 						</Spin>
 					</ListWrapper>
-
-					<br></br> <br></br>
-
-					<div style={{position:"absolute", bottom:"50%", right:"45%"}}>
-						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
-								mozallowfullscreen="" allowFullScreen=""
-								src={this.state.youtubeLink}></iframe>
-					</div>
-
-					<div style={{position:"absolute", bottom:"66%", right:"25%"}}>
-						<iframe id="u35_input" scrolling="auto" frameBorder="0" webkitallowfullscreen=""
-								mozallowfullscreen="" allowFullScreen=""
-								src="https://www.youtube.com/embed/Xm_F_UBjrq8"></iframe>
-					</div>
-
-					<Button style={{background: "#3399ff", borderRadius: 5,
-						width: "10%", height: 40, fontWeight: "bold",
-						boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-						fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"45%"}}
-							onClick={() => PodManager.download(this.state.note)}
-					>Download Notes</Button>
-
-					{ this.state.isPart
-						? null
-						: <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
-							<Button className="manager" style={{background: "#3399ff", borderRadius: 5,
-								width: "10%", height: 40, fontWeight: "bold",
-								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-								fontSize: 15, color: "white", position:"absolute", bottom:"5%", right:"75%"}}
-							>Upload Notes</Button>
-						</Upload>
-					}
 
 					<br></br> <br></br>
 					<br></br> <br></br>
