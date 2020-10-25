@@ -40,6 +40,12 @@ export default {
             pod_list.unshift(pid);
             await userDocs.doc(uid).update({pods: pod_list});
             console.debug(`${CLASS_NAME} | signup | successfully added new pod to user's pod list`);
+            let admin = await UserManager.getCurrentUser();
+            let admin_id = admin.uid;
+            let pods = admin.pods;
+            pods.unshift(pid);
+            await userDocs.doc(admin_id).update({pods: pods});
+            console.debug(`${CLASS_NAME} | signup | successfully added new pod to admin's pod list`);
             return Promise.resolve(pid);
         } catch (err) {
             console.error(`${CLASS_NAME} | createPod | failed to create new pod on DB, received error message ${err.message}`);
@@ -79,6 +85,29 @@ export default {
         } catch (err) {
             console.error(`${CLASS_NAME} | getPod | failed to retrieve the needed pod from DB, received error message ${err.message}`);
             return Promise.reject(err.message);
+        }
+    },
+
+    /**
+     * a method used to get a list of pods from DB
+     * @param pids a list of pod ids
+     * @return {Promise<unknown[]>} upon successful retrieval, a promise with resolve value of a list of needed pods is returned
+     *                              upon failed retrieval, a promise with reject value of received error message is returned
+     */
+    async getPods(pids) {
+        try {
+            let pods = [];
+            for (let i = 0; i < pids.length; i++) {
+                let pod = await this.getPod(pids[i]);
+                // add to end
+                pods.push(Promise.resolve(pod));
+            }
+            console.debug(`${CLASS_NAME} | getPods | finished pre-processing, data is ready to be returned`);
+            return Promise.all(pods);
+        }
+        catch (err) {
+            console.error(`${CLASS_NAME} | getPods | failed to get pods from DB, received error message ${err}`);
+            return Promise.reject(err);
         }
     },
 

@@ -41,19 +41,19 @@ export default {
      * a method used to retrieve a list of notifications from DB
      * @param nids a list of notification ids
      * @returns {Promise<unknown[]>} upon successful retrieval, a promise with resolve value of a list of needed notifications is returned.
-     *                               upon failed retrieval, a promise with reject value of null is returned.
+     *                               upon failed retrieval, a promise with reject value of received error message is returned.
      */
     async getNotifications(nids) {
         try {
             let notifications = [];
             for (let i = 0; i < nids.length; i ++) {
                 let notification = await this.getNotification(nids[i]);
-                notifications.unshift(Promise.resolve(notification));
+                notifications.push(Promise.resolve(notification));
             }
             return Promise.all(notifications);
         } catch (err) {
             console.error(`${CLASS_NAME} | getNotifications | failed to get notifications, received error message: ${err}`);
-            return Promise.reject(null);
+            return Promise.reject(err);
         }
     },
 

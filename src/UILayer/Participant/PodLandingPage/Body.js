@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
 	Body1Wrapper,
-
 	Body2Wrapper,
 	BodyWrapper, ProfileWrapper
 } from './PodLandingPage.style';
@@ -131,8 +130,9 @@ class Body1 extends React.Component {
 				<h1>{this.state.podTitle}</h1>
 				<h2>Pod Description</h2>
 				<p className="description">{this.state.podDescription}</p>
+				<br />
 				<h2>Login to view Available Sessions</h2>
-				<Button className="login" style={{marginLeft:"43%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Login', search:"?pid="+this.state.pid})}>Login</Button>
+				<Button className="login" style={{left:"43.3%",width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Login', search:"?pid="+this.state.pid})}>Login</Button>
 				<br />
 				<br />
 

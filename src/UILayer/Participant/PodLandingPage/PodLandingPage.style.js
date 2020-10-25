@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HeaderWrapper = styled.div`
   height: 150px;
   left:0px;
-  bottom: 0px;
+ 
   
   
 
@@ -154,12 +154,12 @@ export const Body1Wrapper = styled.div`
   width: 100%;
   height: revert;
   background-image: linear-gradient(white,white,#ffce33);
-  margin-top: -30px;
+  
 
   
   
  > h1 {
-    margin:20px auto;
+    
     color: #4682B4;
     font-size: 40px;
     font-weight: normal;
@@ -167,7 +167,7 @@ export const Body1Wrapper = styled.div`
   }
 
   > h2 {
-    margin:20px auto;
+    
     color: red;
     font-size: 30px;
     font-weight: normal;
@@ -176,9 +176,9 @@ export const Body1Wrapper = styled.div`
   
   >p {
     width: 50%;
-    margin:20px auto;
+    margin: auto;
     color: black;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: normal;
     text-align: center;
     word-wrap: break-word;
@@ -212,7 +212,7 @@ export const Body2Wrapper = styled.div`
   }
   .description{
     margin: auto;
-    width: 55%;
+    width: 50%;
     color:  white;
     font-size: 20px;
     font-weight: normal;
@@ -236,7 +236,7 @@ export const ProfileWrapper = styled.div`
     width: 10%;
   
     position: relative;
-    left: 45.5%;
+    left: 45.75%;
    
     
 

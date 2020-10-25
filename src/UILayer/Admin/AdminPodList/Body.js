@@ -27,54 +27,37 @@ import PodManager from "../../../FoundationLayer/PodModel/PodManager";
 class Body extends React.Component {
 
 
-	// getAdminImage = () => {
-	// 	console.log("here");
-	// 	UserManager.getCurrentUser()
-	// 		.then(response => {
-	// 			if (response.photoURL) {
-	//
-	// 				UserManager.getAvatar(response.photoURL)
-	// 					.then(photo => {
-	// 						this.setState({ AdminAvatar: photo });
-	// 						this.props.setImage(photo);
-	// 					})
-	// 					.catch(error => {
-	// 						console.log(error);
-	// 					});
-	// 			}
-	// 		})
-	// 		.catch(error => {
-	// 			console.log(error);
-	// 		});
-	// };
-
 	getPod = () => {
-		PodManager.getAllPods()
-			.then(result =>{
-				this.setState({loading : false });
-				let all = [];
-				let upcoming = [];
-				result.forEach(function (item,index,array){
-
-					if(item._status == "upcoming"){
-						upcoming.unshift(item);
-						all.unshift(item);
-					}
-				});
-				result.forEach(function (item,index,array){
-
-					if(item._status == "finished"){
-						all.unshift(item);
-					}
-				});
-				this.setState({upcoming : upcoming ,data : upcoming, all : all});
-
+		return UserManager.getCurrentUser()
+			.then(response => {
+				console.log(response.pods);
+				return PodManager.getPods(response.pods)
+					.then(result =>{
+						console.log(response);
+						let all = [];
+						let upcoming = [];
+						result.forEach(function (item,index,array){
+							if(item.status === "upcoming"){
+								upcoming.push(item);
+								all.push(item);
+							}
+							else {
+								all.push(item);
+							}
+						});
+						this.setState({upcoming : upcoming ,data : upcoming, all : all ,loading : false});
+					})
+					.catch(err=>{
+						console.log(err);
+					})
 
 			})
-			.catch(err=>{
-				console.log(err);
-			})
-	}
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+
 
 
 	constructor(props) {

@@ -33,8 +33,6 @@ class Body extends React.Component {
 				if (response.pods){
 					let upcoming = [];
 					let all = [];
-					let num = 0;
-
 					response.pods.forEach(function (item,index,array){
 						return PodManager.getPod(item)
 							.then(result =>{
@@ -42,8 +40,8 @@ class Body extends React.Component {
 									upcoming.push(result);
 									all.push(result);
 								}else{
-									all.splice(num,0,result);
-									num++;
+									all.push(result);
+
 								}
 							})
 							.catch(err=>{
