@@ -78,7 +78,8 @@ class Body extends React.Component {
 					note: result.notes,
 					loading: false,
 					shareLink: result.shareLink,
-					video: result.video
+					video: result.video,
+					youtubeLink: result.youtubeLink
 				})
 				console.log("get pod note");
 				console.log(this.state.note);
