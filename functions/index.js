@@ -1,3 +1,6 @@
+/**
+ * @file this file contains methods that perform privileged operations in the backend environment
+ */
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
@@ -51,25 +54,6 @@ exports.createUser = functions.https.onCall((user, context) => {
             }).then(storeFeedback => {
                 console.info(`${CLASS_NAME} | createUser | successfully created a new user record on firestore`);
                 return Promise.resolve(userRecord);
-                // let avatar = user.avatar;
-                // if (avatar) {
-                //     // last step, store the avatar photo
-                //     let path = 'avatars/' + uid + '/' + avatar.name;
-                //     return storage.bucket(BUCKET_NAME).upload(path)
-                //         .then(response => {
-                //             console.info(`${CLASS_NAME} | createUser | successfully stored the avatar file to DB`);
-                //             return Promise.resolve(undefined);
-                //         })
-                //         .catch(err => {
-                //             console.error(`${CLASS_NAME} | createUser | failed to upload avatar file to DB, ${err}`);
-                //             return Promise.reject(err);
-                //         })
-                // }
-                // else {
-                //     console.error(`${CLASS_NAME} | createUser | avatar used to create user is null`);
-                //     return Promise.reject(new Error("given avatar is null"));
-                // }
-                // return Promise.resolve('placeholder');
             }).catch(err => {
                 console.error(`${CLASS_NAME} | createUser | failed to create a new user record on firestore, received error message ${err}`);
                 return Promise.reject(err);
@@ -93,9 +77,6 @@ exports.createUser = functions.https.onCall((user, context) => {
  *                                upon failed retrieval, a promise with reject value of received error message is returned
  */
 exports.getUser = functions.https.onCall((data, context) => {
-    // only login admin can do operation
-    // if (context.auth) {
-        // first get some info from firebase auth
         return auth.getUser(data.uid)
             .then(userAuth => {
                 console.info(`${CLASS_NAME} | getUser | successfully retrieve data from firebase auth`);
@@ -130,11 +111,6 @@ exports.getUser = functions.https.onCall((data, context) => {
                 console.error(`${CLASS_NAME} | getUser | failed to get data from firebase auth for user with uid ${data.uid}, error: ${err}`);
                 return Promise.reject(err);
             });
-    // }
-    // else {
-    //     console.error(`${CLASS_NAME} | getUsers | the admin trying to do operation is not login`);
-    //     return Promise.reject(new Error('admin is not login!'));
-    // }
 });
 
 /**
@@ -378,6 +354,8 @@ exports.updateUserAvatar = functions.https.onCall((data, context) => {
 
 /**********************************************************************************************************************/
 
+// this method should never be called.
+// this method will be auto-triggered when delete event happens in firebase authentication
 exports.autoDelete = functions.auth.user().onDelete(async user => {
     try {
         let feedback = await userDocs.doc(user.uid).delete();
