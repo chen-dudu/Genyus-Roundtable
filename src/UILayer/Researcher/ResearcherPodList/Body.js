@@ -26,37 +26,12 @@ import PodManager from "../../../FoundationLayer/PodModel/PodManager";
 class Body extends React.Component {
 
 
-	getData = () => {
-		return UserManager.getCurrentUser()
+	getPod = () => {
+		UserManager.getCurrentUser()
 			.then(response => {
-				if (response.pods){
-					let upcoming = [];
-					let all = [];
-					response.pods.forEach(function (item,index,array){
-						return PodManager.getPod(item)
-							.then(result =>{
-								if(result.status == "upcoming"){
-									upcoming.push(result);
-									all.push(result);
-								}else{
-									all.push(result);
-								}
-							})
-							.catch(err=>{
-								console.log(err);
-							})
-					});
-
-
-					this.setState({upcoming : upcoming ,data : upcoming, all : all, loading: false});
-				}
-				else{
-					this.setState({loading : false});
-				}
-
 				if (response.photoURL) {
 
-					return UserManager.getAvatar(response.photoURL)
+					UserManager.getAvatar(response.photoURL)
 						.then(photo => {
 							this.setState({ AdminAvatar: photo });
 							this.props.setImage(photo);
@@ -65,6 +40,27 @@ class Body extends React.Component {
 							console.log(error);
 						});
 				}
+
+				PodManager.getPods(response.pods)
+					.then(result =>{
+						console.log(response);
+						let all = [];
+						let upcoming = [];
+						result.forEach(function (item,index,array){
+							if(item.status === "upcoming"){
+								upcoming.push(item);
+								all.push(item);
+							}
+							else {
+								all.push(item);
+							}
+						});
+						this.setState({upcoming : upcoming ,data : upcoming, all : all ,loading : false});
+					})
+					.catch(err=>{
+						console.log(err);
+					})
+
 			})
 			.catch(error => {
 				console.log(error);
@@ -76,7 +72,7 @@ class Body extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.getData();
+		this.getPod();
 
 
 		this.state = {
