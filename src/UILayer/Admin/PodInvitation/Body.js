@@ -6,7 +6,8 @@ import { Form, Input, Button, Select } from 'antd';
 import firebase from 'firebase';
 import PodManager from '../../../FoundationLayer/PodModel/PodManager';
 
-const domainName = "http://localhost:3000/";
+// const domainName = "http://localhost:3000/";
+const domainName = "https://genyus-roundtables.web.app/";
 class Body extends React.Component {
 	constructor(props) {
 		super(props)
