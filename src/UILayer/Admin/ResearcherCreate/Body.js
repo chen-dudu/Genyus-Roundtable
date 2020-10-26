@@ -112,7 +112,8 @@ class Body extends React.Component {
 				this.setState({Modalvisible: false, confirmLoading: false,});
 			}).catch(err => {
 				console.log("something wrong: ", err);
-				this.setState({confirmLoading: false,});
+				window.alert("Failed to create a new researcher, error: "+err);
+				this.setState({confirmLoading: false,Modalvisible: false});
 		});
 
 	};
@@ -215,7 +216,7 @@ class Body extends React.Component {
 
 
 						<div>
-							<Button className="cancelButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Cancel</Button>
+							<Button className="cancelButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Back</Button>
 							<Button className="confirmButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={this.showModal}>Confirm</Button>
 							<Modal
 								title="Confirm to create a new researcher?"

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { HeaderWrapper, ImageWrapper, Seperator, LogoutWrapper, LogoutButton } from './Notification.style';
+import { HeaderWrapper, ImageWrapper, Seperator, LogoutWrapper, LogoutButton } from './Detail.style';
 import logo from '../../img/logo.png';
 import Footer from './Footer.js';
 import Body from './Body.js';
@@ -14,6 +14,21 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.getImage();
+        this.state={
+            Route:"",
+        }
+    }
+
+    handleClick = () => {
+        UserManager.logout()
+            .then(response => {
+                console.log("logout succesfully");
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+        this.props.history.push('/');
     }
 
     getImage = () => {
@@ -24,6 +39,19 @@ class Header extends React.Component {
                 this.setState({ full_name: user.fullname, nick_name: user.nickname });
                 console.log("PrintFullname!!!!!!!!!!!!!", user.fullname);
                 console.log("PrintNickname!!!!!!!!!!!!!", user.nickname);
+                console.log("usertype "+user.type);
+
+                if(user.type === "admin"){
+                    this.setState({ Route: "/AdminHomePage" });
+                }else if(user.type === "researcher"){
+                    this.setState({ Route: "/ResearcherHomePage" });
+                }else if(user.type === "participant"){
+                    this.setState({ Route: "/ParticipantHomePage" });
+                }
+
+                console.log(this.state.Route);
+
+
 
                 if (user.photoURL) {
                     UserManager.getAvatar(user.photoURL)
@@ -47,18 +75,6 @@ class Header extends React.Component {
         console.log(this.image);
     };
 
-    handleClick = () => {
-        UserManager.logout()
-            .then(response => {
-                console.log("logout succesfully");
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-        this.props.history.push('../');
-    }
-
     render() {
         return (
             <HeaderWrapper>
@@ -69,7 +85,7 @@ class Header extends React.Component {
                 </ImageWrapper>
                 <LogoutWrapper>
                     <div>
-                        <Avatar src={this.props.image} size={64} style={{ left: '70%', margin: '2% auto' }} icon={<UserOutlined />} />
+                        <Avatar onClick={()=>{this.props.history.push(this.state.Route)}} src={this.props.image} size={64} style={{ left: '70%', margin: '2% auto' }} icon={<UserOutlined />} />
 
                         <Button danger style={{ left: '75%', margin: '2% auto' }} onClick={this.handleClick} >Logout</Button>
                     </div>

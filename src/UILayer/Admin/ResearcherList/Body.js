@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper} from './ResearcherHomePage.style';
+import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper,Body2Wrapper} from './ResearcherList.style';
 import Img from '../../../img/Avatar.png';
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router-dom'
@@ -9,7 +9,7 @@ import {LoadingOutlined, PlusOutlined, UserOutlined} from '@ant-design/icons';
 import UserManager from "../../../FoundationLayer/UserModel/UserManager";
 import firebase from "firebase";
 import ImgCrop from "antd-img-crop";
-import {Body2Wrapper} from "../../Participant/ParticipantHomePage/ParticipantHomePage.style";
+
 
 
 
@@ -26,25 +26,25 @@ const getResearchers = firebase.functions().httpsCallable('getResearchers');
 class Body extends React.Component {
 
 
-	getAdminImage = () => {
-		UserManager.getCurrentUser()
-			.then(response => {
-				if (response.photoURL) {
-
-					UserManager.getAvatar(response.photoURL)
-						.then(photo => {
-							this.setState({ AdminAvatar: photo });
-							this.props.setImage(photo);
-						})
-						.catch(error => {
-							console.log(error);
-						});
-				}
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	};
+	// getAdminImage = () => {
+	// 	UserManager.getCurrentUser()
+	// 		.then(response => {
+	// 			if (response.photoURL) {
+	//
+	// 				UserManager.getAvatar(response.photoURL)
+	// 					.then(photo => {
+	// 						this.setState({ AdminAvatar: photo });
+	// 						this.props.setImage(photo);
+	// 					})
+	// 					.catch(error => {
+	// 						console.log(error);
+	// 					});
+	// 			}
+	// 		})
+	// 		.catch(error => {
+	// 			console.log(error);
+	// 		});
+	// };
 
 	getImage = () => {
 		this.getResearchers1()
@@ -53,7 +53,6 @@ class Body extends React.Component {
 				// this.setState({ data : this.state.data.concat(result)});
 				let list=[];
 				result.forEach(function (item,index,array){
-
 					if(item){
 						list.unshift(item);
 					}
@@ -67,6 +66,29 @@ class Body extends React.Component {
 			.catch(error =>{
 				console.error(error);
 			});
+	}
+
+	formatDate(date) {
+		let d = new Date(date);
+
+		let month = '' + (d.getMonth() + 1);
+		let day = '' + d.getDate();
+		let year = d.getFullYear();
+		let hour = d.getHours();
+		let min = ('0'+d.getMinutes()).slice(-2);
+
+		if (month.length < 2)
+			month = '0' + month;
+		if (day.length < 2)
+			day = '0' + day;
+
+		let res = [year, month, day].join('-');
+		res = res.concat(' ');
+		res = res.concat(hour.toString());
+		res = res.concat(':');
+		res = res.concat(min.toString());
+
+		return res;
 	}
 
 
@@ -111,11 +133,12 @@ class Body extends React.Component {
 	constructor(props) {
     	super(props);
 		this.getImage();
-		this.getAdminImage();
+		this.formatDate = this.formatDate.bind(this);
+		// this.getAdminImage();
 		this.state = {
 			loading : true,
 			data : [],
-			AdminAvatar: <UserOutlined/>,
+			// AdminAvatar: <UserOutlined/>,
 
 		};
 
@@ -143,7 +166,7 @@ class Body extends React.Component {
 					<br/>
 
 				<h1>Researcher list</h1>
-				<Button style={{width:241, height:53,fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherCreate',query:{AdminAvatar:this.state.AdminAvatar}})}>Create a new account</Button>
+				<Button style={{width:241, height:53,fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherCreate'})}>Create a new account</Button>
 				</TitleWrapper>
 
 
@@ -164,11 +187,11 @@ class Body extends React.Component {
 							<List.Item.Meta style={{marginLeft:20}}
 								avatar={<Avatar src={item.photoURL} icon={<UserOutlined />} size={120}/>}
 								title={<a style={{fontSize:25}}>{item.fullname}</a>}
-								description={<p style={{width:"70%", fontSize:20, wordBreak:"break-all"}}>{item.description}<br/>joined: {item.creationTime}</p>}
+								description={<p style={{width:"70%", fontSize:20, wordWrap:"break-word"}}>{item.description}<br/>joined: {this.formatDate(item.creationTime)}</p>}
 							/>
 
 							<div>
-								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherDetail/'+item.fullname,state:{AdminAvatar:this.state.AdminAvatar,item:item}})}>Edit</Button>
+								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Admin/ResearcherDetail/'+item.fullname, state:{item:item}})}>Edit</Button>
 							</div>
 
 

@@ -16,6 +16,26 @@ export const FooterWrapper = styled.div`
   
 `;
 
+export const ImageWrapper = styled.div`
+  width:50%;
+  height: 80%;
+  float:left;
+
+  >div>img {
+    height:130px;
+`;
+
+export const LogoutWrapper = styled.div` 
+  width:50%;
+  height: 80%;
+  float:left;
+  // >div>img {
+  //   margin-left: 30%;
+  //   margin-top:2%;
+  //   height:80px;
+`;
+
+
 export const BodyWrapper = styled.div`
   width: 70%;
   height: 100%;
@@ -69,24 +89,7 @@ export const BodyWrapper = styled.div`
   
 `;
 
-export const ImageWrapper = styled.div`
-  margin-left: 0;
-  > img {
-    height: 130px;
-  }
-  > p {
-    font-size: 40px;
-    font-weight: bold;
-    color:#4682B4;
-    margin-left:20px;
-  }
-  > Button {
-    position: absolute;
-    right:25px;
-    top: 25px;
-    
-  }
-`;
+
 
 export const ProfileWrapper = styled.div`
     

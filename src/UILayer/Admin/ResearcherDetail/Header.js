@@ -1,24 +1,14 @@
-import { withRouter } from 'react-router-dom'
-import { Avatar, Button } from 'antd';
-import 'antd/dist/antd.css';
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { HeaderWrapper, ImageWrapper, Seperator, LogoutWrapper } from '../PodCreate/PodCreate.style';
 import logo from '../../../img/logo.png';
-import { HeaderWrapper, ImageWrapper, Seperator } from './ResearcherDetail.style';
-import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Button } from 'antd';
+import { withRouter } from 'react-router-dom';
+import { UserOutlined } from '@ant-design/icons';
 import UserManager from '../../../FoundationLayer/UserModel/UserManager';
 
 
 class Header extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            AdminAvatar: this.props.history.location.state.AdminAvatar,
-        };
-        console.log(this.state.AdminAvatar);
-
-    }
-
     handleClick = () => {
         UserManager.logout()
             .then(response => {
@@ -28,25 +18,56 @@ class Header extends React.Component {
                 console.log(error);
             });
 
-        this.props.history.push('../');
+        this.props.history.push('/');
     }
 
+    getImage = () => {
+        UserManager.getCurrentUser()
+            .then(response => {
+
+                if (response.photoURL) {
+                    UserManager.getAvatar(response.photoURL)
+                        .then(photo => {
+                            this.props.setImage(photo);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
+    constructor(props) {
+        super(props);
+        this.getImage();
+    }
     render() {
         return (
             <HeaderWrapper>
                 <ImageWrapper>
-                    <img src={logo} />
-                    {/* <Avatar src={this.state.AdminAvatar} size={64} style={{position:"absolute",right:170, top:20}} icon={<UserOutlined />} />
-                    <Button style={{width:120, height:53,fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/')}>logout</Button> */}
-                    <Avatar src={this.state.AdminAvatar} size={64} style={{ margin: '0% auto', position: "absolute", left: "85%", top: "3%" }} icon={<UserOutlined />} />
-                    <Button danger style={{ left: "90%", margin: '1% auto' }} onClick={this.handleClick} >logout</Button>
+                    <div>
+                        <img src={logo}></img>
+                    </div>
                 </ImageWrapper>
+                <LogoutWrapper>
+                    <div>
+                        <Avatar onClick={()=>{this.props.history.push("/AdminHomePage")}} src={this.props.image} size={64} style={{ left: '70%', margin: '2% auto' }} icon={<UserOutlined />} />
 
-                <Seperator />
+                        <Button danger style={{ left: '75%', margin: '2% auto' }} onClick={this.handleClick} >Logout</Button>
+                    </div>
+                </LogoutWrapper>
+                <br></br> <br></br> <br></br>
+
+
+                <Seperator></Seperator>
+                <br />
             </HeaderWrapper>
 
         );
     }
 }
 
-export default withRouter(Header)
+export default withRouter(Header);

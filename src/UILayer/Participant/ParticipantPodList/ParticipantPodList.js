@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import {HeaderWrapper,ImageWrapper,Seperator} from './ResearcherHomePage.style';
+import {HeaderWrapper,ImageWrapper,Seperator} from './ParticipantPodList.style';
 
 import Footer from './Footer.js';
 import Body from './Body.js';
@@ -8,7 +8,7 @@ import Body from './Body.js';
 import { withRouter } from 'react-router-dom'
 import Header from './Header.js'
 
-const ResearcherHomePage = props => {
+const ParticipantPodList = props => {
     const [image, setImage] = useState();
 
     return(
@@ -22,4 +22,4 @@ const ResearcherHomePage = props => {
 
 
 // ========================================
-export default withRouter(ResearcherHomePage);
+export default withRouter(ParticipantPodList);

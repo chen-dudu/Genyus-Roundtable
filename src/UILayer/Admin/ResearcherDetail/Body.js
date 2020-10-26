@@ -69,8 +69,8 @@ class Body extends React.Component {
 			confirmLoading: false,
 
 		}
-        console.log(this.state.uid);
-		console.log(this.state.imageUrl);
+		console.log(this.props);
+
 		// this.getImage();
 
 	}

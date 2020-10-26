@@ -152,7 +152,7 @@ class Body1 extends React.Component {
 		return (
 			<Body1Wrapper>
 				<h1>Home</h1>
-				<Button  type="primary" style={{ margin: '8% 55% 0', width: '15%', height: '10%', position: 'absolute' }}>My Schedule</Button>
+				<Button  type="primary" style={{ margin: '8% 55% 0', width: '15%', height: '10%', position: 'absolute' }} onClick={() => this.props.history.push('/ResearcherPodList/ResearcherPodList')}>My Schedule</Button>
 				<ProfileWrapper>
 				<h2 style={{color:'red'}}>Hey there, {this.state.displayedName}!</h2>
 					<br /><br/>

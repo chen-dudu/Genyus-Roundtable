@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 
 
@@ -8,16 +8,16 @@ import Body from './Body.js';
 import { withRouter } from 'react-router-dom'
 import Header from './Header.js'
 
-class ResearcherCreate extends React.Component {
-  render(){
+const ResearcherCreate = props => {
+    const [image, setImage] = useState();
+
     return(
-      <container>
-        <Header/>
-        <Body/>
-        <Footer/>
-      </container>
+        <container>
+            <Header setImage={setImage} image={image}/>
+            <Body></Body>
+            <Footer/>
+        </container>
     )
-  }
 }
 
 // ========================================

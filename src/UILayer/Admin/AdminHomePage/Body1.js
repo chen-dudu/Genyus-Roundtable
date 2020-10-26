@@ -141,9 +141,14 @@ class Body1 extends React.Component {
 			});
 	};
 
+
+
+
+
 	constructor(props) {
 		super(props);
 		this.getImage();
+
 		this.state = {
 			displayedName: null
 		}
@@ -157,7 +162,7 @@ class Body1 extends React.Component {
 				<h1>Admin Home</h1>
 				{/* PodCreate */}
 				<Button onClick={()=>{this.props.history.push("/Admin/PodCreate")}} type="primary" style={{ margin: '3% 55% 0', width: '15%', height: '10%', position: 'absolute' }}>Create a New Roundtable</Button>
-				<Button  type="primary" style={{ margin: '8% 55% 0', width: '15%', height: '10%', position: 'absolute' }}>Browse/Edit Roundtables</Button>
+				<Button onClick={()=>{this.props.history.push("/Admin/AdminPodList")}} type="primary" style={{ margin: '8% 55% 0', width: '15%', height: '10%', position: 'absolute' }}>Browse/Edit Roundtables</Button>
 				<Button onClick={()=>{this.props.history.push("/Admin/ResearcherList")}} type="primary" style={{ margin: '13% 55% 0', width: '15%', height: '10%', position: 'absolute' }}>View/Edit Researcher Accounts</Button>
 				<ProfileWrapper>
 				<h2 style={{color:'red'}}>Hey there, {this.state.displayedName}!</h2>

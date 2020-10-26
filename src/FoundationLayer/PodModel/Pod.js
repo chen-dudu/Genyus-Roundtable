@@ -11,8 +11,12 @@ class Pod {
      * @param researcher    the researcher who is responsible for the pod
      * @param participants  the list of participants who sign up for the pod
      * @param notifications the list of notifications associated with the pod
+     * @param notes         the URL to the location where notes are store in DB
+     * @param youtubeLink   the link of the session recording on youtube
+     * @param shareLink     then link of the landing page which will be shared to participants for signup
+     * @param video         the youtube link for the overview video
      */
-    constructor(pid, title, status, description, calendlyLink, researcher, participants, notifications) {
+    constructor(pid, title, status, description, calendlyLink, researcher, participants, notifications, notes, youtubeLink, shareLink, video) {
         this._pid = pid;
         this._title = title;
         this._status = status;
@@ -21,6 +25,10 @@ class Pod {
         this._researcher = researcher;
         this._participants = participants;
         this._notifications = notifications;
+        this._notes = notes;
+        this._youtubeLink = youtubeLink;
+        this._shareLink = shareLink;
+        this._video = video;
         // this._sessions = sessions
     }
 
@@ -56,6 +64,22 @@ class Pod {
         return this._notifications;
     }
 
+    get notes() {
+        return this._notes;
+    }
+
+    get youtubeLink() {
+        return this._youtubeLink;
+    }
+
+    get shareLink() {
+        return this._shareLink;
+    }
+
+    get video() {
+        return this._video;
+    }
+
     set pid(newID) {
         this._pid = newID;
     }
@@ -78,6 +102,22 @@ class Pod {
 
     set researcher(newResearcher) {
         this._researcher = newResearcher;
+    }
+
+    set notes(newNotes) {
+        this._notes = newNotes;
+    }
+
+    set youtubeLink(newLink) {
+        this._youtubeLink = newLink;
+    }
+
+    set shareLink(newLink) {
+        this._shareLink = newLink;
+    }
+
+    set video(newVideo) {
+        this._video = newVideo;
     }
 
     addNotification(notification) {
