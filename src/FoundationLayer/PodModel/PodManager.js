@@ -1,3 +1,6 @@
+/**
+ * @file this file contains methods that communicate with firebase about all pod-related issues
+ */
 import firebase from "firebase";
 import Pod from "./Pod";
 import UserManager from "../UserModel/UserManager";
