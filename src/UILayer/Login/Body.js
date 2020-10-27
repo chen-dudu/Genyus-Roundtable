@@ -30,20 +30,20 @@ class Body extends React.Component {
 
     login(e) {
         e.preventDefault();
-        console.log('user', this.state.email, 'is trying to login using password', this.state.password);
+        //console.log('user', this.state.email, 'is trying to login using password', this.state.password);
         UserManager.login(this.state.email, this.state.password)
             .then(userType => {
                 // redirect to user home page
-                console.info(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
-                console.log(this.state.pid);
+                console.debug(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
+                //console.log(this.state.pid);
 
                 if (this.state.pid) {
                     this.props.history.push({pathname:'/PodSignup', search:"?pid="+this.state.pid});
                 }
-                else if (userType == "participant") {
+                else if (userType === "participant") {
                     this.props.history.push("/ParticipantHomePage");
                 }
-                else if (userType == "admin") {
+                else if (userType === "admin") {
                     this.props.history.push("/AdminHomePage");
                 }
                 else {
@@ -58,16 +58,15 @@ class Body extends React.Component {
 
     // update email
     onEmailEnter(e) {
-        // console.log('email enter:', e.target.value);
         this.setState({ 'email': e.target.value });
-        console.log('new state', this.state);
+        //console.log('new state', this.state);
     }
 
     // update password
     onPasswordEnter(e) {
         // console.log('password enter:', e.target);
         this.setState({ 'password': e.target.value });
-        console.log('new state', this.state);
+        //console.log('new state', this.state);
     }
 
     handleChange(e) {
@@ -84,7 +83,7 @@ class Body extends React.Component {
     render() {
         return (
             <BodyWrapper>
-                <div className="cal"><img src={noteImg}></img></div>
+                <div className="cal"><img src={noteImg} alt={"instruction"}/></div>
                 <div className="title">Welcome Back!</div>
                 <br />
                 <br />
@@ -94,8 +93,6 @@ class Body extends React.Component {
                     </div>
 
                     <Input id={'email'} size={"large"} placeholder={'Email'} allowClear value={this.state.email} onChange={this.onEmailEnter} style={{ width: '50%' }} />
-                    {/*<Input type="text" id="email" name="email" style={{ width: "50%" }} />*/}
-                    {/*<input type={'text'} id={'email'} name={'email'} value={this.state.email} style={{width: '50%', height: 30}} onChange={this.onEmailEnter} />*/}
                     <br />
                     <br />
                     <br />
@@ -104,8 +101,6 @@ class Body extends React.Component {
                     </div>
 
                     <Input.Password id={'password'} size={"large"} placeholder={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{ width: '50%' }} />
-                    {/*<Input type="password" id="password" name="password" style={{ width: "50%" }} />*/}
-                    {/*<input type={'password'} id={'password'} name={'password'} value={this.state.password} style={{width: '50%', height: 30}} onChange={this.onPasswordEnter}/>*/}
                     <br />
                     <br />
                     <br />
@@ -116,13 +111,9 @@ class Body extends React.Component {
                             Log in
                         </Button>
 
-                        {/*<input align={'center'} id={'login-button'} style={{background: "#3399ff", borderRadius: 5,*/}
-                        {/*    width: "80%", height: 40, fontWeight: "bold",*/}
-                        {/*    fontSize: 20, color: "white"}}*/}
-                        {/*       type={'submit'} value={'Log in'} />*/}
                     </div>
                 </form>
-                <br></br>
+                <br/>
                 <Button type="text" danger onClick={this.handleChange}>Don't have an account? Sign up</Button>
 
                 <br />
@@ -132,53 +123,6 @@ class Body extends React.Component {
     }
 }
 
-
-// const Bodyd = props => {
-//   return (
-//     <BodyWrapper>
-//       <div className="cal"><img src={noteImg}></img></div>
-//       <div className="title">Welcome Back!</div>
-//       <br />
-//       <br />
-//       <form>
-//         <div align={'center'}>
-//           <label for="email" style={{ "font-size": "25px" }}>Email</label>
-//         </div>
-//
-//         {/*<Input type="text" id="email" name="email" style={{ width: "50%" }} />*/}
-//         <input type={'text'} id={'email'} name={'email'} style={{width: '50%', height: 30}} ref="email"/>
-//         <br />
-//         <br />
-//         <br />
-//         <div align={'center'}>
-//           <label for="password" style={{ "font-size": "25px" }}>Password</label>
-//         </div>
-//
-//         {/*<Input type="password" id="password" name="password" style={{ width: "50%" }} />*/}
-//         <input type={'password'} id={'password'} name={'password'} style={{width: '50%', height: 30}} ref='password'/>
-//         <br />
-//         <br />
-//         <br />
-//         <br />
-//         <div align={'center'} style={{ width: '90%'}}>
-//             <input align={'center'} id={'login-button'} style={{background: "#3399ff", borderRadius: 5,
-//                 width: "80%", height: 40, fontWeight: "bold",
-//                 fontSize: 20, color: "white"}}
-//                    type={'submit'} value={'Log in'} />
-//         </div>
-//       </form>
-//       {/*<SubmitButton>Log In</SubmitButton>*/}
-//       {/* todolist: domain name need to be updated after deploying*/}
-//       <GoSignup><a href = 'http://localhost:3000/signup'>Don't have an account? Sign up</a></GoSignup>
-//       <br />
-//       <br />
-//     </BodyWrapper>
-//   );
-// };
-
-
-
 // Body.propTypes = {};
-
 
 export default withRouter(Body);

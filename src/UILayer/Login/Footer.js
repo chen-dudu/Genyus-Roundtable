@@ -20,18 +20,18 @@ class Footer extends React.Component {
             </LeftWrapper>
             <MidWrapper>
                 <div>
-                <img src={middleImg}></img>
+                <img src={middleImg} alt={"social media"}/>
                 </div>
             </MidWrapper>
             <RightWrapper>
                 <div>
-                <img src={rightImg}></img>
+                <img src={rightImg} alt={"logo-bottom"}/>
                 </div>
             </RightWrapper>
         </FooterWrapper>
     );
 }
-};
+}
 
 Footer.propTypes = {
     

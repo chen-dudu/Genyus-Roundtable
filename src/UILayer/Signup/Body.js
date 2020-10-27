@@ -32,7 +32,6 @@ class Body extends React.Component {
             alert("The passwords entered does not match!");
             return;
         }
-        console.log('information from user', this.state);
 
         // first sign up user
 
@@ -85,7 +84,7 @@ class Body extends React.Component {
         // const nname = this.state.nname;
         return (
             <BodyWrapper>
-                <div className="cal"><img src={noteImg}></img></div>
+                <div className="cal"><img src={noteImg} alt={"instruction"}/></div>
                 <div className="title">Let's make you a Genyus!</div>
                 <br />
                 <form onSubmit={this.signup}>
@@ -94,8 +93,6 @@ class Body extends React.Component {
                     </div>
 
                     <Input id={'email'} size={"large"} placeholder={'Email'} allowClear value={this.state.email} onChange={this.onEmailEnter} style={{ width: '55%' }} />
-                    {/*<Input type="text" id="email" name="email" style={{width:"50%"}}></Input>*/}
-                    {/*<input type={'text'} id={'email'} name={'email'} value={this.state.email} style={{width: '50%', height: 30}} onChange={this.onEmailEnter}/>*/}
                     <br />
                     <br />
                     <div align={'center'}>
@@ -103,8 +100,6 @@ class Body extends React.Component {
                     </div>
 
                     <Input.Password id={'password'} size={"large"} placeholder={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{ width: '55%' }} />
-                    {/*<Input type="text" id="password" name="password" style={{width:"50%"}}></Input>*/}
-                    {/*<input type={'password'} id={'password'} name={'password'} value={this.state.password} style={{width: '50%', height: 30}} onChange={this.onPasswordEnter}/>*/}
                     <br />
                     <br />
                     <div align={'center'}>
@@ -112,8 +107,6 @@ class Body extends React.Component {
                     </div>
 
                     <Input.Password id={'confirmPassword'} size={"large"} placeholder={'Re-enter your password'} value={this.state.re_password} onChange={this.onRePasswordEnter} style={{ width: '55%' }} />
-                    {/*<Input type="text" id="confirmPassword" name="confirmPassword" style={{width:"50%"}}></Input>*/}
-                    {/*<input type={'password'} id={'re_password'} name={'re_password'} value={this.state.re_password} style={{width: '50%', height: 30}} onChange={this.onRePasswordEnter}/>*/}
                     <br />
                     <br />
                     <div align={'center'}>
@@ -121,8 +114,6 @@ class Body extends React.Component {
                     </div>
 
                     <Input id={'full_name'} size={"large"} allowClear placeholder={'Full Name'} value={this.state.full_name} onChange={this.onFullnameEnter} style={{ width: '55%' }} />
-                    {/*<Input type="text" id="full_name" name="fname" style={{width:"50%"}}></Input>*/}
-                    {/*<input type={'text'} id={'full_name'} name={'full_name'} value={this.state.full_name} style={{width: '50%', height: 30}} onChange={this.onFullnameEnter}/>*/}
                     <br />
                     <br />
                     <div align={'center'}>
@@ -130,9 +121,6 @@ class Body extends React.Component {
                     </div>
 
                     <Input id={'nick_name'} size={"large"} allowClear placeholder={'Nick Name'} value={this.state.nick_name} onChange={this.onNicknameEnter} style={{ width: '55%' }} />
-                    {/*<Input type="text" id="nname" name="nname" style={{width:"50%" }} value={nname}*/}
-                    {/*  onChange={this.handleChange} ></Input>*/}
-                    {/*<input type={'text'} id={'nick_name'} name={'nick_name'} value={this.state.nick_name} style={{width: '50%', height: 30}} onChange={this.onNicknameEnter}/>*/}
                     <br />
                     <br />
 
@@ -142,16 +130,10 @@ class Body extends React.Component {
                             style={{ fontSize: "large", display: "block", margin: "0% auto 5%", width: "100%" }} >
                             Sign up
                         </Button>
-                        {/*<input align={'center'} id={'signup-button'} style={{background: "#3399ff", borderRadius: 5,*/}
-                        {/*    width: "80%", height: 40, fontWeight: "bold",*/}
-                        {/*    fontSize: 20, color: "white"}} type={'submit'} value={'Sign up'}/>*/}
                     </div>
                 </form>
                 <br />
                 <Button type="text" danger onClick={this.handleChange} style={{ marginBottom: "3%" }}>Already have an account? Log in</Button>
-                {/*<Link to={{pathname: '/users', state: this.state.nname}}>*/}
-                {/*<SubmitButton type="primary">Sign Up</SubmitButton>*/}
-                {/*</Link>*/}
 
             </BodyWrapper>
         )

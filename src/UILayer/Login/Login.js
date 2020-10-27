@@ -14,13 +14,13 @@ class Login extends React.Component {
     <div>
       <HeaderWrapper>
         <ImageWrapper>
-          <img src={logo}></img>
-          <Seperator></Seperator>
+          <img src={logo} alt={"logo"}/>
+          <Seperator/>
           <p>Log in</p>
         </ImageWrapper>
       </HeaderWrapper>
       <BodyBG>
-        <Body></Body>
+        <Body/>
         </BodyBG>
       <Footer>footer</Footer>
     </div>
