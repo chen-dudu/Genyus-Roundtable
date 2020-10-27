@@ -1,4 +1,6 @@
-
+/**
+ * @file this file contains a class that represents the notification data model in the system
+ */
 class Notification {
 
     /**
