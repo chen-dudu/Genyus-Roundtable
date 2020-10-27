@@ -1,4 +1,6 @@
-
+/**
+ * @file this file contains the initialisation code to setup firebase environment
+ */
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import * as firebase from "firebase/app";
 
