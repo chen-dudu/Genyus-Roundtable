@@ -1,5 +1,6 @@
-
-
+/**
+ * @file this file contains a class that represents the user data model in the system
+ */
 class User {
 
     /**

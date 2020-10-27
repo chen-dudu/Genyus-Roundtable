@@ -1,11 +1,12 @@
+/**
+ * @file this file contains methods that communicate with firebase about all notification-related issues
+ */
 import firebase from "firebase";
 import Notification from "./Notification";
-// import SessionManager from "../SessionModel/SessionManager";
 import PodManager from "../PodModel/PodManager";
 import UserManager from "../UserModel/UserManager";
 
 const NO_COLLECTION = 'notifications';
-// const SESSION_COLLECTION = 'sessions';
 const POD_COLLECTION = "pods";
 const CLASS_NAME = 'NotificationManager';
 
@@ -13,7 +14,6 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 const noDocs = db.collection(NO_COLLECTION);
-// const sessionDocs = db.collection(SESSION_COLLECTION);
 const podDocs = db.collection(POD_COLLECTION);
 
 export default {

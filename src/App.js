@@ -19,9 +19,7 @@ import ResearcherCreate from './UILayer/Admin/ResearcherCreate/ResearcherCreate'
 
 import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
 
-// import StatusAndRewards from './StatusAndRewards/StatusAndRewards'
 import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
-// import ResearcherHomePage from './UILayer/Researcher/ResearcherHomePage/ResearcherHomePage'
 import Detail from './UILayer/Detail/Detail'
 import AdminPodList from './UILayer/Admin/AdminPodList/AdminPodList'
 
@@ -36,27 +34,24 @@ import ResearcherPodList from "./UILayer/Researcher/ResearcherPodList/Researcher
 
 function App(){
 
-
-    // const [nickName, setNickName] = useState("");
     return (
     <Router>
 
     <switch>
 
-    <Route exact path="/" component={HomePage}></Route>
+    <Route exact path="/" component={HomePage}/>
 
-    <Route path="/Signup" component={Signup}></Route>
-    <Route path="/Login" component={Login}></Route>
-    <Route path="/ProfileSetting" component={ProfileSetting}></Route>
-    <Route path="/ParticipantHomePage" component={ParticipantHomePage}></Route>
+    <Route path="/Signup" component={Signup}/>
+    <Route path="/Login" component={Login}/>
+    <Route path="/ProfileSetting" component={ProfileSetting}/>
+    <Route path="/ParticipantHomePage" component={ParticipantHomePage}/>
     <Route path="/Participant/ParticipantPodList" component={ParticipantPodList}/>
 
-    <Route path="/AdminHomePage" component={AdminHomePage}></Route>
-    <Route path="/ResearcherHomePage" component={ResearcherHomePage}></Route>
+    <Route path="/AdminHomePage" component={AdminHomePage}/>
+    <Route path="/ResearcherHomePage" component={ResearcherHomePage}/>
     <Route path="/ResearcherPodList/ResearcherPodList" component={ResearcherPodList}/>
 
-    <Route path="/Notification" component={Notification}></Route>
-
+    <Route path="/Notification" component={Notification}/>
 
     <Route path="/Admin/ResearcherList" component={ResearcherList}/>
     <Route path="/Admin/ResearcherDetail/:fullname" component={ResearcherDetail}/>
@@ -64,20 +59,14 @@ function App(){
     <Route path="/Detail" component={Detail}/>
     <Route path="/Admin/AdminPodList" component={AdminPodList}/>
 
-    {/*<Route path="/Admin/AdminPodDetail" component={AdminPodDetail}/>*/}
-    {/*<Route path="/Researcher/ResearcherPodDetail" component={ResearcherPodDetail}/>*/}
-    {/*<Route path="/Participant/ParticipantPodDetail" component={ParticipantPodDetail}/>*/}
-
-
-
     <Route path="/PodSignup" component={PodSignup}/>
     <Route path="/PodLandingPage" component={PodLandingPage}/>
 
 
-    <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}></Route>
+    <Route path="/ViewAcceptedSession/:nid" component={ViewAcceptedSession}/>
 
-    <Route path="/Admin/PodCreate" component={PodCreate}></Route>
-    <Route path="/Admin/PodInvitation" component={PodInvitation}></Route>
+    <Route path="/Admin/PodCreate" component={PodCreate}/>
+    <Route path="/Admin/PodInvitation" component={PodInvitation}/>
 
     </switch>
     </Router>

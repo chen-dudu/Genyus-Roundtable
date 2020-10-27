@@ -1,3 +1,6 @@
+/**
+ * @file this file contains methods that communicate with firebase about all user-related issues
+ */
 import firebase from "../../firebase";
 import User from "./User";
 
@@ -45,7 +48,11 @@ export default {
         return Promise.reject('current user is null');
     },
 
-
+    /**
+     * a method used to get a user document reference for the specified id
+     * @param uid the id of user whose document reference is to be returned
+     * @return {null|firebase.firestore.DocumentReference<firebase.firestore.DocumentData>} the required document reference
+     */
     getUserRef(uid) {
         try {
             return userDocs.doc(uid);
@@ -63,7 +70,6 @@ export default {
      */
     async getAvatar (path) {
         try {
-            // TODO decide on which one to use
             // let fileRef = storage.ref().child(path);
             let fileRef = storage.ref(path);
             let url = await fileRef.getDownloadURL();
@@ -102,38 +108,6 @@ export default {
             console.error(`${CLASS_NAME} | signup | signup/name-update/data-storing failed, with error message: ${err.message}`);
             return Promise.reject(err.message);
         }
-        // let error;
-        // auth.createUserWithEmailAndPassword(email, password)
-        //     .then(credential => {
-        //         // error = null
-        //         console.info(`successful login for account ${email}, with fullname ${fullname} and nickname ${nickname}`);
-        //         // update user display name
-        //         let uid = credential.user.uid;
-        //         credential.user.updateProfile({displayName: nickname})
-        //             .then(credential => {
-        //                 console.info(`successfully update user's display name to ${nickname}`);
-        //                 // display name has been updated, now store more info to firestore
-        //                 userDocs.doc(uid).set({fullname: fullname, nickname: nickname})
-        //                     .then(credential => {
-        //                         console.info(`successfully store user info to database`);
-        //                         return null;
-        //                     })
-        //                     .catch(err => {
-        //                         console.error(`failed to store user info to database, with error message: ${err.message}`);
-        //                         return err.message;
-        //                     });
-        //             })
-        //             .catch(err => {
-        //                 console.error(`failed to update user display name, with error message: ${err.message}`);
-        //                 return err.message;
-        //             })
-        //     })
-        //     .catch(err => {
-        //         // error = err.message;
-        //         console.error(`failed to signup account ${email}, received error message: ${err.message}`);
-        //         return err.message;
-        //     });
-        // return error;
     },
 
     /**
@@ -166,22 +140,12 @@ export default {
     async logout() {
         try {
             let signoutFeedback = await auth.signOut();
-            // TODO log to see the structure of credential, need to change later on
             console.debug(`${CLASS_NAME} | logout |signoutFeedback`);
             return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | logout | failed to logout current user, with error message: ${err.message}`);
             return Promise.reject(err.message);
         }
-
-        // auth.signOut()
-        //     .then(credential => {
-        //         // TODO log to see the structure of credential, need to change later on
-        //         console.info(credential);
-        //     })
-        //     .catch(err => {
-        //         console.error(`failed to logout current user`);
-        //     });
     },
 
     /**
@@ -256,16 +220,6 @@ export default {
                             console.error(`${CLASS_NAME} | | failed to update user property photoURL, received error message: ${err.message}`);
                             return Promise.reject(err.message);
                         })
-
-                    // auth.currentUser.updateProfile({photoURL: path})
-                    //     .then(value => {
-                    //         console.info(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${value}`);
-                    //         return Promise.resolve(undefined);
-                    //     })
-                    //     .catch(err => {
-                    //         console.error(`${CLASS_NAME} | | failed to update user property photoURL, received error message: ${err.message}`);
-                    //         return Promise.reject(err.message);
-                    //     });
                 }
             );
         } catch (err) {

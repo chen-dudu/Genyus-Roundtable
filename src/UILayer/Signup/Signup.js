@@ -16,13 +16,13 @@ const Signup = props => {
     <div>
       <HeaderWrapper>
         <ImageWrapper>
-          <img src={logo}></img>
-          <Seperator></Seperator>
+          <img src={logo} alt={"logo"}/>
+          <Seperator/>
           <p>Sign Up</p>
         </ImageWrapper>
       </HeaderWrapper>
       <BodyBG>
-        <Body></Body>
+        <Body/>
         </BodyBG>
       <Footer>footer</Footer>
     </div>
