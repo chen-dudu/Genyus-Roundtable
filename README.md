@@ -61,3 +61,12 @@ root
         - contains information about the project, e.g. project metadata and project dependencies
 
 ```
+
+To run on localhost, use the command
+```npm start```
+
+To produce a production build, use the command
+```npm run build```
+
+To deploy to firebase hosting, use the command (note: firebase CLI must be installed)
+```firebase deploy --only hosting```
