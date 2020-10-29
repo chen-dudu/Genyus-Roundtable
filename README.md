@@ -54,7 +54,7 @@ root
  |-- functions
  |      - where firebase cloud functions codes live
  |-- public
- |      - the website landing page is here
+ |      - where index.html lives
  |-- src
  |      - all the source codes are here
  |-- package.json
