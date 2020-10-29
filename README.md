@@ -62,11 +62,11 @@ root
 
 ```
 
-To run on localhost, use the command
+To run on localhost, use the command  
 ```npm start```
 
-To produce a production build, use the command
+To produce a production build, use the command  
 ```npm run build```
 
-To deploy to firebase hosting, use the command (note: firebase CLI must be installed)
+To deploy to firebase hosting, use the command (note: firebase CLI must be installed)  
 ```firebase deploy --only hosting```
