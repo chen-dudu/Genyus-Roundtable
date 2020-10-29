@@ -9,8 +9,14 @@ import { UserOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
 import UserManager from "../../FoundationLayer/UserModel/UserManager";
 
+/**
+ * @file this file contains a class that represents the header of pod detail page
+ */
 class Header extends React.Component {
 
+    /**
+     * get and render current user avatar from backend
+     */
     constructor(props) {
         super(props);
         this.getImage();
@@ -19,6 +25,9 @@ class Header extends React.Component {
         }
     }
 
+    /**
+     * handle log out button
+     */
     handleClick = () => {
         UserManager.logout()
             .then(response => {
@@ -31,6 +40,9 @@ class Header extends React.Component {
         this.props.history.push('/');
     }
 
+    /**
+     * get current user avatar from backend
+     */
     getImage = () => {
         UserManager.getCurrentUser()
             .then(user => {
