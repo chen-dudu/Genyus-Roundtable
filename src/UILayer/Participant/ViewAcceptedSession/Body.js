@@ -11,11 +11,18 @@ import UserManager from '../../../FoundationLayer/UserModel/UserManager';
 import NotificationManager from "../../../FoundationLayer/NotificationModel/NotificationManager";
 import SessionManager from "../../../FoundationLayer/SessionModel/SessionManager";
 
+/**
+ * @file this file contains a class that represents the body of accepted session page
+ */
 const { Step } = Steps;
 const style = {background: 'white', padding: '8px 0'};
 
 class Body extends React.Component {
 
+	/**
+	 * a private constructor which is used to store notification id from notification list page and
+	 * all notification information from backend
+	 */
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -43,6 +50,9 @@ class Body extends React.Component {
 		this.getSession();
 	}
 
+	/**
+	 * get all session information from backend and store in the state
+	 * */
 	getSession = () => {
 		console.log("check sid");
 		console.log(this.state.sid);
@@ -130,6 +140,9 @@ class Body extends React.Component {
 		});
 	}
 
+	/**
+	 * change js Date format to human readable date
+	 */
 	formatDate(date) {
 		let d = new Date(date);
 
@@ -153,6 +166,9 @@ class Body extends React.Component {
 		return res;
 	}
 
+	/**
+	 * change object array to list
+	 */
 	arrayToList(array) {
 		let list = null;
 		for (let i = array.length - 1; i >= 0; i--) {
