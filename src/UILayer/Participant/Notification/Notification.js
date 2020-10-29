@@ -4,6 +4,9 @@ import Footer from './Footer.js';
 import Body from './Body.js';
 import {withRouter} from "react-router-dom";
 
+/**
+ * @file this file contains a constant which represents the whole notification page
+ */
 const Notification = props => {
     const [image, setImage] = useState();
     return(
@@ -16,17 +19,5 @@ const Notification = props => {
         </div>
     )
 }
-
-// class Notification extends React.Component{
-//
-//
-//   render(){
-//   return (
-//     <div>
-//     	<Header> image={image} </Header>
-//     </div>
-//   );
-// }
-// }
 
 export default withRouter(Notification);
