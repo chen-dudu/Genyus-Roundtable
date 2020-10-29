@@ -5,7 +5,7 @@ import middleImg from "../../img/footmid.png"
 import rightImg from "../../img/footright.png"
 
 /**
- * @file this file contains a class that represents the footer of detail page
+ * @file this file contains a class that represents the footer of pod detail page
  */
 class Footer extends React.Component {
 	render(){
