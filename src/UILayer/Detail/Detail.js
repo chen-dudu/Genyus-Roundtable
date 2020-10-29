@@ -4,6 +4,9 @@ import Footer from './Footer.js';
 import Body from './Body.js';
 import {withRouter} from "react-router-dom";
 
+/**
+ * @file this file contains a constant which represents the whole detail page
+ */
 const Detail = props => {
     const [image, setImage] = useState();
     return(
