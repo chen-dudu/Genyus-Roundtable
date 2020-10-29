@@ -15,7 +15,7 @@ import UserManager from "../../FoundationLayer/UserModel/UserManager";
 class Header extends React.Component {
 
     /**
-     * get and render current user avatar from backend
+     * a private constructor which is used to get and render current user avatar from backend
      */
     constructor(props) {
         super(props);
