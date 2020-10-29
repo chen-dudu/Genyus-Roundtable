@@ -9,13 +9,22 @@ import { UserOutlined } from '@ant-design/icons';
 import { withRouter } from "react-router-dom";
 import UserManager from "../../../FoundationLayer/UserModel/UserManager";
 
+/**
+ * @file this file contains a class that represents the header of view session page
+ */
 class Header extends React.Component {
 
+    /**
+     * a private constructor which is used to get and render current user avatar from backend
+     */
     constructor(props) {
         super(props);
         this.getImage();
     }
 
+    /**
+     * handle log out button
+     */
     handleClick = () => {
         UserManager.logout()
             .then(response => {
@@ -28,6 +37,9 @@ class Header extends React.Component {
         this.props.history.push('../');
     }
 
+    /**
+     * get current user avatar from backend
+     */
     getImage = () => {
         UserManager.getCurrentUser()
             .then(user => {
