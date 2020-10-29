@@ -58,15 +58,20 @@ root
  |-- src
  |      - all the source codes are here
  |-- package.json
-        - contains information about the project, e.g. project metadata and project dependencies
-
+ |      - contains information about the project, e.g. project metadata and project dependencies
+ |-- firebase.json
+ |      - contains parameters for firebase cloud function and firebase hosting
 ```
 
+## Execution
 To run on localhost, use the command  
 ```npm start```
 
 To produce a production build, use the command  
 ```npm run build```
 
-To deploy to firebase hosting, use the command (note: firebase CLI must be installed)  
+To deploy a build to firebase hosting, use the command (Note: firebase CLI must be installed)  
 ```firebase deploy --only hosting```
+
+To deploy cloud functions to firebase server, use the command (Note: firebase CLI must be installed)  
+```firebase deploy --only functions```
