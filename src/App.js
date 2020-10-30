@@ -6,30 +6,30 @@ import {
   Route
 } from "react-router-dom";
 
-import HomePage from './UILayer/HomePage/HomePage';
-import Signup from './UILayer/Signup/Signup'
-import Login from './UILayer/Login/Login'
-import Notification from './UILayer/Participant/Notification/Notification'
-import ViewAcceptedSession from "./UILayer/Participant/ViewAcceptedSession/ViewAcceptedSession";
-import ParticipantHomePage from './UILayer/Participant/ParticipantHomePage/ParticipantHomePage'
+import HomePage from './View/HomePage/HomePage';
+import Signup from './View/Signup/Signup'
+import Login from './View/Login/Login'
+import Notification from './View/ParticipantUI/Notification/Notification'
+import ViewAcceptedSession from "./View/ParticipantUI/ViewAcceptedSession/ViewAcceptedSession";
+import ParticipantHomePage from './View/ParticipantUI/ParticipantHomePage/ParticipantHomePage'
 
-import ResearcherList from './UILayer/Admin/ResearcherList/ResearcherList'
-import ResearcherDetail from './UILayer/Admin/ResearcherDetail/ResearcherDetail'
-import ResearcherCreate from './UILayer/Admin/ResearcherCreate/ResearcherCreate'
+import ResearcherList from './View/AdminUI/ResearcherList/ResearcherList'
+import ResearcherDetail from './View/AdminUI/ResearcherDetail/ResearcherDetail'
+import ResearcherCreate from './View/AdminUI/ResearcherCreate/ResearcherCreate'
 
-import ProfileSetting from './UILayer/Participant/ProfileSetting/ProfileSetting'
+import ProfileSetting from './View/ParticipantUI/ProfileSetting/ProfileSetting'
 
-import AdminHomePage from './UILayer/Admin/AdminHomePage/AdminHomePage'
-import Detail from './UILayer/Detail/Detail'
-import AdminPodList from './UILayer/Admin/AdminPodList/AdminPodList'
+import AdminHomePage from './View/AdminUI/AdminHomePage/AdminHomePage'
+import Detail from './View/Detail/Detail'
+import AdminPodList from './View/AdminUI/AdminPodList/AdminPodList'
 
-import PodCreate from './UILayer/Admin/PodCreate/PodCreate'
-import PodInvitation from './UILayer/Admin/PodInvitation/PodInvitation'
-import PodSignup from "./UILayer/Participant/PodSignup/PodSignup";
-import PodLandingPage from "./UILayer/Participant/PodLandingPage/PodLandingPage";
-import ResearcherHomePage from "./UILayer/Researcher/ResearcherHomePage/ResearcherHomePage"
-import ParticipantPodList from "./UILayer/Participant/ParticipantPodList/ParticipantPodList";
-import ResearcherPodList from "./UILayer/Researcher/ResearcherPodList/ResearcherPodList";
+import PodCreate from './View/AdminUI/PodCreate/PodCreate'
+import PodInvitation from './View/AdminUI/PodInvitation/PodInvitation'
+import PodSignup from "./View/ParticipantUI/PodSignup/PodSignup";
+import PodLandingPage from "./View/ParticipantUI/PodLandingPage/PodLandingPage";
+import ResearcherHomePage from "./View/ResearcherUI/ResearcherHomePage/ResearcherHomePage"
+import ParticipantPodList from "./View/ParticipantUI/ParticipantPodList/ParticipantPodList";
+import ResearcherPodList from "./View/ResearcherUI/ResearcherPodList/ResearcherPodList";
 
 
 function App(){
