@@ -47,7 +47,11 @@ class Body extends React.Component {
 	onFinish = (values) => {
 		console.log(values);
 	};
-
+  
+	/**
+	 * getResearcherName from the database
+	 * showing in the list
+	 */
 	getResearcherName = () => {
 		return getResearchers()
 			.then(result => {
