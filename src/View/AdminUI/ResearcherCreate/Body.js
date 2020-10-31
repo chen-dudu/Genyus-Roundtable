@@ -1,28 +1,31 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {Body1Wrapper,SubmitButton,ProfileWrapper,TitleWrapper,BodyWrapper} from './ResearcherCreate.style';
-import Img from '../../../img/Avatar.png';
-import { Link } from "react-router-dom";
+import {Body1Wrapper,ProfileWrapper,TitleWrapper,BodyWrapper} from './ResearcherCreate.style';
 import { withRouter } from 'react-router-dom'
-import {Input, text, Avatar, Button, Modal, Upload, message} from 'antd';
-import noteImg from "../../../img/note.png";
-import {LoadingOutlined, PlusOutlined, UserOutlined} from "@ant-design/icons";
+import {Input, text, Button, Modal, Upload, message} from 'antd';
+import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import UserManager from "../../../DataModel/UserModel/UserManager";
 import firebase from "firebase";
 import ImgCrop from "antd-img-crop";
 
-
-
 const { TextArea } = Input;
 const createUser = firebase.functions().httpsCallable('createUser');
-const updateUserAvatar = firebase.functions().httpsCallable('updateUserAvatar');
 
+/**
+ * a function to represent the origin image object with an URL
+ * @param img
+ * @param callback
+ */
 function getBase64(img, callback) {
 	const reader = new FileReader();
 	reader.addEventListener('load', () => callback(reader.result));
 	reader.readAsDataURL(img);
 }
 
+/**
+ * a function to check if the uploaded image is legal
+ * @param file the image
+ * @returns {boolean}
+ */
 function beforeUpload(file) {
 	const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
 	if (!isJpgOrPng) {
@@ -35,8 +38,14 @@ function beforeUpload(file) {
 	return isJpgOrPng && isLt2M;
 }
 
-
+/**
+ *@Description: a react component that renders the body of the ResearcherCreate
+ */
 class Body extends React.Component {
+	/**
+	 * define the state needed when rendering the page
+	 * @param props React predefined props
+	 */
 	constructor(props) {
 		super(props);
 		this.onEmailEnter = this.onEmailEnter.bind(this);
@@ -54,7 +63,10 @@ class Body extends React.Component {
 			loading: false,
 		};
 	}
-
+	/**
+	 * a function used to handle when a photo is uploaded
+	 * @param info
+	 */
 	handleChange = info => {
 		if (info.file.status === 'uploading') {
 			this.setState({ loading: true });
@@ -92,7 +104,10 @@ class Body extends React.Component {
 	onFullnameEnter(e) {
 		this.setState({fullname: e.target.value});
 	}
-
+	/**
+	 * functions to show a modal for the user to confirm the input information
+	 * if confirmed, use the createUser function to create a new researcher account
+	 */
 	showModal = () => {this.setState({Modalvisible: true,});};
 	handleModalOk = () => {
 		this.setState({
@@ -115,29 +130,30 @@ class Body extends React.Component {
 				window.alert("Failed to create a new researcher, error: "+err);
 				this.setState({confirmLoading: false,Modalvisible: false});
 		});
-
 	};
 	handleModalCancel = () => {this.setState({Modalvisible: false,});};
 
 
-
+	/**
+	 * render the JSX elements
+	 * @returns {JSX.Element} including an button to upload a photo, several input area for information
+	 * and a back button and a confirm button
+	 */
 	render(){
 		const { loading, imageUrl } = this.state;
 		const uploadButton = (
 			<div>
 				{loading ? <LoadingOutlined style={{ background: 'red' }} /> : <PlusOutlined />}
-				<div style={{ marginTop: 8 }}></div>
+				<div style={{marginTop: 8}}/>
 			</div>
 		);
 		return(
-
 			<Body1Wrapper>
 				<TitleWrapper>
 					<h1>Create a new Researcher</h1>
 					<br/>
 				</TitleWrapper>
 				<BodyWrapper>
-
 					<div className="title">Researcher Details</div>
 					<br />
 					<br />
@@ -149,9 +165,7 @@ class Body extends React.Component {
 						<div align={'center'}>
 							<label htmlFor="Photo" style={{fontSize:"25px"}}>Photo</label>
 						</div>
-
 						<ProfileWrapper>
-
 							<ImgCrop rotate>
 								<Upload
 									name="avatar"
@@ -166,55 +180,41 @@ class Body extends React.Component {
 								</Upload>
 							</ImgCrop>
 						</ProfileWrapper>
-
-
 						<text>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</text>
 						<br />
 						<br />
 						<br />
 						<br />
 						<text style={{ fontWeight:"bold",color: '#4682B4',marginLeft:'20%' }}>Click on the photo to make a change</text>
-
 						<br />
 						<br />
-
 						<div align={'center'}>
 							<label htmlFor="Full Name" style={{fontSize:"25px"}}>Full Name</label>
 						</div>
 						<text>&emsp;&emsp;&emsp;&emsp;&emsp;</text>
-
 						<Input type={'text'} allowClear id={'Full Name'} name={'Full Name'} value={this.state.FullName} onChange={this.onFullnameEnter} style={{width: '70%', height: 30}}/>
 						<br />
 						<br />
-
-
 						<div align={'center'}>
 							<label htmlFor="Description" style={{fontSize:"25px"}}>Description </label>
 						</div>
 						<text>&emsp;&emsp;&emsp;&emsp;&emsp;</text>
-
 						<TextArea rows={3} type={'text'} allowClear id={'Description'} name={'Description'} value={this.state.description} onChange={this.onDescriptionEnter} style={{width: '70%', height: 90}} />
 						<br />
 						<br />
-
-
 						<div align={'center'}>
 							<label htmlFor="Email" style={{fontSize:"25px"}}>Email</label>
 						</div>
 						<text>&emsp;&emsp;&emsp;&emsp;&emsp;</text>
-						{/*<Input type="text" id="confirmPassword" name="confirmPassword" style={{width:"50%"}}></Input>*/}
 						<Input type={'text'} allowClear id={'Email'} name={'Email'} value={this.state.email} onChange={this.onEmailEnter} style={{width: '70%', height: 30}}/>						<br />
 						<br />
 						<div align={'center'}>
 							<label htmlFor="full_name" style={{fontSize:"25px"}}>Password</label>
 						</div>
 						<text>&emsp;&emsp;&emsp;&emsp;&emsp;</text>
-						{/*<Input type="text" id="full_name" name="fname" style={{width:"50%"}}></Input>*/}
 						<Input.Password type={'password'}  id={'Password'} name={'Password'} value={this.state.password} onChange={this.onPasswordEnter} style={{width: '70%', height: 30}} />
 						<br />
 						<br />
-
-
 						<div>
 							<Button className="cancelButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Back</Button>
 							<Button className="confirmButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={this.showModal}>Confirm</Button>
@@ -234,7 +234,6 @@ class Body extends React.Component {
 						</div>
 						<br/>
 						<br/>
-
 					</form>
 					<br/><br/>
 				</BodyWrapper>
@@ -243,18 +242,10 @@ class Body extends React.Component {
 				<br/>
 				<br/>
 				<br/>
-
 			</Body1Wrapper>
-
-
-
-
 		)
 	}
 }
-
-
-
 
 export default withRouter(Body);
 
