@@ -10,7 +10,6 @@ import UserManager from "../../../DataModel/UserModel/UserManager";
 import PodManager from "../../../DataModel/PodModel/PodManager";
 import firebase from 'firebase';
 
-
 /**
  * a function that get a user with given user id
  * @type {firebase.functions.HttpsCallable}
@@ -21,7 +20,7 @@ const getUser = firebase.functions().httpsCallable('getUser');
 /**
  *@Description: a react component that renders the body of the PodLandingPage
  */
-class Body1 extends React.Component {
+class Body extends React.Component {
 	/**
 	 * define the state needed when rendering the page
 	 * @param props React predefined props
@@ -129,4 +128,4 @@ class Body1 extends React.Component {
 	}
 }
 
-export default withRouter(Body1);
+export default withRouter(Body);

@@ -21,7 +21,7 @@ const getUser = firebase.functions().httpsCallable('getUser');
 /**
  *@Description: a react component that renders the body of the PodSignup page
  */
-class Body1 extends React.Component {
+class Body extends React.Component {
 
 	/**
 	 * define the state needed when rendering the page
@@ -171,4 +171,4 @@ class Body1 extends React.Component {
 	}
 }
 
-export default withRouter(Body1);
+export default withRouter(Body);
