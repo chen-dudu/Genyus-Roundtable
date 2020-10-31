@@ -1,5 +1,8 @@
+/**
+ * The Body Wrapper holds login functionality
+ * After click login button, all inputs are submitted to the database
+ */
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { BodyWrapper, SubmitButton, GoSignup } from './Login.style';
 import noteImg from "../../img/note.png"
 import UserManager from "../../DataModel/UserModel/UserManager";
@@ -11,26 +14,28 @@ const CLASS_NAME = "Login/Body";
 
 class Body extends React.Component {
 
-
     constructor(props) {
         super(props);
         const query = this.props.location.search;
         const pid = query.substr(5);
 
         this.state = { email: '', password: '', pid: pid };
-
-
-
         this.onEmailEnter = this.onEmailEnter.bind(this);
         this.onPasswordEnter = this.onPasswordEnter.bind(this);
         this.login = this.login.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-
+    /**
+     * isTriggered when submitting the login form
+     * @param {*} e 
+     */
     login(e) {
         e.preventDefault();
-        //console.log('user', this.state.email, 'is trying to login using password', this.state.password);
+        /**
+         * ask the UserManager to store email and password to db
+         * firebase: firestore
+         */
         UserManager.login(this.state.email, this.state.password)
             .then(userType => {
                 // redirect to user home page

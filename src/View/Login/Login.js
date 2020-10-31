@@ -1,3 +1,10 @@
+/**
+ * The Login component is composed by 
+ * HeaderWrapper: Header
+ * Body: the login submission form
+ * Footer
+ * Author: Yujun Yan
+ */
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import {
