@@ -30,9 +30,6 @@ class Body2 extends React.Component {
 	}
 }
 
-/**
- * Body1: The react component holds: buttons and upload photo field
- */
 class Body extends React.Component {
 	render() {
 		return (

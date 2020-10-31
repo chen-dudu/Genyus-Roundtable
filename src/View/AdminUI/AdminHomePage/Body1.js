@@ -1,3 +1,9 @@
+/**
+ * Body1: The react component holds: buttons and upload photo field
+ * Buttons: imported from antd
+ * Upload field: imported from antd
+ * Crop function: antd
+*/
 import React, { useState } from 'react';
 import { Body1Wrapper, ProfileWrapper } from './AdminHomePage.style';
 import { Upload, message, Button } from 'antd';
@@ -7,13 +13,21 @@ import ImgCrop from 'antd-img-crop';
 import { withRouter } from 'react-router-dom';
 import UserManager from '../../../DataModel/UserModel/UserManager';
 
-
+/** 
+ * change uploaded photo format
+ * @param img image uploaded
+ * @param callback 
+*/
 function getBase64(img, callback) {
 	const reader = new FileReader();
 	reader.addEventListener('load', () => callback(reader.result));
 	reader.readAsDataURL(img);
 }
 
+/**
+ * check photo format before uploading
+ * @param {*} file 
+ */
 function beforeUpload(file) {
 	const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
 	if (!isJpgOrPng) {
@@ -31,6 +45,10 @@ class Avatar extends React.Component {
 		loading: false,
 	};
 
+	/**
+	 * update the uploaded photo file to the database
+	 * @param {*} info 
+	 */
 	handleChange = info => {
 		if (info.file.status === 'uploading') {
 			this.setState({ loading: true });
@@ -58,6 +76,9 @@ class Avatar extends React.Component {
 		}
 	};
 
+	/**
+	 * get current from the Usermanager
+	 */
 	getImage = () => {
 		UserManager.getCurrentUser()
 			.then(response => {
@@ -65,6 +86,9 @@ class Avatar extends React.Component {
 				console.log('photourl:' + response.photoURL);
 
 				if (response.photoURL) {
+					/**
+					 * get one attribute: photoURL of the current user
+					 */
 					UserManager.getAvatar(response.photoURL)
 						.then(photo => {
 							console.log('getAvatar successful');
@@ -141,10 +165,6 @@ class Body1 extends React.Component {
 			});
 	};
 
-
-
-
-
 	constructor(props) {
 		super(props);
 		this.getImage();
@@ -169,16 +189,7 @@ class Body1 extends React.Component {
 					<br /><br/>
 					<Avatar setImage={this.props.setImage} size="large" />
 					<br /><br /><br /><br />
-					{/* <Button danger style={{ margin: '0', width: '55%', height: '12%', fontSize: '120%' }} onClick={this.handleClick}>Profile Settings</Button> */}
-
-					{/* <Button danger style={{ margin: '5% 5% 0', width: '55%', height: '12%', fontSize: '120%' }} onClick={() => this.props.history.push('/ProfileSetting')}>Status and Rewards</Button> */}
-
-					{/* <StatusButton>Status and Rewards</StatusButton> */}
 				</ProfileWrapper>
-
-				{/* <div className='notificationButton'>My Notification</div>
-			<div className='scheduleButton'>My Roundtable Schedule</div> */}
-
 			</Body1Wrapper>
 		)
 	}
