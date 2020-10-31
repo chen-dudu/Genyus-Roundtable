@@ -1,3 +1,8 @@
+/**
+ * The Body contains a Podcreation Form
+ * Inputs are submitted to the database as submitting the form
+ * Author: Yujun Yan
+ */
 import React, { useState } from 'react';
 import { BodyWrapper, Body1Wrapper, TitleWrapper } from './PodCreate.style';
 import 'antd/dist/antd.css';
@@ -6,6 +11,9 @@ import { Form, Input, Button, Select } from 'antd';
 import firebase from 'firebase';
 import PodManager from '../../../DataModel/PodModel/PodManager';
 
+/**
+ * Declare constants (avoid magic value)
+ */
 const { Option } = Select;
 // const domainName = "http://localhost:3000";
 const domainName = "https://genyus-roundtables.web.app/";
@@ -26,13 +34,16 @@ const tailLayout = {
 		span: 16,
 	},
 };
-
 const getResearchers = firebase.functions().httpsCallable('getResearchers');
-
 const { TextArea } = Input;
 
 class Body extends React.Component {
 	formRef = React.createRef();
+
+	/**
+	 * Print the Input to the console
+	 * @param {*} values 
+	 */
 	onFinish = (values) => {
 		console.log(values);
 	};
@@ -77,7 +88,6 @@ class Body extends React.Component {
 				console.log("create pod successful");
 				console.log("print id", response);
 				this.setState({ pid: response });
-				// this.setState({ shareLink: domainName.concat(pathName,searchName,response)})
 				this.props.history.push({ pathname: pathName, search: searchName + response })
 				console.log("the shared link is", this.state.shareLink);
 				console.log("the introduction video link is: ", this.state.video);
