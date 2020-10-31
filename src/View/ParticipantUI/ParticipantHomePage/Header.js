@@ -21,17 +21,22 @@ class Header extends React.Component {
     this.props.history.push('/');
   }
 
+  constructor(props) {
+      super(props);
+      console.error("photo" + props.photo)
+  }
+
   render() {
     return (
       <HeaderWrapper>
         <ImageWrapper>
           <div>
-            <img src={logo}></img>
+            <img src={logo} />
           </div>
         </ImageWrapper>
         <LogoutWrapper>
           <div>
-            <Avatar src={this.props.image} size={64} style={{ left: '70%', margin: '2% auto' }} icon={<UserOutlined />} />
+            <Avatar src={this.props.photo} size={64} style={{ left: '70%', margin: '2% auto' }} icon={<UserOutlined />} />
 
             <Button danger style={{ left: '75%', margin: '2% auto' }} onClick={this.handleClick} >logout</Button>
           </div>
