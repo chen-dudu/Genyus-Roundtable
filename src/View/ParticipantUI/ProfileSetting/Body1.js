@@ -27,6 +27,10 @@ function getBase64(img, callback) {
 	reader.readAsDataURL(img);
 }
 
+/**
+ * check photo format before uploading
+ * @param {*} file 
+ */
 function beforeUpload(file) {
 	return true;
 }
@@ -36,6 +40,10 @@ class UploadTrigger extends React.Component {
 		loading: false,
 	};
 
+	/**
+	 * update the uploaded photo file to the database
+	 * @param {*} info 
+	 */
 	handleChange = info => {
 		getBase64(info.file.originFileObj, imageUrl => {
 			this.setState({
@@ -123,8 +131,8 @@ class Body1 extends React.Component {
 	updateProfile = (e) => {
 		e.preventDefault();
 		if (this.state.full_name && this.state.nick_name) {
-			console.log("PrintFullname",this.state.full_name);
-			console.log("PrintNickname",this.state.nick_name);
+			console.log("PrintFullname", this.state.full_name);
+			console.log("PrintNickname", this.state.nick_name);
 			UserManager.updateProfile(this.state.full_name, this.state.nick_name)
 				.then(response => {
 					this.props.history.push("ParticipantHomePage");
@@ -143,9 +151,9 @@ class Body1 extends React.Component {
 			.then(user => {
 				console.log('getCurrentUser successful');
 				console.log('photourl:' + user.photoURL);
-				this.setState({full_name: user.fullname, nick_name: user.nickname});
-				console.log("PrintFullname!!!!!!!!!!!!!",user.fullname);
-				console.log("PrintNickname!!!!!!!!!!!!!",user.nickname);
+				this.setState({ full_name: user.fullname, nick_name: user.nickname });
+				console.log("PrintFullname!!!!!!!!!!!!!", user.fullname);
+				console.log("PrintNickname!!!!!!!!!!!!!", user.nickname);
 
 				if (user.photoURL) {
 					UserManager.getAvatar(user.photoURL)
