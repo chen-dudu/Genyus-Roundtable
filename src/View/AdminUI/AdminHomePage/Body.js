@@ -1,10 +1,16 @@
+/**
+ * The Body component is composed by:
+ * Body1: The react component holds: buttons and upload photo field
+ * and Body2: The react component holds: Genyus Roundtable descriptions
+ */
 import React,{ useState } from 'react';
 import {Body2Wrapper} from './AdminHomePage.style';
 import Body1 from './Body1.js';
 import {withRouter} from 'react-router-dom';
 
-
-
+/**
+ * Body2: The react component holds: Genyus Roundtable descriptions
+ */
 class Body2 extends React.Component {
 	render() {
 		return (
@@ -24,7 +30,9 @@ class Body2 extends React.Component {
 	}
 }
 
-
+/**
+ * Body1: The react component holds: buttons and upload photo field
+ */
 class Body extends React.Component {
 	render() {
 		return (
