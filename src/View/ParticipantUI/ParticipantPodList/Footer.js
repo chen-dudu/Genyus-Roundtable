@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './ParticipantPodList.style'
 import leftImg from "../../../img/footleft.png"
 import middleImg from "../../../img/footmid.png"

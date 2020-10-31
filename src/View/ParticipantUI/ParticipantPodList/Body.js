@@ -8,7 +8,7 @@ import {Body2Wrapper} from "../ParticipantHomePage/ParticipantHomePage.style";
 import PodManager from "../../../DataModel/PodModel/PodManager";
 
 /**
- *@Description: a react component that renders the body of the ResearcherPodList
+ *@Description: a react component that renders the body of the ParticipantPodList
  */
 class Body extends React.Component {
 
