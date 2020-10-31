@@ -13,7 +13,7 @@ import { withRouter } from 'react-router-dom';
 class Header extends React.Component {
     /**
      * render the JSX elements
-     * @returns {JSX.Element} including the left, middle and right part of the footer, which are three images
+     * @returns {JSX.Element} including a logo
      */
   render(){
     return (
