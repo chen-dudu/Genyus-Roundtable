@@ -118,7 +118,6 @@ class Avatar extends React.Component {
 				<div style={{ marginTop: 8 }}></div>
 			</div>
 		);
-		//   console.log(this.state);
 		return (
 			<ImgCrop rotate>
 				<Upload
@@ -151,7 +150,6 @@ class Body1 extends React.Component {
 						.then(photo => {
 							console.log('getAvatar successful');
 							console.log('setImage successful');
-							// this.setState({imageUrl: photo});
 							this.props.setImage(photo);
 						})
 						.catch(error => {

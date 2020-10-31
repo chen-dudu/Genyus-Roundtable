@@ -125,8 +125,8 @@ class Body1 extends React.Component {
 		this.state = { full_name: '', nick_name: '' };
 	}
 
+
 	onFullnameEnter(e) {
-		console.log("++++++++", e.target.value);
 		this.setState({ full_name: e.target.value });
 	}
 
@@ -151,22 +151,25 @@ class Body1 extends React.Component {
 		}
 	}
 
-
+	/**
+	 * get current user from the UserManager
+	 * so that we can get other attributes of the user
+	 */
 	getImage = () => {
 		UserManager.getCurrentUser()
 			.then(user => {
 				console.log('getCurrentUser successful');
 				console.log('photourl:' + user.photoURL);
 				this.setState({ full_name: user.fullname, nick_name: user.nickname });
-				console.log("PrintFullname!!!!!!!!!!!!!", user.fullname);
-				console.log("PrintNickname!!!!!!!!!!!!!", user.nickname);
 
 				if (user.photoURL) {
+					/**
+					 * get the photoUrl of the current user
+					 */
 					UserManager.getAvatar(user.photoURL)
 						.then(photo => {
 							console.log('getAvatar successful');
 							console.log('setImage successful');
-							// this.setState({imageUrl: photo});
 							this.props.setImage(photo);
 						})
 						.catch(error => {
