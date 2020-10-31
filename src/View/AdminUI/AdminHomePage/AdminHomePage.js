@@ -1,3 +1,6 @@
+/** The AdminHomePage is composed by A Header, A Body, A Footer
+ * The Body Component is composed by Body1 and Body2
+ */
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import logo from '../../../img/logo.png';
