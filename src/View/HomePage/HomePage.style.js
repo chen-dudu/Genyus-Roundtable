@@ -1,3 +1,7 @@
+/**
+ *@File: a file that exports styled-components
+ */
+
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
@@ -6,8 +10,7 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const FooterWrapper = styled.div`
-  height: 200px;
-  
+  height: 200px;  
   background: #141414;
   width:100%;
   bottom:0px;
@@ -148,8 +151,6 @@ export const Body2Wrapper = styled.div`
   width: 100%;
   background: #4682B4;
   
-
-
   > h1 {
     color:white;
     font-weight:bold;

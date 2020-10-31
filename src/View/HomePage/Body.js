@@ -1,63 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {Body1Wrapper,SubmitButton,Body2Wrapper} from './HomePage.style';
-import Img from '../../img/person.gif';
-import { Button } from 'antd';
+import {Body2Wrapper} from './HomePage.style';
 import { withRouter } from 'react-router-dom';
 import Body1 from './Body1.js';
 
-
-
+/**
+*@Description: a react component that renders the body of the homepage
+*/
 
 class Body extends React.Component {
-
-
-
-	// componentDidMount() {
-	// 	fetch("https://auth.calendly.com/oauth/token", {
-	// 		"method": "POST",
-	// 		"headers": {},
-	// 		"body": {
-	// 			"grant_type": "authorization_code",
-	// 			"client_id": "qJWDGzV1-0Jzw5QHusOPv8yGdPZ24RiBJJs_-qwWe_U",
-	// 			"client_secret": "-0nkGp3XFXEnvsDS8xVNKMXJdTO4xaIu16OlZh24LEw",
-	// 			"code": this.state.code,
-	// 			"redirect_uri": "https://genyus-roundtables.web.app/"
-	// 		}
-	// 	})
-	// 		.then(response => {
-	// 			console.log(response);
-	// 			return response.json();
-	// 		})
-	// 		.then(data =>{
-	// 			return fetch("https://api.calendly.com/users/me?access_token-="+data.access_token, {
-	// 				"method": "GET",
-	// 				"headers": {}
-	// 			})
-	// 				.then(response => {
-	// 					console.log(response);
-	// 					return response.json();
-	// 				})
-	// 				.then(data => {
-	// 					console.log(data);
-	// 				})
-	// 				.catch(err => {
-	// 					console.error(err);
-	// 				});
-	// 		})
-	// 		.catch(err => {
-	// 			console.error(err);
-	// 		})
-	// 		.catch(err => {
-	// 			console.error(err);
-	// 		});
-	// }
-
-
+	/**
+	 * render the JSX elements
+	 * @returns {JSX.Element} including some description of Genyus Roundtable
+	 */
 	render(){
 		return(
 			<div>
-			<Body1></Body1>
+			<Body1/>
 				<Body2Wrapper>
 					<br />
 					<h1>Genyus Roundtable Is...</h1>
@@ -69,8 +27,6 @@ class Body extends React.Component {
 					<br/>
 				</Body2Wrapper>
 			</div>
-
-
 		)
 	}
 }
