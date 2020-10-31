@@ -1,3 +1,9 @@
+/**
+ * Body1: The react component holds: buttons and upload photo field
+ * Buttons: imported from antd
+ * Upload field: imported from antd
+ * Crop function: antd
+*/
 import React, { Fragment, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Body1Wrapper, ProfileWrapper } from './ProfileSetting.style';
@@ -10,7 +16,11 @@ import UserManager from '../../../DataModel/UserModel/UserManager';
 
 const CLASS_NAME = "ProfileSetting/Body1";
 
-
+/** 
+ * change uploaded photo format
+ * @param img image uploaded
+ * @param callback 
+*/
 function getBase64(img, callback) {
 	const reader = new FileReader();
 	reader.addEventListener('load', () => callback(reader.result));
