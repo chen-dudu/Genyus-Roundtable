@@ -54,6 +54,9 @@ class UploadTrigger extends React.Component {
 		});
 	};
 
+	/**
+	 * get current from the Usermanager
+	 */
 	getImage = () => {
 		UserManager.getCurrentUser()
 			.then(user => {
@@ -61,6 +64,9 @@ class UploadTrigger extends React.Component {
 				console.log('photourl:' + user.photoURL);
 
 				if (user.photoURL) {
+					/**
+					 * get one attribute: photoURL of the current user
+					 */
 					UserManager.getAvatar(user.photoURL)
 						.then(photo => {
 							console.log('getAvatar successful');
