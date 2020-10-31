@@ -100,20 +100,17 @@ class Body extends React.Component {
 
 	onTitleEnter = (e) => {
 		console.log("Title: ", e.target.value);
-		// this.setState({ pod: { title: e.target.value } });
 		this.setState({ title: e.target.value });
 	}
 
 	onResearcherEnter = (name) => {
 		console.log("Researcher: ", name);
-		// this.setState({ pod: { researcher: name } });
 		this.setState({ researcher: name });
 
 	}
 
 	onCalendlyLinkEnter = (e) => {
 		console.log("CalendlyLink: ", e.target.value);
-		// this.setState({ pod: { calendlyLink: e.target.value } });
 		this.setState({ calendlyLink: e.target.value });
 	}
 
