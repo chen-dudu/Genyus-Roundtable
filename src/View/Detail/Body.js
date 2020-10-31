@@ -424,13 +424,34 @@ class Body extends React.Component {
 
 					{ this.state.isPart
 						? null
-						: <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
-							<Button className="manager" style={{background: "#D9021B", borderRadius: 8,
-								width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
-								boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-								fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"70%"}}
-							>Upload Notes</Button>
-						</Upload>
+						:
+						<div className={"manager"} style={{background: "#D9021B", borderRadius: 8,
+									width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+									boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+									fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"70%"}}>
+							<label htmlFor="upload" style={{marginLeft: "15%", marginRight: "15%"}}>
+								Upload Notes
+							</label>
+							<input id="upload" type="file" style={{visibility: "hidden", display: "none"}} name="" value=""
+									onChange={(e) => {
+										let file = e.target.files[0];
+										PodManager.upload(file, this.state.pid)
+											.then(res => {
+												alert("Your file has been successfully uploaded");
+											})
+											.catch(err => {
+												alert(err);
+											});
+									}}
+									/>
+						</div>
+						// <Upload {...this.upload} progress={{ strokeWidth: 2, }}>
+						// 	<Button className="manager" style={{background: "#D9021B", borderRadius: 8,
+						// 		width: "10%", height: 40, fontWeight: "bold", borderWidth: 0,
+						// 		boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+						// 		fontSize: 15, color: "white", position:"absolute", bottom:"30%", right:"70%"}}
+						// 	>Upload Notes</Button>
+						// </Upload>
 					}
 					<br />
 					<br />
