@@ -1,6 +1,12 @@
+/**
+ * The Footer component is composed by
+ * LeftWapper
+ * MidWrapper
+ * RightWrapper
+ * Different Wrapper holds different information
+ * Author: Yujun Yan
+ */
 import React from 'react';
-// import PropTypes from 'prop-types';
-// uppercase below
 import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper,Title,Text} from './Signup.style'
 import middleImg from "../../img/footmid.png"
 import rightImg from "../../img/footright.png"

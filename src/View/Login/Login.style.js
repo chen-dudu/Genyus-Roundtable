@@ -1,4 +1,4 @@
-/** CSS codes for the components in the PodCreatePage
+/** CSS codes for the components in the LoginPage
  * Author: Yujun Yan
  */
 import styled from 'styled-components';
