@@ -1,3 +1,6 @@
+/** CSS codes for the components in the PodInvitationPage
+ * Author: Yujun Yan
+ */
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
@@ -7,13 +10,10 @@ export const HeaderWrapper = styled.div`
 
 export const FooterWrapper = styled.div`
   height: 200px;
-  
   background: #141414;
   width:100%;
   bottom:0px;
   left:0px;
-  
-  
 `;
 
 export const ImageWrapper = styled.div`
