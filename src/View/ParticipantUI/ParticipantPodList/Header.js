@@ -2,14 +2,20 @@ import { withRouter } from 'react-router-dom'
 import { Avatar, Button } from 'antd';
 import 'antd/dist/antd.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
+
 import logo from '../../../img/logo.png';
 import { HeaderWrapper, ImageWrapper, Seperator } from './ParticipantPodList.style';
 import { UserOutlined } from "@ant-design/icons";
 import UserManager from '../../../DataModel/UserModel/UserManager';
 
+/**
+ *@Description: a react component that renders the header of the ParticipantPodList
+ */
 
 class Header extends React.Component {
+    /**
+     * a functions used to logout when the logout button is clicked
+     */
     handleClick = () => {
         UserManager.logout()
             .then(response => {
@@ -18,10 +24,12 @@ class Header extends React.Component {
             .catch(error => {
                 console.log(error);
             });
-
         this.props.history.push('/');
     }
-
+    /**
+     * render the JSX elements
+     * @returns {JSX.Element} including a logo and the avatar of the current user and a button to logout
+     */
     render() {
         return (
             <HeaderWrapper>
