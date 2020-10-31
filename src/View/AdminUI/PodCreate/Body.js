@@ -161,11 +161,20 @@ class Body extends React.Component {
 		this.setState({ description: e.target.value });
 	}
 
+	/**
+	 * Upadate the video link after entering video link
+	 * in the input field
+	 * @param {*} e 
+	 */
 	onVideoEnter = (e) => {
 		console.log("Video: ", e.target.value);
 		this.setState({ video: e.target.value });
 	}
 
+	/**
+	 * constructor function
+	 * @param {*} props 
+	 */
 	constructor(props) {
 		super(props);
 		this.onTitleEnter = this.onTitleEnter.bind(this);
