@@ -40,7 +40,6 @@ class Header extends React.Component {
                 </ImageWrapper>
                 <Seperator />
             </HeaderWrapper>
-
         );
     }
 }

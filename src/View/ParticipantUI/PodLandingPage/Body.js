@@ -1,18 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
 	Body1Wrapper,
 	Body2Wrapper,
 	BodyWrapper, ProfileWrapper
 } from './PodLandingPage.style';
-import Img from '../../../img/person.gif';
 import { withRouter } from "react-router-dom";
-import { InlineWidget } from "react-calendly"
-import {List, Avatar, Button, Spin, message, Switch, Empty} from 'antd';
+import { Avatar, Button, Spin, } from 'antd';
 import UserManager from "../../../DataModel/UserModel/UserManager";
 import PodManager from "../../../DataModel/PodModel/PodManager";
-import {ButtonWrapper} from "../../AdminUI/ResearcherList/ResearcherList.style";
-import {CloseOutlined, CheckOutlined, LoadingOutlined, PlusOutlined} from '@ant-design/icons';
 import firebase from 'firebase';
 
 
