@@ -9,7 +9,11 @@ import Footer from './Footer.js';
 import Body from './Body.js';
 import {withRouter} from 'react-router-dom';
 
-
+/** 
+ * setImage is used to unify 
+ * the image upload in the Body component
+ * and the avatar in the Header component
+*/
 const AdminHomePage = props => {
   const [image, setImage] = useState();
     return(
