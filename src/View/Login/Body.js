@@ -40,8 +40,7 @@ class Body extends React.Component {
             .then(userType => {
                 // redirect to user home page
                 console.debug(`${CLASS_NAME} | login | successfully login user, who is a ${userType}`);
-                //console.log(this.state.pid);
-
+                // be directed to different userhomepage according to the userType
                 if (this.state.pid) {
                     this.props.history.push({pathname:'/PodSignup', search:"?pid="+this.state.pid});
                 }
@@ -61,19 +60,27 @@ class Body extends React.Component {
             });
     }
 
-    // update email
+    /**
+     * update email
+     * @param {*} e 
+     */
     onEmailEnter(e) {
         this.setState({ 'email': e.target.value });
-        //console.log('new state', this.state);
     }
 
-    // update password
+    /**
+     * update password
+     * @param {*} e 
+     */
     onPasswordEnter(e) {
-        // console.log('password enter:', e.target);
         this.setState({ 'password': e.target.value });
-        //console.log('new state', this.state);
     }
 
+    /**
+     * be directed to the signup page when clicking the
+     * "Don't have an account? Sign up" button
+     * @param {*} e 
+     */
     handleChange(e) {
         if(this.state.pid){
             this.props.history.push({pathname:'/Signup', search:"?pid="+this.state.pid});
@@ -81,8 +88,6 @@ class Body extends React.Component {
         else {
             this.props.history.push("/Signup");
         }
-
-
     }
 
     render() {
@@ -127,7 +132,5 @@ class Body extends React.Component {
         );
     }
 }
-
-// Body.propTypes = {};
 
 export default withRouter(Body);
