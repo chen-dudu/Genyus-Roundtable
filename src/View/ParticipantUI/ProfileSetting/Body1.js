@@ -18,15 +18,7 @@ function getBase64(img, callback) {
 }
 
 function beforeUpload(file) {
-	const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-	if (!isJpgOrPng) {
-		message.error('You can only upload JPG/PNG file!');
-	}
-	const isLt2M = file.size / 1024 / 1024 < 2;
-	if (!isLt2M) {
-		message.error('Image must smaller than 2MB!');
-	}
-	return isJpgOrPng && isLt2M;
+	return true;
 }
 
 class UploadTrigger extends React.Component {
@@ -35,31 +27,13 @@ class UploadTrigger extends React.Component {
 	};
 
 	handleChange = info => {
-		if (info.file.status === 'uploading') {
-			this.setState({ loading: true });
-			return;
-		}
-		if (info.file.status === 'done') {
-			// Get this url from response in real world.
-			console.log(info.file.originFileObj);
-			UserManager.updateAvatar(info.file.originFileObj)
-				.then(response => {
-					console.log('update successful');
-				})
-				.catch(error => {
-					console.log(error);
-				});
-
-			getBase64(info.file.originFileObj, imageUrl => {
-				this.setState({
-					imageUrl,
-					loading: false,
-				});
-				this.props.setImage(imageUrl);
-			},
-			);
-
-		}
+		getBase64(info.file.originFileObj, imageUrl => {
+			this.setState({
+				imageUrl,
+				loading: false,
+			});
+			this.props.setImage(imageUrl);
+		});
 	};
 
 	getImage = () => {
@@ -106,7 +80,7 @@ class UploadTrigger extends React.Component {
 					listType="picture-card"
 					className="avatar-uploader"
 					showUploadList={false}
-					action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+					action={UserManager.updateAvatar}
 					beforeUpload={beforeUpload}
 					onChange={this.handleChange}
 				>

@@ -29,8 +29,8 @@ class Body extends React.Component {
 	render() {
 		return (
 			<div>
-				<Body1 setImage={this.props.setImage}></Body1>
-				<Body2></Body2>
+				<Body1 displayName = {this.props.displayName} photo = {this.props.photo} />
+				<Body2 />
 			</div>
 
 
