@@ -6,13 +6,10 @@ import { UserOutlined} from '@ant-design/icons';
 import UserManager from "../../../DataModel/UserModel/UserManager";
 import firebase from "firebase";
 
-/**
- *@Description: a react component that renders the body of the AdminPodList
- */
 const getResearchers = firebase.functions().httpsCallable('getResearchers');
+
 /**
- * a function that used to get the avatar of the current user and
- * a list of all the pods
+ *@Description: a react component that renders the body of the ResearcherList
  */
 class Body extends React.Component {
 	/**
