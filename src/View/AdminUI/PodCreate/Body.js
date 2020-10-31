@@ -53,12 +53,14 @@ class Body extends React.Component {
 	 * showing in the list
 	 */
 	getResearcherName = () => {
+		/**
+		 * get a list of researchers synchronously from db
+		 */
 		return getResearchers()
 			.then(result => {
 				console.log("print result.data", result.data);
 				let list = [];
 				result.data.forEach(function (item, index, array) {
-
 					if (item) {
 						list.unshift(item);
 					}
@@ -71,6 +73,12 @@ class Body extends React.Component {
 			});
 	}
 
+	/**
+	 * ask the PodManager to createPod
+	 * when the PodManager create the Pod successfully:
+	 * update the sharedLink to the PodManager asynchronously
+	 * @param {*} values
+	 */
 	createPod = (values) => {
 		let pod = {
 			title: this.state.title,
@@ -112,22 +120,42 @@ class Body extends React.Component {
 			});
 	}
 
+	/**
+	 * Update the title after entering title
+	 * in the input field
+	 * @param {*} e 
+	 */
 	onTitleEnter = (e) => {
 		console.log("Title: ", e.target.value);
 		this.setState({ title: e.target.value });
 	}
 
+	/**
+	 * Update the researcherName after choosing the researcher
+	 * from the list
+	 * @param {*} name 
+	 */
 	onResearcherEnter = (name) => {
 		console.log("Researcher: ", name);
 		this.setState({ researcher: name });
 
 	}
 
+	/**
+	 * Update the calendlyLink after entering title
+	 * in the input field
+	 * @param {*} e 
+	 */
 	onCalendlyLinkEnter = (e) => {
 		console.log("CalendlyLink: ", e.target.value);
 		this.setState({ calendlyLink: e.target.value });
 	}
 
+	/**
+	 * Update the description after entering pod descriptions
+	 * in the input field
+	 * @param {*} e 
+	 */
 	onDescriptionEnter = (e) => {
 		console.log("Description: ", e.target.value);
 		this.setState({ description: e.target.value });
