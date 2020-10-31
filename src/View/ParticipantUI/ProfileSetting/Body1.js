@@ -125,20 +125,41 @@ class Body1 extends React.Component {
 		this.state = { full_name: '', nick_name: '' };
 	}
 
-
+	/**
+	 * change fullname after entering input in the
+	 * Fullname field
+	 * @param {*} e 
+	 */
 	onFullnameEnter(e) {
 		this.setState({ full_name: e.target.value });
 	}
 
+	/**
+	 * change nickname after entering input in the
+	 * Nickname field
+	 * @param {*} e 
+	 */
 	onNicknameEnter(e) {
 		this.setState({ nick_name: e.target.value });
 	}
 
+	/**
+	 * is triggered when submitting the form
+	 * @param {*} e 
+	 */
 	updateProfile = (e) => {
 		e.preventDefault();
+		/**
+		 * if neither fullname nor nickname is blank
+		 */
 		if (this.state.full_name && this.state.nick_name) {
 			console.log("PrintFullname", this.state.full_name);
 			console.log("PrintNickname", this.state.nick_name);
+			/**
+			 * ask the userManager to update fullname and nickname
+			 * of the user in the db
+			 * firebase: firestore
+			 */
 			UserManager.updateProfile(this.state.full_name, this.state.nick_name)
 				.then(response => {
 					this.props.history.push("ParticipantHomePage");
