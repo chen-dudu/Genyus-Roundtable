@@ -3,9 +3,6 @@ import {Body2Wrapper} from './ProfileSetting.style';
 import Body1 from './Body1.js';
 import { withRouter } from 'react-router-dom';
 
-
-
-
 class Body2 extends React.Component {
 	render() {
 		return (
@@ -19,12 +16,9 @@ class Body2 extends React.Component {
 				<br />
 				<br />
 			</Body2Wrapper>
-
-
 		)
 	}
 }
-
 
 class Body extends React.Component {
 	render() {
@@ -33,8 +27,6 @@ class Body extends React.Component {
 				<Body1 setImage={this.props.setImage} image={this.props.image}></Body1>
 				<Body2></Body2>
 			</div>
-
-
 		)
 	}
 }
