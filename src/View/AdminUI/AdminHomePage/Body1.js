@@ -94,7 +94,6 @@ class Avatar extends React.Component {
 							console.log('getAvatar successful');
 							console.log('setImage successful');
 							this.setState({ imageUrl: photo });
-							// this.props.setImage(photo);
 						})
 						.catch(error => {
 							console.log(error);
