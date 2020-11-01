@@ -1,33 +1,33 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {Body1Wrapper,SubmitButton,ProfileWrapper,TitleWrapper,BodyWrapper} from './ResearcherDetail.style';
-import Img from '../../../img/Avatar.png';
-import { Link } from "react-router-dom";
+import {Body1Wrapper,ProfileWrapper,TitleWrapper,BodyWrapper} from './ResearcherDetail.style';
 import { withRouter } from 'react-router-dom'
 import {Input, Avatar, Button, Modal, message, Upload} from 'antd';
-import noteImg from "../../../img/note.png";
 import {LoadingOutlined, PlusOutlined, UserOutlined} from "@ant-design/icons";
 import firebase from "firebase";
 import UserManager from "../../../DataModel/UserModel/UserManager";
 import ImgCrop from "antd-img-crop";
-
-
 const { TextArea } = Input;
-const { Search } = Input;
 const updateUserFullname = firebase.functions().httpsCallable('updateUserFullname');
 const updateUserDescription = firebase.functions().httpsCallable('updateUserDescription');
 const updateUserEmail = firebase.functions().httpsCallable('updateUserEmail');
 const updateUserPassword = firebase.functions().httpsCallable('updateUserPassword');
-const updateUserAvatar = firebase.functions().httpsCallable('updateUserAvatar');
-const getUser = firebase.functions().httpsCallable('getUser');
 
-
+/**
+ * a function to represent the origin image object with an URL
+ * @param img
+ * @param callback
+ */
 function getBase64(img, callback) {
 	const reader = new FileReader();
 	reader.addEventListener('load', () => callback(reader.result));
 	reader.readAsDataURL(img);
 }
 
+/**
+ * a function to check if the uploaded image is legal
+ * @param file the image
+ * @returns {boolean}
+ */
 function beforeUpload(file) {
 	const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
 	if (!isJpgOrPng) {
@@ -40,18 +40,20 @@ function beforeUpload(file) {
 	return isJpgOrPng && isLt2M;
 }
 
-
-
+/**
+ *@Description: a react component that renders the body of the ResearcherDetail
+ */
 class Body extends React.Component {
+	/**
+	 * define the state needed when rendering the page
+	 * @param props React predefined props
+	 */
 	constructor(props) {
 		super(props);
 		this.onEmailEnter = this.onEmailEnter.bind(this);
 		this.onPasswordEnter = this.onPasswordEnter.bind(this);
 		this.onDescriptionEnter = this.onDescriptionEnter.bind(this);
 		this.onFullNameEnter = this.onFullNameEnter.bind(this);
-
-
-
 		this.state = {
 			uid: this.props.history.location.state.item.uid,
 			fullname : this.props.history.location.state.item.fullname,
@@ -59,23 +61,19 @@ class Body extends React.Component {
 			email : this.props.history.location.state.item.email,
 			password : this.props.history.location.state.item.password,
 			imageUrl : this.props.history.location.state.item.photoURL,
-
-
 			loading: false,
 			Modal1visible: false,
 			Modal2visible: false,
 			Modal3visible: false,
 			Modal4visible: false,
 			confirmLoading: false,
-
 		}
-		console.log(this.props);
-
-		// this.getImage();
-
 	}
 
-
+	/**
+	 * a function used to handle when a photo is uploaded
+	 * @param info
+	 */
 	handleChange = info => {
 		if (info.file.status === 'uploading') {
 			this.setState({ loading: true });
@@ -91,13 +89,11 @@ class Body extends React.Component {
 				.catch(error => {
 					console.log(error);
 				});
-
 			getBase64(info.file.originFileObj, imageUrl => {
 					this.setState({
 						imageUrl,
 						loading: false,
 					});
-
 				},
 			);
 		}
@@ -120,6 +116,9 @@ class Body extends React.Component {
 		this.setState({password: e.target.value});
 	}
 
+	/**
+	 * functions to show a modal for the user to modify the information
+	 */
 	showModal1 = () => {this.setState({Modal1visible: true,});};
 	handleModal1Ok = () => {
 		this.setState({
@@ -178,25 +177,26 @@ class Body extends React.Component {
 
 	};
 	handleModal4Cancel = () => {this.setState({Modal4visible: false,});};
-
+	/**
+	 * render the JSX elements
+	 * @returns {JSX.Element} including an button to upload a photo, several modify buttons to change the information
+	 * and a back button
+	 */
 	render(){
 		const { loading, imageUrl} = this.state;
-
 		const uploadButton = (
 			<div>
 				{loading ? <LoadingOutlined style={{ background: 'red' }} /> : <PlusOutlined />}
-				<div style={{ marginTop: 8 }}></div>
+				<div style={{marginTop: 8}}/>
 			</div>
 		);
 		return(
-			
 			<Body1Wrapper>
 				<TitleWrapper>
 				<h1>Edit Researcher</h1>
 					<br/>
 				</TitleWrapper>
 				<BodyWrapper>
-
 					<div className="title">Researcher Details</div>
 					<br />
 					<br />
@@ -208,9 +208,7 @@ class Body extends React.Component {
 						<div align={'center'}>
 							<label htmlFor="Photo" style={{fontSize:"25px"}}>Photo</label>
 						</div>
-
 						<ProfileWrapper>
-
 						<ImgCrop rotate>
 							<Upload
 								name="avatar"
@@ -225,22 +223,18 @@ class Body extends React.Component {
 							</Upload>
 						</ImgCrop>
 							</ProfileWrapper>
-
-
 						<text>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</text>
 						<br />
 						<br />
 						<br />
 						<br />
 						<text style={{ fontWeight:"bold",color: '#4682B4',marginLeft:'20%' }}>Click on the photo to make a change</text>
-
 						<br />
 						<br />
 						<div align={'center'}>
 							<label htmlFor="Full Name" style={{fontSize:"25px"}}>Full Name</label>
 						</div>
 						<text>&emsp;&emsp;&emsp;&emsp;&emsp;</text>
-
 						<Input readOnly type={'text'}  id={'Full Name'} name={'Full Name'}style={{width: '60%', height: 30}} value={this.state.fullname}/>
 						<text>&emsp;&emsp;</text>
 						<Button style={{width: "10%", color:"white", fontWeight:"bold", background: "#3399ff"}} onClick={this.showModal1}>modify</Button>
@@ -256,13 +250,10 @@ class Body extends React.Component {
 
 							<br />
 						<br />
-
-
 						<div align={'center'}>
 							<label htmlFor="Description" style={{fontSize:"25px"}}>Description </label>
 						</div>
 						<text>&emsp;&emsp;&emsp;&emsp;&emsp;</text>
-
 						<TextArea readOnly rows={3} type={'text'} allowClear id={'Description'} name={'Description'} style={{width: '60%', height: 120}} value={this.state.description}/>
 						<text>&emsp;&emsp;</text>
 						<Button style={{width: "10%", color:"white", fontWeight:"bold", background: "#3399ff"}} onClick={this.showModal2}>modify</Button>
@@ -277,9 +268,6 @@ class Body extends React.Component {
 						</Modal>
 						<br />
 						<br />
-
-
-
 						<div align={'center'}>
 							<label htmlFor="Email" style={{fontSize:"25px"}}>Email</label>
 						</div>
@@ -298,8 +286,6 @@ class Body extends React.Component {
 						</Modal>
 						<br />
 						<br />
-
-
 						<div align={'center'}>
 							<label htmlFor="full_name" style={{fontSize:"25px"}}>Password</label>
 						</div>
@@ -319,15 +305,11 @@ class Body extends React.Component {
 						</Modal>
 						<br />
 						<br />
-
-
 						<div>
 							<Button className="backButton" style={{width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push('/Admin/ResearcherList')}>Back</Button>
-
 						</div>
 						<br/>
 						<br/>
-
 					</form>
 					<br/><br/>
 				</BodyWrapper>
@@ -336,18 +318,10 @@ class Body extends React.Component {
 				<br/>
 				<br/>
 				<br/>
-
 			</Body1Wrapper>
-
-
-
-
 		)
 	}
 }
-
-
-
 
 export default withRouter(Body);
 

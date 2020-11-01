@@ -1,32 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {Body1Wrapper,ButtonWrapper,TitleWrapper,ListWrapper} from './AdminPodList.style';
-import Img from '../../../img/Avatar.png';
-import { Link } from "react-router-dom";
+import {Body1Wrapper,TitleWrapper,ListWrapper} from './AdminPodList.style';
 import { withRouter } from 'react-router-dom'
-import {List, Avatar, Button, Spin, message, Upload, Switch} from 'antd';
-import {CheckOutlined, CloseOutlined, LoadingOutlined, PlusOutlined, UserOutlined} from '@ant-design/icons';
+import {List, Button, Spin, Switch} from 'antd';
+import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 import UserManager from "../../../DataModel/UserModel/UserManager";
-import firebase from "firebase";
-import ImgCrop from "antd-img-crop";
 import {Body2Wrapper} from "../../ParticipantUI/ParticipantHomePage/ParticipantHomePage.style";
 import PodManager from "../../../DataModel/PodModel/PodManager";
 
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ *@Description: a react component that renders the body of the AdminPodList
+ */
 class Body extends React.Component {
 
-
+	/**
+	 * a function that used to get the avatar of the current user and
+	 * a list of all the pods
+	 */
 	getPod = () => {
 		return UserManager.getCurrentUser()
 			.then(response => {
@@ -57,58 +46,45 @@ class Body extends React.Component {
 			});
 	};
 
-
-
-
+	/**
+	 * define the state needed when rendering the page
+	 * @param props React predefined props
+	 */
 	constructor(props) {
     	super(props);
 		this.getPod();
-		// this.getAdminImage();
 		this.state = {
 			loading : true,
 			data : [],
 			all : [],
 			upcoming : [],
-			// AdminAvatar: <UserOutlined/>,
 			isCheck : true
-
 		};
 		this.onChange = this.onChange.bind(this);
-
-
-
-  }
-
+   }
+	/**
+	 * a function to set the pod list when the switch is clicked
+	 * @param checked a param that shows the status of the switch
+	 */
 	onChange = checked => {
 		if(checked){
 			this.setState({ isCheck: !checked , data : this.state.all});
 		}else{
 			this.setState({ isCheck: !checked , data : this.state.upcoming});
 		}
-
 	};
 
-
-
-
-
-
-
-
-
+	/**
+	 * render the JSX elements
+	 * @returns {JSX.Element} including a title, a switch and a list of pod
+	 */
 	render(){
-
 		return(
 			<container>
 			<Body1Wrapper setImage={this.props.setImage}>
-
-
 				<TitleWrapper>
-
-
 					<h1>Pod list</h1>
 					<div>
-
 					<p>show finished pod</p>
 					<Switch
 							checkedChildren={<CheckOutlined />}
@@ -118,50 +94,28 @@ class Body extends React.Component {
 							style={{position:"absolute" , left:"55%", top: 7}}
 					/>
 					</div>
-
-
-
-
-
 				</TitleWrapper>
-
-
 				<ListWrapper>
 					<Spin spinning={this.state.loading}>
 				<List
-
-
 					bordered={false}
-
-
 					dataSource={this.state.data}
-
 					renderItem={item => (
 						<div>
 						<List.Item style={{borderColor:'red', borderWidth:4,borderStyle:'solid',borderRadius:20}}>
-
 							<List.Item.Meta style={{marginLeft:20}}
-
 								title={<a style={{fontSize:25}}>{item._title}</a>}
 								description={<p style={{width:"70%", fontSize:20, wordWrap:"break-word"}}>{item._description}<br/>status:{item._status}</p>}
 							/>
-
 							<div>
 								<Button style={{marginRight:20, width:186, height:53, fontSize: 18, fontWeight: "bold", background: "#3399ff", borderRadius: 5}} type="primary" onClick={() => this.props.history.push({pathname:'/Detail/',search: "?pid="+item.pid})}>View Pod Info</Button>
 							</div>
-
-
 						</List.Item><br/><br/></div>
-
-
 						)}
 				/>
 					</Spin>
 				</ListWrapper>
                 <br/>
-
-                
-
 			</Body1Wrapper>
 			<Body2Wrapper>
 				<br />
@@ -174,15 +128,9 @@ class Body extends React.Component {
 				<br />
 			</Body2Wrapper>
 			</container>
-
-
-
 		)
 	}
 }
-
-
-
 
 export default withRouter(Body);
 

@@ -1,20 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {Body1Wrapper,SubmitButton,Body2Wrapper} from './HomePage.style';
-import Img from '../../img/person.gif';
-import { Button } from 'antd';
+import {Body2Wrapper} from './HomePage.style';
 import { withRouter } from 'react-router-dom';
 import Body1 from './Body1.js';
 
-
-
+/**
+*@Description: a react component that renders the body of the homepage
+*/
 
 class Body extends React.Component {
 
+	/**
+	 * render the JSX elements
+	 * @returns {JSX.Element} including some description of Genyus Roundtable
+	 */
 	render(){
 		return(
 			<div>
-			<Body1></Body1>
+			<Body1/>
 				<Body2Wrapper>
 					<br />
 					<h1>Genyus Roundtable Is...</h1>
@@ -26,8 +28,6 @@ class Body extends React.Component {
 					<br/>
 				</Body2Wrapper>
 			</div>
-
-
 		)
 	}
 }
