@@ -1,3 +1,11 @@
+/**
+ * The Footer component is composed by
+ * LeftWapper
+ * MidWrapper
+ * RightWrapper
+ * Different Wrapper holds different information
+ * Author: Yujun Yan
+ */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {LeftWrapper,MidWrapper,RightWrapper,FooterWrapper} from './AdminHomePage.style'

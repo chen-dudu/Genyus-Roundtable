@@ -1,3 +1,10 @@
+/**
+ * The Signup component is composed by 
+ * HeaderWrapper: Header
+ * Body: the signup submission form
+ * Footer
+ * Author: Yujun Yan
+ */
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {

@@ -1,3 +1,7 @@
+/**
+ * The Body contains a PodInvitionLink
+ * Author: Yujun Yan
+ */
 import React, { useState } from 'react';
 import { BodyWrapper, Body1Wrapper, TitleWrapper } from './PodInvitation.style';
 import 'antd/dist/antd.css';
@@ -6,12 +10,17 @@ import { Form, Input, Button, Select } from 'antd';
 import firebase from 'firebase';
 import PodManager from '../../../DataModel/PodModel/PodManager';
 
+/**
+ * The invitation link is: domainName + "?pid=" + pid
+ */
 // const domainName = "http://localhost:3000/";
 const domainName = "https://genyus-roundtables.web.app/";
+
 class Body extends React.Component {
 	constructor(props) {
 		super(props)
 
+		// get the pid from the current url: pid is passed from Podcreation Page
 		const query = this.props.history.location.search;
 		const pid = query.substr(5);
 
@@ -21,14 +30,19 @@ class Body extends React.Component {
 		}
 	}
 
+	/**
+	 * click ReturnHome button to return AdminHomePage
+	 */
 	returnHome = () => {
 		this.props.history.push("/AdminHomePage");
 	}
 
+	/**
+	 * click ViewPod button to the PodList Page
+	 */
 	viewPods = () => {
 		this.props.history.push("/Admin/AdminPodList");
 	}
-
 
 	render() {
 		return (

@@ -1,3 +1,9 @@
+/**
+ * The Header is composed by
+ * ImageWapper holding the GN logo
+ * LogoutWrapper holding the Avatar and the logout button
+ * Author: Yujun Yan
+ */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { HeaderWrapper, ImageWrapper, Seperator, LogoutWrapper } from './PodInvitation.style';
@@ -9,6 +15,10 @@ import UserManager from '../../../DataModel/UserModel/UserManager';
 
 
 class Header extends React.Component {
+
+  /**
+  * logout after clicking the logout button
+  */
   handleClick = () => {
     UserManager.logout()
       .then(response => {

@@ -1,3 +1,8 @@
+/**
+ * The Body contains a Podcreation Form
+ * Inputs are submitted to the database as submitting the form
+ * Author: Yujun Yan
+ */
 import React, { useState } from 'react';
 import { BodyWrapper, Body1Wrapper, TitleWrapper } from './PodCreate.style';
 import 'antd/dist/antd.css';
@@ -6,6 +11,9 @@ import { Form, Input, Button, Select } from 'antd';
 import firebase from 'firebase';
 import PodManager from '../../../DataModel/PodModel/PodManager';
 
+/**
+ * Declare constants (avoid magic value)
+ */
 const { Option } = Select;
 // const domainName = "http://localhost:3000";
 const domainName = "https://genyus-roundtables.web.app/";
@@ -26,24 +34,33 @@ const tailLayout = {
 		span: 16,
 	},
 };
-
 const getResearchers = firebase.functions().httpsCallable('getResearchers');
-
 const { TextArea } = Input;
 
 class Body extends React.Component {
 	formRef = React.createRef();
+
+	/**
+	 * Print the Input to the console
+	 * @param {*} values 
+	 */
 	onFinish = (values) => {
 		console.log(values);
 	};
-
+  
+	/**
+	 * getResearcherName from the database
+	 * showing in the list
+	 */
 	getResearcherName = () => {
+		/**
+		 * get a list of researchers synchronously from db
+		 */
 		return getResearchers()
 			.then(result => {
 				console.log("print result.data", result.data);
 				let list = [];
 				result.data.forEach(function (item, index, array) {
-
 					if (item) {
 						list.unshift(item);
 					}
@@ -56,6 +73,12 @@ class Body extends React.Component {
 			});
 	}
 
+	/**
+	 * ask the PodManager to createPod
+	 * when the PodManager create the Pod successfully:
+	 * update the sharedLink to the PodManager asynchronously
+	 * @param {*} values
+	 */
 	createPod = (values) => {
 		let pod = {
 			title: this.state.title,
@@ -77,7 +100,6 @@ class Body extends React.Component {
 				console.log("create pod successful");
 				console.log("print id", response);
 				this.setState({ pid: response });
-				// this.setState({ shareLink: domainName.concat(pathName,searchName,response)})
 				this.props.history.push({ pathname: pathName, search: searchName + response })
 				console.log("the shared link is", this.state.shareLink);
 				console.log("the introduction video link is: ", this.state.video);
@@ -98,35 +120,61 @@ class Body extends React.Component {
 			});
 	}
 
+	/**
+	 * Update the title after entering title
+	 * in the input field
+	 * @param {*} e 
+	 */
 	onTitleEnter = (e) => {
 		console.log("Title: ", e.target.value);
-		// this.setState({ pod: { title: e.target.value } });
 		this.setState({ title: e.target.value });
 	}
 
+	/**
+	 * Update the researcherName after choosing the researcher
+	 * from the list
+	 * @param {*} name 
+	 */
 	onResearcherEnter = (name) => {
 		console.log("Researcher: ", name);
-		// this.setState({ pod: { researcher: name } });
 		this.setState({ researcher: name });
 
 	}
 
+	/**
+	 * Update the calendlyLink after entering title
+	 * in the input field
+	 * @param {*} e 
+	 */
 	onCalendlyLinkEnter = (e) => {
 		console.log("CalendlyLink: ", e.target.value);
-		// this.setState({ pod: { calendlyLink: e.target.value } });
 		this.setState({ calendlyLink: e.target.value });
 	}
 
+	/**
+	 * Update the description after entering pod descriptions
+	 * in the input field
+	 * @param {*} e 
+	 */
 	onDescriptionEnter = (e) => {
 		console.log("Description: ", e.target.value);
 		this.setState({ description: e.target.value });
 	}
 
+	/**
+	 * Upadate the video link after entering video link
+	 * in the input field
+	 * @param {*} e 
+	 */
 	onVideoEnter = (e) => {
 		console.log("Video: ", e.target.value);
 		this.setState({ video: e.target.value });
 	}
 
+	/**
+	 * constructor function
+	 * @param {*} props 
+	 */
 	constructor(props) {
 		super(props);
 		this.onTitleEnter = this.onTitleEnter.bind(this);

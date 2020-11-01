@@ -1,3 +1,6 @@
+/** CSS codes for the components in the PodCreatePage
+ * Author: Yujun Yan
+ */
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`

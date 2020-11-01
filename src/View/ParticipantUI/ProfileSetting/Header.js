@@ -1,3 +1,9 @@
+/**
+ * The Header is composed by
+ * ImageWapper holding the GN logo
+ * LogoutWrapper holding the Avatar and the logout button
+ * Author: Yujun Yan
+ */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { HeaderWrapper, ImageWrapper, Seperator, LogoutWrapper } from './ProfileSetting.style';

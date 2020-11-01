@@ -1,3 +1,9 @@
+/**
+ * The Header is composed by
+ * ImageWapper holding the GN logo
+ * LogoutWrapper holding the Avatar and the logout button
+ * Author: Yujun Yan
+ */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { HeaderWrapper, ImageWrapper, Seperator, LogoutWrapper } from './PodCreate.style';
@@ -9,6 +15,10 @@ import UserManager from '../../../DataModel/UserModel/UserManager';
 
 
 class Header extends React.Component {
+  
+  /**
+  * logout after clicking the logout button
+  */
   handleClick = () => {
     UserManager.logout()
       .then(response => {
@@ -54,7 +64,7 @@ class Header extends React.Component {
         </ImageWrapper>
         <LogoutWrapper>
           <div>
-            <Avatar onClick={()=>{this.props.history.push("/AdminHomePage")}} src={this.props.image} size={64} style={{ left: '70%', margin: '2% auto' }} icon={<UserOutlined />} />
+            <Avatar onClick={() => { this.props.history.push("/AdminHomePage") }} src={this.props.image} size={64} style={{ left: '70%', margin: '2% auto' }} icon={<UserOutlined />} />
 
             <Button danger style={{ left: '75%', margin: '2% auto' }} onClick={this.handleClick} >Logout</Button>
           </div>

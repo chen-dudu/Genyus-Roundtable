@@ -8,6 +8,7 @@ import Body1 from './Body1.js';
 */
 
 class Body extends React.Component {
+
 	/**
 	 * render the JSX elements
 	 * @returns {JSX.Element} including some description of Genyus Roundtable

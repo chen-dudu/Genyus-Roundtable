@@ -1,3 +1,9 @@
+/**
+ * Body1: The react component holds: buttons and upload photo field
+ * Buttons: imported from antd
+ * Upload field: imported from antd
+ * Crop function: antd
+*/
 import React, { Fragment, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Body1Wrapper, ProfileWrapper } from './ProfileSetting.style';
@@ -10,13 +16,21 @@ import UserManager from '../../../DataModel/UserModel/UserManager';
 
 const CLASS_NAME = "ProfileSetting/Body1";
 
-
+/** 
+ * change uploaded photo format
+ * @param img image uploaded
+ * @param callback 
+*/
 function getBase64(img, callback) {
 	const reader = new FileReader();
 	reader.addEventListener('load', () => callback(reader.result));
 	reader.readAsDataURL(img);
 }
 
+/**
+ * check photo format before uploading
+ * @param {*} file 
+ */
 function beforeUpload(file) {
 	return true;
 }
@@ -26,6 +40,10 @@ class UploadTrigger extends React.Component {
 		loading: false,
 	};
 
+	/**
+	 * update the uploaded photo file to the database
+	 * @param {*} info 
+	 */
 	handleChange = info => {
 		getBase64(info.file.originFileObj, imageUrl => {
 			this.setState({
@@ -36,6 +54,9 @@ class UploadTrigger extends React.Component {
 		});
 	};
 
+	/**
+	 * get current from the Usermanager
+	 */
 	getImage = () => {
 		UserManager.getCurrentUser()
 			.then(user => {
@@ -43,6 +64,9 @@ class UploadTrigger extends React.Component {
 				console.log('photourl:' + user.photoURL);
 
 				if (user.photoURL) {
+					/**
+					 * get one attribute: photoURL of the current user
+					 */
 					UserManager.getAvatar(user.photoURL)
 						.then(photo => {
 							console.log('getAvatar successful');
@@ -101,20 +125,41 @@ class Body1 extends React.Component {
 		this.state = { full_name: '', nick_name: '' };
 	}
 
+	/**
+	 * change fullname after entering input in the
+	 * Fullname field
+	 * @param {*} e 
+	 */
 	onFullnameEnter(e) {
-		console.log("++++++++", e.target.value);
 		this.setState({ full_name: e.target.value });
 	}
 
+	/**
+	 * change nickname after entering input in the
+	 * Nickname field
+	 * @param {*} e 
+	 */
 	onNicknameEnter(e) {
 		this.setState({ nick_name: e.target.value });
 	}
 
+	/**
+	 * is triggered when submitting the form
+	 * @param {*} e 
+	 */
 	updateProfile = (e) => {
 		e.preventDefault();
+		/**
+		 * if neither fullname nor nickname is blank
+		 */
 		if (this.state.full_name && this.state.nick_name) {
-			console.log("PrintFullname",this.state.full_name);
-			console.log("PrintNickname",this.state.nick_name);
+			console.log("PrintFullname", this.state.full_name);
+			console.log("PrintNickname", this.state.nick_name);
+			/**
+			 * ask the userManager to update fullname and nickname
+			 * of the user in the db
+			 * firebase: firestore
+			 */
 			UserManager.updateProfile(this.state.full_name, this.state.nick_name)
 				.then(response => {
 					this.props.history.push("ParticipantHomePage");
@@ -127,22 +172,25 @@ class Body1 extends React.Component {
 		}
 	}
 
-
+	/**
+	 * get current user from the UserManager
+	 * so that we can get other attributes of the user
+	 */
 	getImage = () => {
 		UserManager.getCurrentUser()
 			.then(user => {
 				console.log('getCurrentUser successful');
 				console.log('photourl:' + user.photoURL);
-				this.setState({full_name: user.fullname, nick_name: user.nickname});
-				console.log("PrintFullname!!!!!!!!!!!!!",user.fullname);
-				console.log("PrintNickname!!!!!!!!!!!!!",user.nickname);
+				this.setState({ full_name: user.fullname, nick_name: user.nickname });
 
 				if (user.photoURL) {
+					/**
+					 * get the photoUrl of the current user
+					 */
 					UserManager.getAvatar(user.photoURL)
 						.then(photo => {
 							console.log('getAvatar successful');
 							console.log('setImage successful');
-							// this.setState({imageUrl: photo});
 							this.props.setImage(photo);
 						})
 						.catch(error => {

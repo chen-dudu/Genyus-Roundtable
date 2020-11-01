@@ -1,5 +1,9 @@
+/**
+ * The Body Wrapper holds login functionality
+ * After click signup button, all inputs are submitted to the database
+ * Author: Yujun Yan, Kaixuan Guo
+ */
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { BodyWrapper, SubmitButton } from './Signup.style';
 import noteImg from "../../img/note.png"
 import { Link } from "react-router-dom";
@@ -26,6 +30,10 @@ class Body extends React.Component {
         this.state = { email: '', password: '', re_password: '', full_name: '', nick_name: '', pid: pid};
     }
 
+    /**
+     * isTrigger when clicking signup button 
+     * @param {*} e 
+     */
     signup(e) {
         e.preventDefault();
         if (document.getElementById("password").value !== document.getElementById("confirmPassword").value) {
@@ -33,8 +41,10 @@ class Body extends React.Component {
             return;
         }
 
-        // first sign up user
-
+        /**
+         * all inputs are passed to the db
+         * firebase: firestore
+         */
         UserManager.signup(this.state.email, this.state.password, this.state.full_name, this.state.nick_name)
             .then(response => {
                 if(this.state.pid){
@@ -50,27 +60,50 @@ class Body extends React.Component {
             });
     }
 
-
+    /**
+     * updateEmail
+     * @param {*} e 
+     */
     onEmailEnter(e) {
         this.setState({ email: e.target.value });
     }
 
+    /**
+     * updatePassword
+     * @param {*} e 
+     */
     onPasswordEnter(e) {
         this.setState({ password: e.target.value });
     }
 
+    /**
+     * update reentered password
+     * @param {*} e 
+     */
     onRePasswordEnter(e) {
         this.setState({ re_password: e.target.value });
     }
 
+    /**
+     * update fullname
+     * @param {*} e 
+     */
     onFullnameEnter(e) {
         this.setState({ full_name: e.target.value });
     }
 
+    /**
+     * update nickname
+     * @param {*} e 
+     */
     onNicknameEnter(e) {
         this.setState({ nick_name: e.target.value });
     }
 
+    /**
+     * be directed to the login page when clicking the
+     * "Already have an account" button
+     */
     handleChange = () => {
         if(this.state.pid){
             this.props.history.push({pathname:'/Login', search:"?pid="+this.state.pid});
@@ -81,7 +114,6 @@ class Body extends React.Component {
     }
 
     render() {
-        // const nname = this.state.nname;
         return (
             <BodyWrapper>
                 <div className="cal"><img src={noteImg} alt={"instruction"}/></div>
