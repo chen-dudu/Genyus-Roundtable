@@ -34,7 +34,6 @@ class Header extends React.Component {
             <HeaderWrapper>
                 <ImageWrapper>
                     <img src={logo} />
-                    <Button danger style={{ right: "20%", margin: '1% 3%' }} onClick={() => this.props.history.push('../')} >Logout</Button> */}
                     <Avatar onClick={()=>{this.props.history.push("/ParticipantHomePage")}} src={this.props.image} size={64} style={{ margin: '0% auto', position: "absolute", left: "85%", top: "3%" }} icon={<UserOutlined />} />
                     <Button danger style={{ left: "90%", margin: '1% auto' }} onClick={this.handleClick} >logout</Button>
                 </ImageWrapper>
