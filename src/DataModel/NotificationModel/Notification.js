@@ -1,4 +1,6 @@
-
+/**
+ * @file this file contains a class that represents the notification data model in the system
+ */
 class Notification {
 
     /**
@@ -8,15 +10,15 @@ class Notification {
      * @param description  the description of the notification
      * @param timeReceived the time when the notification is received
      * @param isRead       whether the notification has been read or not
-     * @param sid          the id of the associated session
+     * @param pid          the id of the associated pod
      */
-    constructor(title, description, timeReceived, isRead, nid=null, sid=null) {
+    constructor(title, description, timeReceived, isRead, nid=null, pid=null) {
         this._title = title;
         this._description = description;
         this._timeReceived = timeReceived;
         this._isRead = isRead;
         this._nid = nid;
-        this._sid = sid;
+        this._pid = pid;
     }
 
 
@@ -40,8 +42,8 @@ class Notification {
         return this._isRead;
     }
 
-    get sid() {
-        return this._sid;
+    get pid() {
+        return this._pid;
     }
 
     set nid(newId) {
@@ -66,8 +68,8 @@ class Notification {
         }
     }
 
-    set sid(newId) {
-        this._sid = newId;
+    set pid(newId) {
+        this._pid = newId;
     }
 }
 

@@ -1,4 +1,7 @@
-import firebase from "firebase";
+/**
+ * @file this file contains methods that communicate with firebase about all user-related issues
+ */
+import firebase from "../../firebase";
 import User from "./User";
 
 const USER_COLLECTION = 'users';
@@ -24,21 +27,32 @@ export default {
         if (current) {
             try {
                 let uid = current.uid;
+                let creationTime = current.metadata.creationTime;
                 let userDoc = await userDocs.doc(uid).get();
-                let sessions = userDoc.get('sessions');
+                let fullname = userDoc.get('fullname');
+                let nickname = userDoc.get('nickname');
+                let pods = userDoc.get('pods');
                 let notifications = userDoc.get('notifications');
-                currentUser = new User(current.uid, current.email, current.displayName, current.phoneNumber, current.photoURL, current.providerId, sessions, notifications);
+                let type = userDoc.get('type');
+                let description = userDoc.get('description');
+                let photoURL = userDoc.get('photoURL');
+                currentUser = new User(current.uid, current.email, current.displayName, fullname, nickname, current.phoneNumber, photoURL, current.providerId, type, creationTime, description, pods, notifications);
                 // return current;
-                return currentUser;
+                return Promise.resolve(currentUser);
             } catch (err) {
                 console.error(`${CLASS_NAME} | getCurrentUser | failed to retrieve current user information from DB, received error message: ${err.message}`);
-                return err.message;
+                return Promise.reject(err.message);
             }
         }
         console.error(`${CLASS_NAME} | getCurrentUser | current user is null!`);
-        return 'current user is null';
+        return Promise.reject('current user is null');
     },
 
+    /**
+     * a method used to get a user document reference for the specified id
+     * @param uid the id of user whose document reference is to be returned
+     * @return {null|firebase.firestore.DocumentReference<firebase.firestore.DocumentData>} the required document reference
+     */
     getUserRef(uid) {
         try {
             return userDocs.doc(uid);
@@ -55,90 +69,45 @@ export default {
      *                          upon failed retrieving, a promise with reject value of null is returned.
      */
     async getAvatar (path) {
-        // TODO decide on which one to use
-        // let fileRef = storage.ref().child(path);
-        let fileRef = storage.ref(path);
-
-        fileRef.getDownloadURL()
-            .then(url => {
-                console.info(`${CLASS_NAME} | getAvatar | successfully get the download URL of avatar file, ${url}`);
-
-                // This can be downloaded directly:
-                // let xhr = new XMLHttpRequest();
-                // xhr.responseType = 'blob';
-                // xhr.onload = function(event) {
-                //     var blob = xhr.response;
-                // };
-                // xhr.open('GET', url);
-                // xhr.send();
-
-                // Or inserted into an <img> element:
-                // let img = document.getElementById('myimg');
-                // img.src = url;
-                return url;
-            })
-            .catch(err => {
-                console.error(`${CLASS_NAME}| getAvatar | failed to get the download URL for avatar file, received error message: ${err.message}`);
-                return null;
-            });
-
+        try {
+            // let fileRef = storage.ref().child(path);
+            let fileRef = storage.ref(path);
+            let url = await fileRef.getDownloadURL();
+            console.debug(`${CLASS_NAME} | getAvatar | successfully get the download URL of avatar file, ${url}`);
+            return Promise.resolve(url);
+        } catch (err) {
+            console.error(`${CLASS_NAME}| getAvatar | failed to get the download URL for avatar file, received error message: ${err.message}`);
+            return Promise.reject(null);
+        }
     },
 
     /**
      * a method used to sign up the user with the provided email address, password, full name and nick name
-     * @param email    the email of the user to be signed up
-     * @param password the password of the user to be signed up
-     * @param type     the type of the user to be signed up
-     * @param fullname the full name of the user to be signed up
-     * @param nickname the nick name of the user to be signed up
+     * @param email       the email of the user to be signed up
+     * @param password    the password of the user to be signed up
+     * @param fullname    the full name of the user to be signed up
+     * @param nickname    the nick name of the user to be signed up
+     * @param type        the type of the user to be signed up
+     * @param description the description of the user
      * @returns {Promise<*>} upon successful signup, a promise with resolve value of undefined is returned.
      *                       upon failed signup, a promise with reject value of error message string is returned.
      */
-    async signup(email, password, type='participant', fullname, nickname) {
+    async signup(email, password, fullname, nickname, type='participant', description='') {
         try {
             let signupFeedback = await auth.createUserWithEmailAndPassword(email, password);
-            console.info(`${CLASS_NAME} | signup | feedback from user signup: ${signupFeedback}`);
+            console.debug(`${CLASS_NAME} | signup | feedback from user signup: ${signupFeedback}`);
             let updateProfileFeedback = await signupFeedback.user.updateProfile({displayName: nickname});
-            console.info(`${CLASS_NAME} | signup | feedback from updating display name: ${updateProfileFeedback}`);
+            console.debug(`${CLASS_NAME} | signup | feedback from updating display name: ${updateProfileFeedback}`);
             let uid = signupFeedback.user.uid;
-            let storeFeedback = await userDocs.doc(uid).set({fullname: fullname, nickname: nickname, type: type, sessions: [], notifications: []});
-            console.info(`${CLASS_NAME} | signup | feedback from firestore: ${storeFeedback}`);
+            let storeFeedback = await userDocs.doc(uid).set({fullname: fullname, nickname: nickname, type: type, description: description, pods: [], notifications: [], photoURL: signupFeedback.user.photoURL, email: email});
+            console.debug(`${CLASS_NAME} | signup | feedback from firestore: ${storeFeedback}`);
+            await auth.currentUser.sendEmailVerification();
+            console.debug(`${CLASS_NAME} | signup | verification email has been sent to user`);
+            return Promise.resolve(undefined);
         } catch (err) {
-            console.error(`${CLASS_NAME} | signup | signup/name update/data storing failed, with error message: ${err.message}`);
-            return err.message;
+            console.error(`${CLASS_NAME} | signup | signup/name-update/data-storing failed, with error message: ${err.message}`);
+            return Promise.reject(err.message);
         }
-        // let error;
-        // auth.createUserWithEmailAndPassword(email, password)
-        //     .then(credential => {
-        //         // error = null
-        //         console.info(`successful login for account ${email}, with fullname ${fullname} and nickname ${nickname}`);
-        //         // update user display name
-        //         let uid = credential.user.uid;
-        //         credential.user.updateProfile({displayName: nickname})
-        //             .then(credential => {
-        //                 console.info(`successfully update user's display name to ${nickname}`);
-        //                 // display name has been updated, now store more info to firestore
-        //                 userDocs.doc(uid).set({fullname: fullname, nickname: nickname})
-        //                     .then(credential => {
-        //                         console.info(`successfully store user info to database`);
-        //                         return null;
-        //                     })
-        //                     .catch(err => {
-        //                         console.error(`failed to store user info to database, with error message: ${err.message}`);
-        //                         return err.message;
-        //                     });
-        //             })
-        //             .catch(err => {
-        //                 console.error(`failed to update user display name, with error message: ${err.message}`);
-        //                 return err.message;
-        //             })
-        //     })
-        //     .catch(err => {
-        //         // error = err.message;
-        //         console.error(`failed to signup account ${email}, received error message: ${err.message}`);
-        //         return err.message;
-        //     });
-        // return error;
     },
 
     /**
@@ -146,30 +115,21 @@ export default {
      * @param email    the email of the user to be logged in
      * @param password the password of the user to be logged in
      * @returns {Promise<*>} upon successful login, a promise with resolve value of user type is returned.
-     *                       upon failed login, a promise with reject value of null is returned.
+     *                       upon failed login, a promise with reject value of the received error message is returned.
      */
     async login(email, password) {
         try {
             let loginFeedback = await auth.signInWithEmailAndPassword(email, password);
-            console.info(`${CLASS_NAME} | login |successful login for account ${email} and returned credential ${loginFeedback}`);
+            console.debug(`${CLASS_NAME} | login |successful login for account ${email} and returned credential ${loginFeedback}`);
             let uid = loginFeedback.user.uid;
-            return await userDocs.doc(uid).get().get('type');
+            // get the user first, before get the attribute "type", otherwise it would be undefined
+            let user = await userDocs.doc(uid).get();
+            let type = user.get('type');
+            return Promise.resolve(type);
         } catch (err) {
             console.error(`${CLASS_NAME} | login |failed to login account ${email}, received error message: ${err.message}`);
-            return null;
+            return Promise.reject(err.message);
         }
-        // let error;
-        // auth.signInWithEmailAndPassword(email, password)
-        //     .then(credential => {
-        //         // successful login, no error raised
-        //         console.info(`successful login for account ${email}`);
-        //         return null;
-        //     })
-        //     .catch(err => {
-        //         // error = err.message;
-        //         console.error(`failed to login account ${email}, received error message: ${err.message}`);
-        //         return err.message
-        //     });
     },
 
     /**
@@ -180,115 +140,194 @@ export default {
     async logout() {
         try {
             let signoutFeedback = await auth.signOut();
-            // TODO log to see the structure of credential, need to change later on
-            console.info(`${CLASS_NAME} | logout |signoutFeedback`);
+            console.debug(`${CLASS_NAME} | logout |signoutFeedback`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | logout | failed to logout current user, with error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
+    },
 
-        // auth.signOut()
-        //     .then(credential => {
-        //         // TODO log to see the structure of credential, need to change later on
-        //         console.info(credential);
-        //     })
-        //     .catch(err => {
-        //         console.error(`failed to logout current user`);
-        //     });
+    /**
+     * a method used to retrieve a record from DB for user with the specified uid
+     * @param uid the id of the user whose record is to be retrieved from DB
+     * @return {Promise<Object|String>} upon successful retrieval, a promise with resolve of an object containing all relevant data is returned
+     *                                  upon failed retrieval, a promise with reject value of the received error message is returned
+     */
+    async getUser(uid) {
+        try {
+            let doc = await userDocs.doc(uid).get();
+            console.debug(`${CLASS_NAME} | getUser | successfully retrieve user record from firestore for uid ${uid}`);
+            let user = {
+                email: doc.get('email'),
+                photoURL: doc.get('photoURL'),
+                description: doc.get('description'),
+                fullname: doc.get('fullname'),
+                nickname: doc.get('nickname'),
+                notifications: doc.get('notifications'),
+                pods: doc.get('pods'),
+                type: doc.get('type')
+            };
+            console.debug(`${CLASS_NAME} | getUser | finished pre-processing for uid ${uid}, data is ready to be returned`);
+            return Promise.resolve(user);
+        } catch (err) {
+            console.error(`${CLASS_NAME} | getUser | failed to retrieve user record from firestore for uid ${uid}, err: ${err}`);
+            return Promise.reject(err);
+        }
     },
 
     /**
      * a method used to update the avatar of the user
      * @param avatarFile the new avatar file which will be stored in the database
-     * @returns {Promise<void>} upon successful update, a promise wit resolve value of undefined is returned.
-     *                          upon failed update, a promise with reject value of error message string is returned.
+     * @param uid        the uid of the user whose avatar is to be updated
+     * @returns {Promise<undefined|string>} upon successful update, a promise wit resolve value of undefined is returned.
+     *                            upon failed update, a promise with reject value of error message string is returned.
      */
-    async updateAvatar (avatarFile) {
-        let uid = auth.currentUser.uid;
-        let path = 'avatars/' + uid + '/' + avatarFile.name;
-        let storageRef = storage.ref(path);
-        // put is not async
-        let uploadFeedback = storageRef.put(avatarFile);
-        uploadFeedback.on('state_change',
-            function progress(snapshot) {
-                // this is used together with progress bar to show the current upload progress
-            },
-
-            function error(err) {
-                console.error(`${CLASS_NAME} | updateAvatar | failed to upload new avatar file to database, received error message: ${err.message}`)
-                return err.message;
-            },
-
-            function complete () {
-                console.info(`${CLASS_NAME} | updateAvatar | uploading successful, start updating user property`);
-                // now, update the user's photoURL property
-                auth.currentUser.updateProfile({photoURL: path})
-                    .then(value => {
-                        console.info(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${value}`);
-                    })
-                    .catch(err => {
-                        console.error(`${CLASS_NAME} | | failed to update user property photoURL, received error message: ${err.message}`);
-                        return err.message;
-                    });
+    async updateAvatar (avatarFile, uid=null) {
+        try {
+            if (!uid) {
+                let currentUser = auth.currentUser;
+                if (!currentUser) {
+                    // current is null
+                    console.error(`${CLASS_NAME} | updateAvatar | failed to retrieve the current user to perform update`);
+                    return Promise.reject('current user is null');
+                }
+                uid = auth.currentUser.uid;
             }
-        );
+            let path = 'avatars/' + uid + '/' + avatarFile.name;
+            let storageRef = storage.ref(path);
+            // put is not async
+            let uploadFeedback = storageRef.put(avatarFile);
+            uploadFeedback.on('state_changed',
+                function progress(snapshot) {
+                    // this is used together with progress bar to show the current upload progress
+                },
+
+                function error(err) {
+                    console.error(`${CLASS_NAME} | updateAvatar | failed to upload new avatar file to database, received error message: ${err.message}`)
+                    return Promise.reject(err.message);
+                },
+
+                function complete () {
+                    console.debug(`${CLASS_NAME} | updateAvatar | uploading successful, start updating user property`);
+                    // now, update the user's photoURL property
+                    userDocs.doc(uid).update({photoURL: path})
+                        .then(updateFeedback => {
+                            console.debug(`${CLASS_NAME} | updateAvatar | successfully update user property photoURL, with feedback: ${updateFeedback}`);
+                            return Promise.resolve(undefined);
+                        })
+                        .catch(err => {
+                            console.error(`${CLASS_NAME} | | failed to update user property photoURL, received error message: ${err.message}`);
+                            return Promise.reject(err.message);
+                        })
+                }
+            );
+        } catch (err) {
+            console.error(`${CLASS_NAME} | updateAvatar | failed to update user avatar, received error message ${err.message}`);
+            return Promise.reject(err.message);
+        }
     },
 
     /**
      * a method used to update the user's full name and nickname
      * @param fullname the new full name
      * @param nickname the new nick name
-     * @returns {Promise<*>} upon successful update, a promise wit resolve value of undefined is returned.
-     *                       upon failed update, a promise with reject value of error message string is returned.
+     * @returns {Promise<string|*>} upon successful update, a promise wit resolve value of undefined is returned.
+     *                              upon failed update, a promise with reject value of error message string is returned.
      */
     async updateProfile(fullname, nickname) {
         try {
-            let uid = auth.currentUser.uid;
+            let currentUser = auth.currentUser;
+            if (!currentUser) {
+                // current is null
+                console.error(`${CLASS_NAME} | updateProfile | failed to retrieve the current user to perform update`);
+                return Promise.reject('current user is null');
+            }
+            let uid = currentUser.uid;
             let DBupdateFeedback = await userDocs.doc(uid).update({fullname: fullname, nickname: nickname});
-            console.info(`${CLASS_NAME} | updateProfile | successfully update the user's full name and nick name in database, feedback received: ${DBupdateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateProfile | successfully update the user's full name and nick name in database, feedback received: ${DBupdateFeedback}`);
             // also need to update user's display name (using the value of nick name)
             let userUpdateFeedback = await auth.currentUser.updateProfile({displayName: nickname});
-            console.info(`${CLASS_NAME} | updateProfile | successfully update user property displaneName, feedback received: ${userUpdateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateProfile | successfully update user property displaneName, feedback received: ${userUpdateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateProfile | failed to update user's full name and nick name, with error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
     /**
      * a method used to update a user's full name
      * @param fullname the new full name
-     * @returns {Promise<*>} upon successful update, a promise wit resolve value of undefined is returned.
-     *                       upon failed update, a promise with reject value of error message string is returned.
+     * @returns {Promise<string|*>} upon successful update, a promise with resolve value of undefined is returned.
+     *                              upon failed update, a promise with reject value of error message string is returned.
      */
     async updateFullname(fullname) {
         try {
-            let uid = auth.currentUser.uid;
+            let currentUser = auth.currentUser;
+            if (!currentUser) {
+                // current is null
+                console.error(`${CLASS_NAME} | updateFullname | failed to retrieve the current user to perform update`);
+                return Promise.reject('current user is null');
+            }
+            let uid = currentUser.uid;
             let updateFeedback = await userDocs.doc(uid).update({fullname: fullname});
-            console.info(`${CLASS_NAME} | updateFullname | successfully update the user's full name, feedback received: ${updateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateFullname | successfully update the user's full name, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateFullname | failed to update user's full name, with error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
         }
     },
 
     /**
      * a method used to update a user's nick name
      * @param nickname the new nick name
-     * @returns {Promise<*>} upon successful update, a promise wit resolve value of undefined is returned.
-     *                       upon failed update, a promise with reject value of error message string is returned.
+     * @returns {Promise<string|*>} upon successful update, a promise with resolve value of undefined is returned.
+     *                              upon failed update, a promise with reject value of error message string is returned.
      */
     async updateNickname(nickname) {
         try {
-            let uid = auth.currentUser.uid;
+            let currentUser = auth.currentUser;
+            if (!currentUser) {
+                // current is null
+                console.error(`${CLASS_NAME} | updateNickname | failed to retrieve the current user to perform update`);
+                return Promise.reject('current user is null');
+            }
+            let uid = currentUser.uid;
             let DBupdateFeedback = await userDocs.doc(uid).update({nickname: nickname});
-            console.info(`${CLASS_NAME} | updateNickname | successfully update the user's nick name, feedback received: ${DBupdateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateNickname | successfully update the user's nick name, feedback received: ${DBupdateFeedback}`);
             // also need to update user's display name (using the value of nick name)
             let userUpdateFeedback = await auth.currentUser.updateProfile({displayName: nickname});
-            console.info(`${CLASS_NAME} | updateNickname | successfully update user property displaneName, feedback received: ${userUpdateFeedback}`);
+            console.debug(`${CLASS_NAME} | updateNickname | successfully update user property displaneName, feedback received: ${userUpdateFeedback}`);
+            return Promise.resolve(undefined);
         } catch (err) {
             console.error(`${CLASS_NAME} | updateNickname | failed to update user's and nick name, with error message: ${err.message}`);
-            return err.message;
+            return Promise.reject(err.message);
+        }
+    },
+
+    /**
+     * a method used to update the description of a user
+     * @param des the new description
+     * @returns {Promise<string|*>} upon successful update, a promise with resolve value of undefined is returned.
+     *                              upon failed update, a promise with reject value of received error message is returned.
+     */
+    async updateDescription(des) {
+        try {
+            let currentUser = auth.currentUser;
+            if (!currentUser) {
+                // current is null
+                console.error(`${CLASS_NAME} | updateDescription | failed to retrieve the current user to perform update`);
+                return Promise.reject('current user is null');
+            }
+            let uid = currentUser.uid;
+            let updateFeedback = userDocs.doc(uid).update({description: des});
+            console.debug(`${CLASS_NAME} | updateDescription | successfully retrieved user data for uid ${uid}, feedback received: ${updateFeedback}`);
+            return Promise.resolve(undefined);
+        } catch (err) {
+            console.error(`${CLASS_NAME} | updateDescription | failed to update user description, received error message: ${err.mesage}`);
+            return Promise.reject(err.message);
         }
     }
 }
