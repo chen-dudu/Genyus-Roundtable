@@ -13,22 +13,22 @@ Genyus Roundtable is a part of the offerings of the Genyus Network. Roundtable i
 <table>
     <tr>
         <td align="center">
-            <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/haichaos?view=summary">Haichao Song</a>
+            <a href="https://github.com/HaichaoS">Haichao Song</a>
             <br>
             <p align="center">:computer:</p>
         </td>
         <td align="center">
-            <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/kaixuang?view=summary">Kaixuan Guo</a>
+            <a href="https://github.com/Akameea">Kaixuan Guo</a>
             <br>
             <p align="center">:computer:</p>
         </td>
         <td align="center">
-            <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/liguoc?view=summary">Liguo Chen</a>
+            <a href="https://github.com/chen-dudu">Liguo Chen</a>
             <br>
             <p align="center">:computer:</p>
         </td>
         <td align="center">
-            <a href="https://bitbucket.cis.unimelb.edu.au:8445/plugins/servlet/user-contributions/yujuny?view=summary">Yujun Yan</a>
+            <a href="https://github.com/Rachelyyj">Yujun Yan</a>
             <br>
             <p align="center">:computer:</p>
         </td>
